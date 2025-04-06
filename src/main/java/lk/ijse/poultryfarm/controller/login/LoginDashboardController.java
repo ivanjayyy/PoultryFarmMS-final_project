@@ -19,6 +19,7 @@ public class LoginDashboardController implements Initializable {
     }
 
     public void goLoginPageOnAction(ActionEvent actionEvent) {
+
         navigateTo("/view/login/LoginPage.fxml");
     }
 

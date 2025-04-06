@@ -1,8 +1,9 @@
 module lk.ijse.poultryfarm {
-    requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
     requires mysql.connector.j;
+    requires com.jfoenix;
+    requires javafx.controls;
 
 
     opens lk.ijse.poultryfarm.controller.app.other to javafx.fxml;
@@ -11,5 +12,6 @@ module lk.ijse.poultryfarm {
     opens lk.ijse.poultryfarm.controller.app.food to javafx.fxml;
     opens lk.ijse.poultryfarm.controller.app.employee to javafx.fxml;
     opens lk.ijse.poultryfarm.controller.login to javafx.fxml;
+    opens lk.ijse.poultryfarm.controller.app to javafx.fxml;
     exports lk.ijse.poultryfarm;
 }
