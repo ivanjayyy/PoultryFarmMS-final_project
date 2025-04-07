@@ -53,4 +53,8 @@ public class AppDashboardController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    public void goOwnerAccountOnAction(ActionEvent actionEvent) {
+        navigateTo("/view/app/owner/OwnerAccount.fxml");
+    }
 }

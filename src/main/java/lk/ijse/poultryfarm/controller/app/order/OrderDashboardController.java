@@ -1,4 +1,44 @@
 package lk.ijse.poultryfarm.controller.app.order;
 
-public class OrderDashboardController {
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.layout.AnchorPane;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class OrderDashboardController implements Initializable {
+
+    public AnchorPane ancOrderWindow;
+
+    public void navigateTo(String path) {
+        try {
+            ancOrderWindow.getChildren().clear();
+            AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(path));
+
+            anchorPane.prefWidthProperty().bind(ancOrderWindow.widthProperty());
+            anchorPane.prefHeightProperty().bind(ancOrderWindow.heightProperty());
+
+            ancOrderWindow.getChildren().add(anchorPane);
+        } catch (IOException e) {
+            new Alert(Alert.AlertType.ERROR, "Page not found").show();
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        navigateTo("/view/app/order/OrderProductPage.fxml");
+    }
+
+    public void goProductSupplierPageOnAction(ActionEvent actionEvent) {
+        navigateTo("/view/app/order/ProductSupplierPage.fxml");
+    }
+
+    public void goOrderProductPageOnAction(ActionEvent actionEvent) {
+        navigateTo("/view/app/order/OrderProductPage.fxml");
+    }
 }
