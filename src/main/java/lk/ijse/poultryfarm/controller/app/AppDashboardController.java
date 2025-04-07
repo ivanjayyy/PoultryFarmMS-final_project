@@ -1,9 +1,11 @@
 package lk.ijse.poultryfarm.controller.app;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -13,6 +15,7 @@ import java.util.ResourceBundle;
 public class AppDashboardController implements Initializable {
     
     public AnchorPane ancAppWindow;
+    public JFXButton btnOwnerAccount;
 
     public void openOtherWindowOnAction(ActionEvent actionEvent) {
         navigateTo("/view/app/other/OtherDashboard.fxml");
@@ -32,6 +35,10 @@ public class AppDashboardController implements Initializable {
 
     public void openOrderWindowOnAction(ActionEvent actionEvent) {
         navigateTo("/view/app/order/OrderDashboard.fxml");
+    }
+
+    public void goOwnerAccountOnAction(ActionEvent actionEvent) {
+        navigateTo("/view/app/owner/OwnerAccount.fxml");
     }
 
     @Override
@@ -54,7 +61,8 @@ public class AppDashboardController implements Initializable {
         }
     }
 
-    public void goOwnerAccountOnAction(ActionEvent actionEvent) {
-        navigateTo("/view/app/owner/OwnerAccount.fxml");
+    public void changeUsernameOnMouseMoved(MouseEvent mouseEvent) {
+        btnOwnerAccount.setText(lk.ijse.poultryfarm.controller.login.LoginPageController.txtUsername);
     }
+
 }

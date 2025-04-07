@@ -20,7 +20,7 @@
                   <Insets bottom="100.0" />
                </VBox.margin>
             </Label>
-            <TextField alignment="CENTER" prefHeight="49.0" prefWidth="393.0" promptText="username" style="-fx-background-color: #ecf0f1; -fx-border-color: gray;">
+            <TextField fx:id="inputUsername" alignment="CENTER" prefHeight="49.0" prefWidth="393.0" promptText="username" style="-fx-background-color: #ecf0f1; -fx-border-color: gray;">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin>
@@ -28,7 +28,7 @@
                   <Font size="18.0" />
                </font>
             </TextField>
-            <TextField alignment="CENTER" prefHeight="49.0" prefWidth="393.0" promptText="password" style="-fx-background-color: #ecf0f1; -fx-border-color: gray;">
+            <TextField fx:id="inputPassword" alignment="CENTER" prefHeight="49.0" prefWidth="393.0" promptText="password" style="-fx-background-color: #ecf0f1; -fx-border-color: gray;">
                <VBox.margin>
                   <Insets bottom="50.0" />
                </VBox.margin>

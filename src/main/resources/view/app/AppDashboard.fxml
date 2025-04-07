@@ -57,7 +57,7 @@
                   </JFXButton>
                   <VBox alignment="BOTTOM_LEFT" prefHeight="430.0" prefWidth="153.0">
                      <children>
-                        <JFXButton buttonType="RAISED" onAction="#goOwnerAccountOnAction" prefHeight="56.0" prefWidth="112.0" text="\@Username" textFill="WHITE">
+                        <JFXButton fx:id="btnOwnerAccount" buttonType="RAISED" onAction="#goOwnerAccountOnAction" onMouseMoved="#changeUsernameOnMouseMoved" prefHeight="56.0" prefWidth="112.0" text="\@username" textFill="WHITE">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
