@@ -10,10 +10,10 @@ public class AppInitializer extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/login/LoginDashboard.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/LoginDashboard.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Poultry Farm Management System");
+        stage.setTitle("J.M.R. Farm House Management System");
         stage.show();
     }
 

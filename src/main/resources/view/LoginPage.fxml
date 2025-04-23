@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="940.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.poultryfarm.controller.LoginPageController">
+   <children>
+      <VBox alignment="CENTER" layoutX="544.0" layoutY="44.0" prefHeight="940.0" prefWidth="1920.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="555.0" prefWidth="1920.0">
+               <children>
+                  <HBox alignment="TOP_CENTER" prefHeight="221.0" prefWidth="1920.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="123.0" prefWidth="348.0" text="LOG IN" textAlignment="CENTER" textFill="GREY">
+                           <font>
+                              <Font name="Arial Black" size="70.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="77.0" prefWidth="1920.0">
+                     <children>
+                        <TextField fx:id="inputUsername" alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="username" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;">
+                           <font>
+                              <Font name="Arial" size="24.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="118.0" prefWidth="1920.0">
+                     <children>
+                        <PasswordField fx:id="inputPassword" alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="password" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;">
+                           <font>
+                              <Font name="Arial" size="24.0" />
+                           </font>
+                        </PasswordField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="BOTTOM_CENTER" prefHeight="110.0" prefWidth="1920.0">
+                     <children>
+                        <JFXButton fx:id="btnLogin" buttonType="RAISED" onAction="#goAppWindowOnAction" prefHeight="70.0" prefWidth="155.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="LOG IN" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="27.0" />
+                           </font>
+                           <ripplerFill>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color red="0.9019607901573181" green="0.4941176474094391" blue="0.13333334028720856" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="1.0" green="1.0" blue="1.0" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </ripplerFill>
+                        </JFXButton>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
