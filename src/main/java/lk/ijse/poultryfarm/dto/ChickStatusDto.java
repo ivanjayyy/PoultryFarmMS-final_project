@@ -11,6 +11,7 @@ import lombok.*;
 public class ChickStatusDto {
 
     private String batchId;
+    private String chickStatusId;
     private String date;
     private int chicksDead;
 }

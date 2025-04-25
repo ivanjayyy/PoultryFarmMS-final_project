@@ -10,6 +10,7 @@ import lombok.*;
 
 public class FoodDto {
 
+    private String foodId;
     private String foodName;
     private double quantityRemain;
 

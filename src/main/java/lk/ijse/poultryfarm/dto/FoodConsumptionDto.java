@@ -11,8 +11,9 @@ import lombok.*;
 public class FoodConsumptionDto {
 
     private String batchId;
-    private String foodName;
-    private double consumption;
+    private String consumptionId;
     private String date;
+    private String foodId;
+    private double consumption;
 
 }

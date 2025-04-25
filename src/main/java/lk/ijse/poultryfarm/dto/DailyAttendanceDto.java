@@ -11,9 +11,9 @@ import lombok.*;
 public class DailyAttendanceDto {
 
     private String batchId;
-    private String employeeId;
     private String attendanceId;
     private String date;
+    private String employeeId;
     private boolean attendance;
 
 }

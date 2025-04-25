@@ -1,16 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="746.0" prefWidth="1082.0" style="-fx-background-color: #ecf0f1;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.poultryfarm.controller.BillManagementPageController">
+<AnchorPane prefHeight="1000.0" prefWidth="1720.0" style="-fx-background-color: #ecf0f1;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.poultryfarm.controller.BillManagementPageController">
    <children>
-      <Label layoutX="357.0" layoutY="339.0" text="Bill Management">
-         <font>
-            <Font name="System Bold" size="46.0" />
-         </font>
-      </Label>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="227.0" prefWidth="1720.0">
+               <children>
+                  <Label prefHeight="127.0" prefWidth="701.0" text="BILL MANAGEMENT" textFill="GREY">
+                     <font>
+                        <Font name="Arial Black" size="64.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="772.0" spacing="50.0">
+                     <children>
+                        <Label text="BATCH ID :" textFill="GREY">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="44.0" prefWidth="228.0" style="-fx-border-color: gray; -fx-border-width: 0 0 1px 0;" textAlignment="CENTER" textFill="GREY">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="712.0" spacing="50.0">
+                     <children>
+                        <Label text="BILL ID :" textFill="GREY">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="320.0" layoutY="45.0" prefHeight="47.0" prefWidth="228.0" style="-fx-border-color: gray; -fx-border-width: 0 0 1px 0;" textAlignment="CENTER" textFill="GREY">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="207.0" prefWidth="1720.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="207.0" prefWidth="659.0">
+                     <children>
+                        <Label prefHeight="75.0" prefWidth="169.0" text="BILL VARIANT" textFill="GREY">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <JFXComboBox fx:id="comboBillVariant" focusColor="#d35400" prefHeight="41.0" prefWidth="262.0" style="-fx-background-color: white;" unFocusColor="GREY" visibleRowCount="2" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="207.0" prefWidth="308.0">
+                     <children>
+                        <Label prefHeight="74.0" prefWidth="172.0" text="AMOUNT (RS.)" textFill="GREY">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <TextField prefHeight="40.0" prefWidth="286.0" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="207.0" prefWidth="662.0">
+                     <children>
+                        <Label prefHeight="86.0" prefWidth="131.0" text="PAID DATE" textFill="GREY">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <DatePicker prefHeight="40.0" prefWidth="212.0" style="-fx-background-color: white;" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <TableView prefHeight="435.0" prefWidth="1720.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="C1" />
+                <TableColumn prefWidth="75.0" text="C2" />
+                  <TableColumn prefWidth="75.0" text="Column X" />
+                  <TableColumn prefWidth="75.0" text="Column X" />
+                  <TableColumn prefWidth="75.0" text="Column X" />
+              </columns>
+            </TableView>
+         </children></VBox>
    </children>
 </AnchorPane>

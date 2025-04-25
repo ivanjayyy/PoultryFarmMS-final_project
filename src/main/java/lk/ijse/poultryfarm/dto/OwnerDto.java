@@ -10,6 +10,7 @@ import lombok.*;
 
 public class OwnerDto {
 
+    private String ownerId;
     private String name;
     private String username;
     private String password;

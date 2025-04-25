@@ -11,9 +11,9 @@ import lombok.*;
 public class FoodPaymentDto {
 
     private String foodPaymentId;
-    private String foodName;
+    private String foodId;
     private double quantity;
-    private double pay_amount;
+    private double payAmount;
     private String date;
 
 }

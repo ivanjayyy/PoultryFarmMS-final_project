@@ -18,7 +18,7 @@
          <children>
             <VBox alignment="CENTER" prefHeight="555.0" prefWidth="1920.0">
                <children>
-                  <HBox alignment="TOP_CENTER" prefHeight="221.0" prefWidth="1920.0">
+                  <HBox alignment="TOP_CENTER" prefHeight="196.0" prefWidth="1920.0">
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="123.0" prefWidth="348.0" text="LOG IN" textAlignment="CENTER" textFill="GREY">
                            <font>
@@ -31,7 +31,7 @@
                      <children>
                         <TextField fx:id="inputUsername" alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="username" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;">
                            <font>
-                              <Font name="Arial" size="24.0" />
+                              <Font name="Arial Rounded MT Bold" size="24.0" />
                            </font>
                         </TextField>
                      </children>
@@ -40,12 +40,12 @@
                      <children>
                         <PasswordField fx:id="inputPassword" alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="password" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;">
                            <font>
-                              <Font name="Arial" size="24.0" />
+                              <Font name="Arial Rounded MT Bold" size="24.0" />
                            </font>
                         </PasswordField>
                      </children>
                   </HBox>
-                  <HBox alignment="BOTTOM_CENTER" prefHeight="110.0" prefWidth="1920.0">
+                  <HBox alignment="BOTTOM_CENTER" prefHeight="99.0" prefWidth="1920.0">
                      <children>
                         <JFXButton fx:id="btnLogin" buttonType="RAISED" onAction="#goAppWindowOnAction" prefHeight="70.0" prefWidth="155.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="LOG IN" textFill="WHITE">
                            <font>

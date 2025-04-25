@@ -14,6 +14,5 @@ public class ChickBatchDto {
     private int chickTotal;
     private double payment;
     private String date;
-    private String username;
 
 }

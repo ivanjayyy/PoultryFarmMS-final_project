@@ -10,8 +10,8 @@ import lombok.*;
 
 public class SalaryDto {
 
-    private String employeeId;
     private String salaryId;
+    private String employeeId;
     private double amount;
     private String date;
 
