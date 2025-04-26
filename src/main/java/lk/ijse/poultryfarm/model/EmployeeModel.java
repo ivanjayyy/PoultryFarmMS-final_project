@@ -47,4 +47,19 @@ public class EmployeeModel {
         }
         return employeeDtos;
     }
+
+    public String getNextEmployeeId() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT employee_id FROM employee ORDER BY employee_id DESC LIMIT 1");
+
+        if (resultSet.next()) {
+            String lastId = resultSet.getString(1);
+            String lastIdNumberString = lastId.substring(1);
+            int lastIdNumber = Integer.parseInt(lastIdNumberString);
+            int nextIdNumber = lastIdNumber + 1;
+            String nextIdString = String.format("E%03d", nextIdNumber);
+            return nextIdString;
+        }
+
+        return "E001";
+    }
 }

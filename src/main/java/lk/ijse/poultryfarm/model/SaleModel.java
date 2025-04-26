@@ -47,4 +47,19 @@ public class SaleModel {
         }
         return saleDtos;
     }
+
+    public String getNextSaleId() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT sale_id FROM sale ORDER BY sale_id DESC LIMIT 1");
+
+        if (resultSet.next()) {
+            String lastId = resultSet.getString(1);
+            String lastIdNumberString = lastId.substring(1);
+            int lastIdNumber = Integer.parseInt(lastIdNumberString);
+            int nextIdNumber = lastIdNumber + 1;
+            String nextIdString = String.format("R%03d", nextIdNumber);
+            return nextIdString;
+        }
+
+        return "R001";
+    }
 }

@@ -46,4 +46,19 @@ public class SalaryModel {
         }
         return salaryDtos;
     }
+
+    public String getNextSalaryId() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT salary_id FROM salary ORDER BY salary_id DESC LIMIT 1");
+
+        if (resultSet.next()) {
+            String lastId = resultSet.getString(1);
+            String lastIdNumberString = lastId.substring(1);
+            int lastIdNumber = Integer.parseInt(lastIdNumberString);
+            int nextIdNumber = lastIdNumber + 1;
+            String nextIdString = String.format("S%03d", nextIdNumber);
+            return nextIdString;
+        }
+
+        return "S001";
+    }
 }

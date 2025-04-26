@@ -41,4 +41,19 @@ public class ChickStatusModel {
         }
         return chickStatusDtos;
     }
+
+    public String getNextChickStatusId() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT chick_status_id FROM chick_status ORDER BY chick_status_id DESC LIMIT 1");
+
+        if (resultSet.next()) {
+            String lastId = resultSet.getString(1);
+            String lastIdNumberString = lastId.substring(1);
+            int lastIdNumber = Integer.parseInt(lastIdNumberString);
+            int nextIdNumber = lastIdNumber + 1;
+            String nextIdString = String.format("M%03d", nextIdNumber);
+            return nextIdString;
+        }
+
+        return "M001";
+    }
 }

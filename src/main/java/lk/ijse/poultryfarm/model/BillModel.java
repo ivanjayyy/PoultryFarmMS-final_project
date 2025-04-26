@@ -47,4 +47,19 @@ public class BillModel {
         }
         return billDtos;
     }
+
+    public String getNextBillId() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT bill_id FROM bill ORDER BY bill_id DESC LIMIT 1");
+
+        if (resultSet.next()) {
+            String lastId = resultSet.getString(1);
+            String lastIdNumberString = lastId.substring(1);
+            int lastIdNumber = Integer.parseInt(lastIdNumberString);
+            int nextIdNumber = lastIdNumber + 1;
+            String nextIdString = String.format("X%03d", nextIdNumber);
+            return nextIdString;
+        }
+
+        return "X001";
+    }
 }

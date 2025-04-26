@@ -11,9 +11,9 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="940.0" prefWidth="1920.0" style="-fx-background-color: #ecf0f1;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.poultryfarm.controller.CreateAccountPageController">
+<AnchorPane prefHeight="940.0" prefWidth="1920.0" style="-fx-background-color: #e67e22;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.poultryfarm.controller.CreateAccountPageController">
    <children>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white; -fx-background-radius: 100;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
          <children>
             <VBox prefHeight="703.0" prefWidth="1920.0">
                <children>
@@ -48,7 +48,8 @@
                               <Font name="Arial Rounded MT Bold" size="24.0" />
                            </font>
                         </TextField>
-                     </children></HBox>
+                     </children>
+                  </HBox>
                   <HBox alignment="CENTER" layoutX="10.0" layoutY="310.0" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <TextField alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="email" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;">
@@ -56,7 +57,8 @@
                               <Font name="Arial Rounded MT Bold" size="24.0" />
                            </font>
                         </TextField>
-                     </children></HBox>
+                     </children>
+                  </HBox>
                   <HBox alignment="BOTTOM_CENTER" layoutX="10.0" layoutY="410.0" prefHeight="117.0" prefWidth="1920.0">
                      <children>
                         <JFXButton buttonType="RAISED" prefHeight="70.0" prefWidth="155.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="CREATE" textFill="WHITE">

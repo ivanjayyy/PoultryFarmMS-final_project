@@ -47,4 +47,19 @@ public class FoodPaymentModel {
         }
         return foodPaymentDtos;
     }
+
+    public String getNextFoodPaymentId() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT food_payment_id FROM food_payment ORDER BY food_payment_id DESC LIMIT 1");
+
+        if (resultSet.next()) {
+            String lastId = resultSet.getString(1);
+            String lastIdNumberString = lastId.substring(1);
+            int lastIdNumber = Integer.parseInt(lastIdNumberString);
+            int nextIdNumber = lastIdNumber + 1;
+            String nextIdString = String.format("P%03d", nextIdNumber);
+            return nextIdString;
+        }
+
+        return "P001";
+    }
 }
