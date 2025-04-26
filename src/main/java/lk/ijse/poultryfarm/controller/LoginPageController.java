@@ -9,8 +9,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import lk.ijse.poultryfarm.model.OwnerModel;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class LoginPageController {
 
@@ -18,20 +20,25 @@ public class LoginPageController {
     public PasswordField inputPassword;
     public TextField inputUsername;
 
-    public void goAppWindowOnAction(ActionEvent actionEvent) throws IOException {
-        String username1 = "Ivan";
-        String username2 = "a";
-        String password1 = "2003";
-        String password2 = "a";
+    OwnerModel ownerModel = new OwnerModel();
 
+    public void goAppWindowOnAction(ActionEvent actionEvent) throws IOException, SQLException, ClassNotFoundException {
         String txtUsername = inputUsername.getText();
         String txtPassword = inputPassword.getText();
 
-        if(txtUsername.equals(username1) && txtPassword.equals(password1) || txtUsername.equals(username2) && txtPassword.equals(password2)) {
-            Stage stage = (Stage) btnLogin.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/view/AppDashboard.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+        String username = ownerModel.ownerUsername();
+        String password = ownerModel.ownerPassword();
+
+        if(txtUsername.equals(username) && txtPassword.equals(password)) {
+            Stage currentstage = (Stage) btnLogin.getScene().getWindow();
+            currentstage.close();
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/AppDashboard.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setMaximized(true);
+            stage.setResizable(false);
             stage.show();
 
         } else {

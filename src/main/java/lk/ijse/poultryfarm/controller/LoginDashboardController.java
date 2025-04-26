@@ -19,13 +19,12 @@ public class LoginDashboardController implements Initializable {
     }
 
     public void goLoginPageOnAction(ActionEvent actionEvent) {
-
         navigateTo("/view/LoginPage.fxml");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        navigateTo("/view/LoginWindow.fxml");
+        navigateTo("/view/LoginPage.fxml");
     }
 
     public void navigateTo(String path) {

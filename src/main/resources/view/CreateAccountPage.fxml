@@ -17,9 +17,9 @@
          <children>
             <VBox prefHeight="703.0" prefWidth="1920.0">
                <children>
-                  <HBox alignment="TOP_CENTER" prefHeight="185.0" prefWidth="1920.0">
+                  <HBox alignment="TOP_CENTER" prefHeight="130.0" prefWidth="1880.0">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="169.0" prefWidth="940.0" text="CREATE AN ACCOUNT" textAlignment="CENTER" textFill="#808080">
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="147.0" prefWidth="940.0" text="CREATE" textAlignment="CENTER" textFill="#808080">
                            <font>
                               <Font name="Arial Black" size="70.0" />
                            </font></Label>
@@ -27,7 +27,7 @@
                   </HBox>
                   <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <TextField alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="full name" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;">
+                        <TextField fx:id="inputFullName" alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="full name" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="24.0" />
                            </font>
@@ -35,7 +35,7 @@
                      </children></HBox>
                   <HBox alignment="CENTER" layoutX="10.0" layoutY="110.0" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <TextField alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="username" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;">
+                        <TextField fx:id="inputUsername" alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="username" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="24.0" />
                            </font>
@@ -43,7 +43,7 @@
                      </children></HBox>
                   <HBox alignment="CENTER" layoutX="10.0" layoutY="210.0" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <TextField alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="password" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;">
+                        <TextField fx:id="inputPassword" alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="password" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="24.0" />
                            </font>
@@ -52,16 +52,16 @@
                   </HBox>
                   <HBox alignment="CENTER" layoutX="10.0" layoutY="310.0" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <TextField alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="email" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;">
+                        <TextField fx:id="inputEmail" alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="email" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="24.0" />
                            </font>
                         </TextField>
                      </children>
                   </HBox>
-                  <HBox alignment="BOTTOM_CENTER" layoutX="10.0" layoutY="410.0" prefHeight="117.0" prefWidth="1920.0">
+                  <HBox alignment="BOTTOM_CENTER" layoutX="10.0" layoutY="410.0" prefHeight="112.0" prefWidth="1880.0">
                      <children>
-                        <JFXButton buttonType="RAISED" prefHeight="70.0" prefWidth="155.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="CREATE" textFill="WHITE">
+                        <JFXButton buttonType="RAISED" onAction="#createAccountOnAction" prefHeight="70.0" prefWidth="250.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="CREATE" textFill="WHITE">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="27.0" />
                            </font>
@@ -82,7 +82,8 @@
                               </LinearGradient>
                            </ripplerFill>
                         </JFXButton>
-                     </children></HBox>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
          </children>
