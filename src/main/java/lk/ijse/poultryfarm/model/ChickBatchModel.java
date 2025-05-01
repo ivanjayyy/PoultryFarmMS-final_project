@@ -61,4 +61,15 @@ public class ChickBatchModel {
 
         return "B001";
     }
+
+    public String getCurrentBatchId() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT batch_id FROM chick_batch ORDER BY batch_id DESC LIMIT 1");
+
+        if (resultSet.next()) {
+            String lastId = resultSet.getString(1);
+            return lastId;
+        }
+
+        return null;
+    }
 }

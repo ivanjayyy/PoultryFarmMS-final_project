@@ -1,10 +1,12 @@
 package lk.ijse.poultryfarm.model;
 
+import lk.ijse.poultryfarm.dto.BillDto;
 import lk.ijse.poultryfarm.dto.OwnerDto;
 import lk.ijse.poultryfarm.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class OwnerModel {
 
@@ -28,6 +30,21 @@ public class OwnerModel {
         ResultSet resultSet = CrudUtil.execute("SELECT password FROM owner WHERE owner_id = 'O001'");
         if (resultSet.next()) {
             return resultSet.getString("password");
+        }
+        return null;
+    }
+
+    public OwnerDto getOwner() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM owner WHERE owner_id = 'O001'");
+
+        if (resultSet.next()) {
+            return new OwnerDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getString(5)
+            );
         }
         return null;
     }

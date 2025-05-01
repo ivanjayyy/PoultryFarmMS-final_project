@@ -7,4 +7,11 @@ module lk.ijse.poultryfarm {
 
     exports lk.ijse.poultryfarm;
     opens lk.ijse.poultryfarm.controller to javafx.fxml;
+    opens lk.ijse.poultryfarm.dto.tm to javafx.base;
+    opens lk.ijse.poultryfarm.controller.add to javafx.fxml;
+    opens lk.ijse.poultryfarm.controller.dashboard to javafx.fxml;
+    opens lk.ijse.poultryfarm.controller.batch to javafx.fxml;
+    opens lk.ijse.poultryfarm.controller.owner to javafx.fxml;
+    opens lk.ijse.poultryfarm.controller.employee to javafx.fxml;
+    opens lk.ijse.poultryfarm.controller.food to javafx.fxml;
 }

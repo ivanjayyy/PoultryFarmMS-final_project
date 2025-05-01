@@ -21,12 +21,14 @@ public class FoodModel {
         return CrudUtil.execute("DELETE FROM food WHERE food_id = ?", foodId);
     }
 
-    public FoodDto searchFood(String foodName) throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM food WHERE food_name = ?", foodName);
+    public String foodInventory(String foodId) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT quantity_remain FROM food WHERE food_id = ?", foodId);
+
         if (resultSet.next()) {
-            FoodDto foodDto = new FoodDto(resultSet.getString(1),resultSet.getString(2),resultSet.getDouble(3));
-            return foodDto;
+            String foodRemain = resultSet.getString(1);
+            return foodRemain;
         }
+
         return null;
     }
 

@@ -1,4 +1,4 @@
-package lk.ijse.poultryfarm.dto;
+package lk.ijse.poultryfarm.dto.tm;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class BillDto {
+public class BillManagementTm {
     private String batchId;
     private String billId;
     private String billVariant;
