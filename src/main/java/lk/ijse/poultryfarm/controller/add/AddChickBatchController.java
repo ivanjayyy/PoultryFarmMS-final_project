@@ -51,6 +51,7 @@ public class AddChickBatchController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            inputArrivedDate.setValue(java.time.LocalDate.now());
             loadNextId();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

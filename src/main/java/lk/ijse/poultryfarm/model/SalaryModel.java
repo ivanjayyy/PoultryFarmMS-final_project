@@ -21,13 +21,20 @@ public class SalaryModel {
         return CrudUtil.execute("DELETE FROM salary WHERE salary_id = ?", salaryId);
     }
 
-    public SalaryDto searchSalary(String employeeId) throws SQLException, ClassNotFoundException {
+    public ArrayList<SalaryDto> searchSalary(String employeeId) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM salary WHERE employee_id = ?", employeeId);
-        if (resultSet.next()) {
-            SalaryDto salaryDto = new SalaryDto(resultSet.getString(1),resultSet.getString(2),resultSet.getDouble(3),resultSet.getString(4));
-            return salaryDto;
+        ArrayList<SalaryDto> salaryDtos = new ArrayList<>();
+
+        while (resultSet.next()) {
+            SalaryDto salaryDto = new SalaryDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getDouble(3),
+                    resultSet.getString(4)
+            );
+            salaryDtos.add(salaryDto);
         }
-        return null;
+        return salaryDtos;
     }
 
     public ArrayList<SalaryDto> getAllSalary() throws SQLException, ClassNotFoundException {

@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 public class AddEmployeeController implements Initializable {
     public Label lblEmployeeId;
     public TextField inputName;
-    public JFXComboBox<String> inputEmployeeType;
+    public JFXComboBox<Boolean> inputEmployeeType;
     public TextField inputContact;
     public TextField inputDailyWage;
     public JFXButton btnSave;
@@ -29,7 +29,7 @@ public class AddEmployeeController implements Initializable {
     public void saveBatchOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String employeeId = lblEmployeeId.getText();
         String name = inputName.getText();
-        String fullTime = inputEmployeeType.getValue();
+        String fullTime = inputEmployeeType.getValue().toString();
         String contact = inputContact.getText();
         String dailyWage = inputDailyWage.getText();
 
@@ -53,7 +53,7 @@ public class AddEmployeeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            inputEmployeeType.getItems().addAll("true", "false");
+            inputEmployeeType.getItems().addAll(true, false);
             loadNextId();
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR,"Error in retrieving employee id").show();

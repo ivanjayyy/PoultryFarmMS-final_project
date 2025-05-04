@@ -1,7 +1,6 @@
 package lk.ijse.poultryfarm.controller.add;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -11,42 +10,40 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
-import lk.ijse.poultryfarm.dto.BillDto;
-import lk.ijse.poultryfarm.model.BillModel;
+import lk.ijse.poultryfarm.dto.ChickStatusDto;
 import lk.ijse.poultryfarm.model.ChickBatchModel;
+import lk.ijse.poultryfarm.model.ChickStatusModel;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddBillController implements Initializable {
+public class AddChickStatusController implements Initializable {
     public Label lblBatchId;
-    public Label lblBillId;
-    public TextField inputPaidAmount;
-    public DatePicker inputPaidDate;
+    public Label lblChickStatusId;
+    public DatePicker inputCheckedDate;
+    public TextField inputChicksDead;
     public JFXButton btnSave;
-    public JFXComboBox<String> inputBillVariant;
 
-    private final BillModel billModel = new BillModel();
+    private final ChickStatusModel chickStatusModel = new ChickStatusModel();
     private final ChickBatchModel chickBatchModel = new ChickBatchModel();
 
-    public void saveBatchOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+    public void saveChickStatusOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String batchId = lblBatchId.getText();
-        String billId = lblBillId.getText();
-        String billVariant = inputBillVariant.getValue();
-        String paidAmount = inputPaidAmount.getText();
-        String paidDate = inputPaidDate.getValue().toString();
+        String chickStatusId = lblChickStatusId.getText();
+        String checkedDate = inputCheckedDate.getValue().toString();
+        String chicksDead = inputChicksDead.getText();
 
-        BillDto billDto = new BillDto(batchId,billId,billVariant,Double.parseDouble(paidAmount),paidDate);
+        ChickStatusDto chickStatusDto = new ChickStatusDto(batchId,chickStatusId,checkedDate,Integer.parseInt(chicksDead));
 
-        boolean isSaved = billModel.saveBill(billDto);
+        boolean isSaved = chickStatusModel.saveChickStatus(chickStatusDto);
 
-        if (isSaved) {
-            new Alert(Alert.AlertType.INFORMATION, "Bill Saved Successfully").show();
+        if(isSaved) {
+            new Alert(Alert.AlertType.INFORMATION,"Chick Status Saved Successfully").show();
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.close();
         }else {
-            new Alert(Alert.AlertType.ERROR, "Bill Save Failed").show();
+            new Alert(Alert.AlertType.ERROR,"Chick Status Save Failed").show();
         }
     }
 
@@ -57,16 +54,15 @@ public class AddBillController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            inputBillVariant.getItems().addAll("Current","Water");
-            inputPaidDate.setValue(java.time.LocalDate.now());
+            inputCheckedDate.setValue(java.time.LocalDate.now());
             loadNextId();
             loadBatchId();
             ButtonScale.buttonScaling(btnSave);
-            ButtonScale.textFieldScaling(inputPaidAmount);
+            ButtonScale.textFieldScaling(inputChicksDead);
 
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR,"Error in retrieving customer id").show();
             e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in retrieving customer id").show();
         }
     }
 
@@ -80,8 +76,8 @@ public class AddBillController implements Initializable {
         }
     }
 
-    public void loadNextId() throws SQLException, ClassNotFoundException {
-        String nextId = billModel.getNextBillId();
-        lblBillId.setText(nextId);
+    private void loadNextId() throws SQLException, ClassNotFoundException {
+        String nextId = chickStatusModel.getNextChickStatusId();
+        lblChickStatusId.setText(nextId);
     }
 }

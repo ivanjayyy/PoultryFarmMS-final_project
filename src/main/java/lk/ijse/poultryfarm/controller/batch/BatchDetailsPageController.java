@@ -39,6 +39,8 @@ public class BatchDetailsPageController implements Initializable {
     public TableColumn<BatchDetailsTm,String> colArrivedDate;
 
     private final ChickBatchModel chickBatchModel = new ChickBatchModel();
+    public JFXButton btnSale;
+    public JFXButton btnStatus;
 
 
     /**
@@ -88,7 +90,24 @@ public class BatchDetailsPageController implements Initializable {
     }
 
     public void searchBatchOnAction(ActionEvent actionEvent) {
+        try {
+            ArrayList<ChickBatchDto> chickBatchDtos = chickBatchModel.searchChickBatch(inputSearch.getText());
+            ObservableList<BatchDetailsTm> batchDetailsTms = FXCollections.observableArrayList();
 
+            for (ChickBatchDto chickBatchDto : chickBatchDtos) {
+                BatchDetailsTm batchDetailsTm = new BatchDetailsTm(
+                        chickBatchDto.getBatchId(),
+                        chickBatchDto.getChickTotal(),
+                        chickBatchDto.getPayment(),
+                        chickBatchDto.getDate()
+                );
+                batchDetailsTms.add(batchDetailsTm);
+            }
+            tblBatchDetails.setItems(batchDetailsTms);
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in retrieving batches").show();
+        }
     }
 
     public void addBatchOnAction(ActionEvent actionEvent) {
@@ -100,13 +119,42 @@ public class BatchDetailsPageController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
             resetPage();
-
-        } catch (IOException e) {
-            new Alert(Alert.AlertType.ERROR,"Error in opening add batch window").show();
+        } catch (Exception e) {
             e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in opening add batch window").show();
         }
     }
 
     public void onClickTable(MouseEvent mouseEvent) {
+    }
+
+    public void addBatchSaleOnAction(ActionEvent actionEvent) {
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/add/AddSale.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            resetPage();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in opening add batch sale window").show();
+        }
+    }
+
+    public void addChickStatusOnAction(ActionEvent actionEvent) {
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/add/AddChickStatus.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            resetPage();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in opening add chick status window").show();
+        }
     }
 }

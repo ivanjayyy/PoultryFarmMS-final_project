@@ -1,7 +1,6 @@
 package lk.ijse.poultryfarm.controller.add;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -11,42 +10,40 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
-import lk.ijse.poultryfarm.dto.BillDto;
-import lk.ijse.poultryfarm.model.BillModel;
+import lk.ijse.poultryfarm.dto.SaleDto;
 import lk.ijse.poultryfarm.model.ChickBatchModel;
+import lk.ijse.poultryfarm.model.SaleModel;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddBillController implements Initializable {
+public class AddSaleController implements Initializable {
     public Label lblBatchId;
-    public Label lblBillId;
-    public TextField inputPaidAmount;
-    public DatePicker inputPaidDate;
+    public Label lblSaleId;
+    public TextField inputTotalSale;
+    public DatePicker inputSoldDate;
     public JFXButton btnSave;
-    public JFXComboBox<String> inputBillVariant;
 
-    private final BillModel billModel = new BillModel();
+    private final SaleModel saleModel = new SaleModel();
     private final ChickBatchModel chickBatchModel = new ChickBatchModel();
 
-    public void saveBatchOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+    public void saveBatchSaleOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String batchId = lblBatchId.getText();
-        String billId = lblBillId.getText();
-        String billVariant = inputBillVariant.getValue();
-        String paidAmount = inputPaidAmount.getText();
-        String paidDate = inputPaidDate.getValue().toString();
+        String saleId = lblSaleId.getText();
+        String totalSale = inputTotalSale.getText();
+        String date = inputSoldDate.getValue().toString();
 
-        BillDto billDto = new BillDto(batchId,billId,billVariant,Double.parseDouble(paidAmount),paidDate);
+        SaleDto saleDto = new SaleDto(batchId,saleId,Double.parseDouble(totalSale),date);
 
-        boolean isSaved = billModel.saveBill(billDto);
+        boolean isSaved = saleModel.saveSale(saleDto);
 
         if (isSaved) {
-            new Alert(Alert.AlertType.INFORMATION, "Bill Saved Successfully").show();
+            new Alert(Alert.AlertType.INFORMATION,"Sale Saved Successfully").show();
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.close();
-        }else {
-            new Alert(Alert.AlertType.ERROR, "Bill Save Failed").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR,"Sale Save Failed").show();
         }
     }
 
@@ -57,16 +54,14 @@ public class AddBillController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            inputBillVariant.getItems().addAll("Current","Water");
-            inputPaidDate.setValue(java.time.LocalDate.now());
+            inputSoldDate.setValue(java.time.LocalDate.now());
             loadNextId();
             loadBatchId();
             ButtonScale.buttonScaling(btnSave);
-            ButtonScale.textFieldScaling(inputPaidAmount);
-
+            ButtonScale.textFieldScaling(inputTotalSale);
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR,"Error in retrieving customer id").show();
             e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in retrieving customer id").show();
         }
     }
 
@@ -80,8 +75,8 @@ public class AddBillController implements Initializable {
         }
     }
 
-    public void loadNextId() throws SQLException, ClassNotFoundException {
-        String nextId = billModel.getNextBillId();
-        lblBillId.setText(nextId);
+    private void loadNextId() throws SQLException, ClassNotFoundException {
+        String nextId = saleModel.getNextSaleId();
+        lblSaleId.setText(nextId);
     }
 }

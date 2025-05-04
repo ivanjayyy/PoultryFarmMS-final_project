@@ -22,13 +22,20 @@ public class WasteManagementModel {
         return CrudUtil.execute("DELETE FROM waste_management WHERE waste_id = ?", wasteId);
     }
 
-    public WasteManagementDto searchWasteManagement(String batchId) throws SQLException, ClassNotFoundException {
+    public ArrayList<WasteManagementDto> searchWasteManagement(String batchId) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM waste_management WHERE batch_id = ?", batchId);
-        if (resultSet.next()) {
-            WasteManagementDto wasteManagementDto = new WasteManagementDto(resultSet.getString(1),resultSet.getString(2),resultSet.getDouble(3),resultSet.getString(4));
-            return wasteManagementDto;
+        ArrayList<WasteManagementDto> wasteManagementDtos = new ArrayList<>();
+
+        while (resultSet.next()) {
+            WasteManagementDto wasteManagementDto = new WasteManagementDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getDouble(3),
+                    resultSet.getString(4)
+            );
+            wasteManagementDtos.add(wasteManagementDto);
         }
-        return null;
+        return wasteManagementDtos;
     }
 
     public ArrayList<WasteManagementDto> getAllWasteManagement() throws SQLException, ClassNotFoundException {

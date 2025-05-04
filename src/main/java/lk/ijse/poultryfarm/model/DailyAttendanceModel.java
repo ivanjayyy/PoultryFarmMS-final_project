@@ -21,13 +21,21 @@ public class DailyAttendanceModel {
         return CrudUtil.execute("DELETE FROM daily_attendance WHERE attendance_id = ?", attendanceId);
     }
 
-    public DailyAttendanceDto searchDailyAttendance(String employeeId) throws SQLException, ClassNotFoundException {
+    public ArrayList<DailyAttendanceDto> searchDailyAttendance(String employeeId) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM daily_attendance WHERE employee_id = ?", employeeId);
-        if (resultSet.next()) {
-            DailyAttendanceDto dailyAttendanceDto = new DailyAttendanceDto(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getBoolean(5));
-            return dailyAttendanceDto;
+        ArrayList<DailyAttendanceDto> dailyAttendanceDtos = new ArrayList<>();
+
+        while (resultSet.next()) {
+            DailyAttendanceDto dailyAttendanceDto = new DailyAttendanceDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getBoolean(5)
+            );
+            dailyAttendanceDtos.add(dailyAttendanceDto);
         }
-        return null;
+        return dailyAttendanceDtos;
     }
 
     public ArrayList<DailyAttendanceDto> getAllDailyAttendance() throws SQLException, ClassNotFoundException {

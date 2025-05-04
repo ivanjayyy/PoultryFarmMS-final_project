@@ -37,8 +37,30 @@ public class EmployeeDetailsPageController implements Initializable {
     public TableColumn<EmployeeDetailsTm,Double> colDailyWage;
 
     private final EmployeeModel employeeModel = new EmployeeModel();
+    public JFXButton btnSalary;
+    public JFXButton btnAttendance;
+
+    public static String selectedEmployeeId;
 
     public void searchEmployeeOnAction(ActionEvent actionEvent) {
+        try {
+            ArrayList<EmployeeDto> employeeDtos = employeeModel.searchEmployee(inputSearch.getText());
+            ObservableList<EmployeeDetailsTm> employeeDetailsTms = FXCollections.observableArrayList();
+            for (EmployeeDto employeeDto : employeeDtos) {
+                EmployeeDetailsTm employeeDetailsTm = new EmployeeDetailsTm(
+                        employeeDto.getEmployeeId(),
+                        employeeDto.getName(),
+                        employeeDto.isFullTime(),
+                        employeeDto.getContact(),
+                        employeeDto.getDailyWage()
+                );
+                employeeDetailsTms.add(employeeDetailsTm);
+            }
+            tblEmployee.setItems(employeeDetailsTms);
+        }catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in retrieving employees").show();
+        }
     }
 
     public void addEmployeeOnAction(ActionEvent actionEvent) {
@@ -57,6 +79,10 @@ public class EmployeeDetailsPageController implements Initializable {
     }
 
     private void resetPage() {
+        btnSalary.setDisable(true);
+        btnAttendance.setDisable(true);
+        btnAdd.setDisable(false);
+
         try {
             loadTableData();
             inputSearch.setText("");
@@ -83,6 +109,19 @@ public class EmployeeDetailsPageController implements Initializable {
     }
 
     public void onClickTable(MouseEvent mouseEvent) {
+        btnSalary.setDisable(false);
+        btnAttendance.setDisable(false);
+        btnAdd.setDisable(true);
+
+        try {
+            EmployeeDetailsTm selectedItem = tblEmployee.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+                selectedEmployeeId = selectedItem.getEmployeeId();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in retrieving selected item").show();
+        }
     }
 
     /**
@@ -91,6 +130,7 @@ public class EmployeeDetailsPageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         colEmployeeId.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colFullTime.setCellValueFactory(new PropertyValueFactory<>("fullTime"));
@@ -102,6 +142,36 @@ public class EmployeeDetailsPageController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in retrieving employees").show();
+        }
+    }
+
+    public void AddSalaryOnAction(ActionEvent actionEvent) {
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/add/AddSalary.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            resetPage();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in opening add salary window").show();
+        }
+    }
+
+    public void AddEmployeeAttendanceOnAction(ActionEvent actionEvent) {
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/add/AddDailyAttendance.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            resetPage();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in opening add daily attendance window").show();
         }
     }
 }

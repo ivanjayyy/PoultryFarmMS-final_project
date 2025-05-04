@@ -1,7 +1,6 @@
 package lk.ijse.poultryfarm.controller.add;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -11,42 +10,40 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
-import lk.ijse.poultryfarm.dto.BillDto;
-import lk.ijse.poultryfarm.model.BillModel;
+import lk.ijse.poultryfarm.dto.WasteManagementDto;
 import lk.ijse.poultryfarm.model.ChickBatchModel;
+import lk.ijse.poultryfarm.model.WasteManagementModel;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddBillController implements Initializable {
+public class AddWasteManagementController implements Initializable {
     public Label lblBatchId;
-    public Label lblBillId;
-    public TextField inputPaidAmount;
-    public DatePicker inputPaidDate;
+    public Label lblWasteId;
+    public TextField inputTotalSale;
+    public DatePicker inputSoldDate;
     public JFXButton btnSave;
-    public JFXComboBox<String> inputBillVariant;
 
-    private final BillModel billModel = new BillModel();
+    private final WasteManagementModel wasteManagementModel = new WasteManagementModel();
     private final ChickBatchModel chickBatchModel = new ChickBatchModel();
 
     public void saveBatchOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String batchId = lblBatchId.getText();
-        String billId = lblBillId.getText();
-        String billVariant = inputBillVariant.getValue();
-        String paidAmount = inputPaidAmount.getText();
-        String paidDate = inputPaidDate.getValue().toString();
+        String wasteId = lblWasteId.getText();
+        String totalSale = inputTotalSale.getText();
+        String date = inputSoldDate.getValue().toString();
 
-        BillDto billDto = new BillDto(batchId,billId,billVariant,Double.parseDouble(paidAmount),paidDate);
+        WasteManagementDto wasteManagementDto = new WasteManagementDto(batchId,wasteId,Double.parseDouble(totalSale),date);
 
-        boolean isSaved = billModel.saveBill(billDto);
+        boolean isSaved = wasteManagementModel.saveWasteManagement(wasteManagementDto);
 
         if (isSaved) {
-            new Alert(Alert.AlertType.INFORMATION, "Bill Saved Successfully").show();
+            new Alert(Alert.AlertType.INFORMATION,"Waste Saved Successfully").show();
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.close();
-        }else {
-            new Alert(Alert.AlertType.ERROR, "Bill Save Failed").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR,"Waste Save Failed").show();
         }
     }
 
@@ -57,12 +54,11 @@ public class AddBillController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            inputBillVariant.getItems().addAll("Current","Water");
-            inputPaidDate.setValue(java.time.LocalDate.now());
+            inputSoldDate.setValue(java.time.LocalDate.now());
             loadNextId();
             loadBatchId();
             ButtonScale.buttonScaling(btnSave);
-            ButtonScale.textFieldScaling(inputPaidAmount);
+            ButtonScale.textFieldScaling(inputTotalSale);
 
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR,"Error in retrieving customer id").show();
@@ -80,8 +76,8 @@ public class AddBillController implements Initializable {
         }
     }
 
-    public void loadNextId() throws SQLException, ClassNotFoundException {
-        String nextId = billModel.getNextBillId();
-        lblBillId.setText(nextId);
+    private void loadNextId() throws SQLException, ClassNotFoundException {
+        String nextId = wasteManagementModel.getNextWasteId();
+        lblWasteId.setText(nextId);
     }
 }

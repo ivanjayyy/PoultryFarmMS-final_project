@@ -25,11 +25,11 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="116.0" prefWidth="1700.0" spacing="50.0">
                <children>
-                  <TextField alignment="CENTER" prefHeight="53.0" prefWidth="988.0" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;">
+                  <TextField fx:id="inputSearch" alignment="CENTER" prefHeight="53.0" prefWidth="988.0" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="24.0" />
                      </font></TextField>
-                  <JFXButton buttonType="RAISED" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="SEARCH" textFill="WHITE">
+                  <JFXButton buttonType="RAISED" onAction="#searchSalaryOnAction" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="SEARCH" textFill="WHITE">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="22.0" />
                      </font>
@@ -43,12 +43,12 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="497.0" prefWidth="1700.0">
                <children>
-                  <TableView prefHeight="497.0" prefWidth="1440.0" style="-fx-background-color: white; -fx-border-color: gray; -fx-background-radius: 20; -fx-border-radius: 20;">
+                  <TableView fx:id="tblSalary" prefHeight="497.0" prefWidth="1440.0" style="-fx-background-color: white; -fx-border-color: gray; -fx-background-radius: 20; -fx-border-radius: 20;">
                      <columns>
-                        <TableColumn prefWidth="238.0" text="Salary ID" />
-                        <TableColumn prefWidth="256.0" text="Employee ID" />
-                        <TableColumn prefWidth="511.0" text="Salary(Rs.)" />
-                        <TableColumn prefWidth="433.0" text="Paid Date" />
+                        <TableColumn fx:id="colSalaryId" prefWidth="238.0" text="Salary ID" />
+                        <TableColumn fx:id="colEmployeeId" prefWidth="256.0" text="Employee ID" />
+                        <TableColumn fx:id="colSalary" prefWidth="511.0" text="Salary(Rs.)" />
+                        <TableColumn fx:id="colDate" prefWidth="433.0" text="Paid Date" />
                      </columns>
                   </TableView>
                </children>

@@ -21,13 +21,21 @@ public class FoodConsumptionModel {
         return CrudUtil.execute("DELETE FROM food_consumption WHERE consumption_id = ?", consumptionId);
     }
 
-    public FoodConsumptionDto searchFoodConsumption(String foodId) throws SQLException, ClassNotFoundException {
+    public ArrayList<FoodConsumptionDto> searchFoodConsumption(String foodId) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM food_consumption WHERE food_id = ?", foodId);
-        if (resultSet.next()) {
-            FoodConsumptionDto foodConsumptionDto = new FoodConsumptionDto(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getDouble(5));
-            return foodConsumptionDto;
+        ArrayList<FoodConsumptionDto> foodConsumptionDtos = new ArrayList<>();
+
+        while (resultSet.next()) {
+            FoodConsumptionDto foodConsumptionDto = new FoodConsumptionDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getDouble(5)
+            );
+            foodConsumptionDtos.add(foodConsumptionDto);
         }
-        return null;
+        return foodConsumptionDtos;
     }
 
     public ArrayList<FoodConsumptionDto> getAllFoodConsumption() throws SQLException, ClassNotFoundException {

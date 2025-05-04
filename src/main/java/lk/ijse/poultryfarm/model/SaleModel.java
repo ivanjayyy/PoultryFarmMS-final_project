@@ -22,13 +22,20 @@ public class SaleModel {
         return CrudUtil.execute("DELETE FROM sale WHERE sale_id = ?", saleId);
     }
 
-    public SaleDto searchSale(String batchId) throws SQLException, ClassNotFoundException {
+    public ArrayList<SaleDto> searchSale(String batchId) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM sale WHERE batch_id = ?", batchId);
-        if (resultSet.next()) {
-            SaleDto saleDto = new SaleDto(resultSet.getString(1),resultSet.getString(2),resultSet.getDouble(3),resultSet.getString(4));
-            return saleDto;
+        ArrayList<SaleDto> saleDtos = new ArrayList<>();
+
+        while (resultSet.next()) {
+            SaleDto saleDto = new SaleDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getDouble(3),
+                    resultSet.getString(4)
+            );
+            saleDtos.add(saleDto);
         }
-        return null;
+        return saleDtos;
     }
 
     public ArrayList<SaleDto> getAllSale() throws SQLException, ClassNotFoundException {

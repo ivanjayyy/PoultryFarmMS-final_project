@@ -21,13 +21,22 @@ public class EmployeeModel {
         return CrudUtil.execute("DELETE FROM employee WHERE employee_id = ?", employeeId);
     }
 
-    public EmployeeDto searchEmployee(String name) throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM employee WHERE name = ?", name);
-        if (resultSet.next()) {
-            EmployeeDto employeeDto = new EmployeeDto(resultSet.getString(1),resultSet.getString(2),resultSet.getBoolean(3),resultSet.getString(4),resultSet.getDouble(5));
-            return employeeDto;
+    public ArrayList<EmployeeDto> searchEmployee(String fullTime) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM employee WHERE full_time = ?", fullTime);
+
+        ArrayList<EmployeeDto> employeeDtos = new ArrayList<>();
+
+        while (resultSet.next()) {
+            EmployeeDto employeeDto = new EmployeeDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getBoolean(3),
+                    resultSet.getString(4),
+                    resultSet.getDouble(5)
+            );
+            employeeDtos.add(employeeDto);
         }
-        return null;
+        return employeeDtos;
     }
 
     public ArrayList<EmployeeDto> getAllEmployee() throws SQLException, ClassNotFoundException {

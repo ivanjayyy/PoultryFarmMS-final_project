@@ -21,13 +21,15 @@ public class ChickStatusModel {
         return CrudUtil.execute("DELETE FROM chick_status WHERE chick_status_id = ?", chickStatusId);
     }
 
-    public ChickStatusDto searchChickStatus(String date) throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM chick_status WHERE date = ?", date);
-        if (resultSet.next()) {
+    public ArrayList<ChickStatusDto> searchChickStatus(String batchId) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM chick_status WHERE batch_id = ?", batchId);
+        ArrayList<ChickStatusDto> chickStatusDtos = new ArrayList<>();
+
+        while (resultSet.next()) {
             ChickStatusDto chickStatusDto = new ChickStatusDto(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getInt(4));
-            return chickStatusDto;
+            chickStatusDtos.add(chickStatusDto);
         }
-        return null;
+        return chickStatusDtos;
     }
 
     public ArrayList<ChickStatusDto> getAllChickStatus() throws SQLException, ClassNotFoundException {

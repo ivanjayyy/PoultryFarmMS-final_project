@@ -21,13 +21,22 @@ public class BillModel {
         return CrudUtil.execute("DELETE FROM bill WHERE bill_id = ?", billId);
     }
 
-    public BillDto searchBill(String billVariant) throws SQLException, ClassNotFoundException {
+    public ArrayList<BillDto> searchBill(String billVariant) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM bill WHERE bill_variant = ?", billVariant);
-        if (resultSet.next()) {
-            BillDto billDto = new BillDto(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getDouble(4),resultSet.getString(5));
-            return billDto;
+
+        ArrayList<BillDto> billDtos = new ArrayList<>();
+
+        while (resultSet.next()) {
+            BillDto billDto = new BillDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getDouble(4),
+                    resultSet.getString(5)
+            );
+            billDtos.add(billDto);
         }
-        return null;
+        return billDtos;
     }
 
     public ArrayList<BillDto> getAllBill() throws SQLException, ClassNotFoundException {

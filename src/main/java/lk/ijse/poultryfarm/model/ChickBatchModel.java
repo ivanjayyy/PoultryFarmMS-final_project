@@ -21,13 +21,21 @@ public class ChickBatchModel {
         return CrudUtil.execute("DELETE FROM chick_batch WHERE batch_id = ?", batchId);
     }
 
-    public ChickBatchDto searchChickBatch(String batchId) throws SQLException, ClassNotFoundException {
+    public ArrayList<ChickBatchDto> searchChickBatch(String batchId) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM chick_batch WHERE batch_id = ?", batchId);
-        if (resultSet.next()) {
-            ChickBatchDto chickBatchDto = new ChickBatchDto(resultSet.getString(1),resultSet.getInt(2),resultSet.getDouble(3),resultSet.getString(4));
-            return chickBatchDto;
+
+        ArrayList<ChickBatchDto> chickBatchDtos = new ArrayList<>();
+
+        while (resultSet.next()) {
+            ChickBatchDto chickBatchDto = new ChickBatchDto(
+                    resultSet.getString(1),
+                    resultSet.getInt(2),
+                    resultSet.getDouble(3),
+                    resultSet.getString(4)
+            );
+            chickBatchDtos.add(chickBatchDto);
         }
-        return null;
+        return chickBatchDtos;
     }
 
     public ArrayList<ChickBatchDto> getAllChickBatch() throws SQLException, ClassNotFoundException {

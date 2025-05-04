@@ -44,6 +44,24 @@ public class BillManagementPageController implements Initializable {
     private final BillModel billModel = new BillModel();
 
     public void searchBillOnAction(ActionEvent actionEvent) {
+        try {
+            ArrayList<BillDto> billDtos = billModel.searchBill(inputSearch.getText());
+            ObservableList<BillManagementTm> billManagementTms = FXCollections.observableArrayList();
+            for (BillDto billDto : billDtos) {
+                BillManagementTm billManagementTm = new BillManagementTm(
+                        billDto.getBatchId(),
+                        billDto.getBillId(),
+                        billDto.getBillVariant(),
+                        billDto.getAmount(),
+                        billDto.getDate()
+                );
+                billManagementTms.add(billManagementTm);
+            }
+            tblBill.setItems(billManagementTms);
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in retrieving bills").show();
+        }
     }
 
     public void onClickTable(MouseEvent mouseEvent) {
@@ -76,6 +94,9 @@ public class BillManagementPageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ButtonScale.buttonScaling(btnAddBill);
+        ButtonScale.buttonScaling(btnSearch);
+
         colBatchId.setCellValueFactory(new PropertyValueFactory<>("batchId"));
         colBillId.setCellValueFactory(new PropertyValueFactory<>("billId"));
         colBillVariant.setCellValueFactory(new PropertyValueFactory<>("billVariant"));
