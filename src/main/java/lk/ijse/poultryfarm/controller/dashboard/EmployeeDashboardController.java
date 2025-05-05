@@ -1,10 +1,12 @@
 package lk.ijse.poultryfarm.controller.dashboard;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.poultryfarm.controller.ButtonScale;
 
 import java.io.IOException;
 import java.net.URL;
@@ -12,6 +14,9 @@ import java.util.ResourceBundle;
 
 public class EmployeeDashboardController implements Initializable {
     public AnchorPane ancEmployeeWindow;
+    public JFXButton btnEmployeeDetails;
+    public JFXButton btnDailyAttendance;
+    public JFXButton btnSalary;
 
     public void goSalaryManagementPageOnAction(ActionEvent actionEvent) {
         navigateTo("/view/employee/SalaryManagementPage.fxml");
@@ -43,5 +48,8 @@ public class EmployeeDashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         navigateTo("/view/employee/EmployeeDetailsPage.fxml");
+        ButtonScale.buttonScaling(btnEmployeeDetails);
+        ButtonScale.buttonScaling(btnDailyAttendance);
+        ButtonScale.buttonScaling(btnSalary);
     }
 }

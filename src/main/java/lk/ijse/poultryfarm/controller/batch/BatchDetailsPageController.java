@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.ChickBatchDto;
 import lk.ijse.poultryfarm.dto.tm.BatchDetailsTm;
 import lk.ijse.poultryfarm.model.ChickBatchModel;
@@ -28,7 +29,7 @@ public class BatchDetailsPageController implements Initializable {
     public JFXButton btnAdd;
 
     public TextField inputSearch;
-    public Label lblTotalBatches;
+    public Label lblTotalDays;
     public Label lblChicksLeft;
     public Label lblChicksDead;
 
@@ -41,6 +42,7 @@ public class BatchDetailsPageController implements Initializable {
     private final ChickBatchModel chickBatchModel = new ChickBatchModel();
     public JFXButton btnSale;
     public JFXButton btnStatus;
+    public JFXButton btnUpdate;
 
 
     /**
@@ -49,6 +51,12 @@ public class BatchDetailsPageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ButtonScale.buttonScaling(btnAdd);
+        ButtonScale.buttonScaling(btnSearch);
+        ButtonScale.buttonScaling(btnSale);
+        ButtonScale.buttonScaling(btnStatus);
+        ButtonScale.buttonScaling(btnUpdate);
+
         colBatchId.setCellValueFactory(new PropertyValueFactory<>("batchId"));
         colTotalChicks.setCellValueFactory(new PropertyValueFactory<>("chickTotal"));
         colPaymentMade.setCellValueFactory(new PropertyValueFactory<>("payment"));
@@ -156,5 +164,8 @@ public class BatchDetailsPageController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in opening add chick status window").show();
         }
+    }
+
+    public void updateBatchDetailsOnAction(ActionEvent actionEvent) {
     }
 }

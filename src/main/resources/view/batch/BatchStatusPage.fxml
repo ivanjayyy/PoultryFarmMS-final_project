@@ -29,12 +29,7 @@
                             <font>
                                 <Font name="Arial Rounded MT Bold" size="24.0" />
                             </font></TextField>
-                        <JFXButton buttonType="RAISED" onAction="#batchStatusSearchOnAction" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="SEARCH" textFill="WHITE">
-                            <font>
-                                <Font name="Arial Rounded MT Bold" size="22.0" />
-                            </font>
-                        </JFXButton>
-                        <JFXButton buttonType="RAISED" layoutX="1122.0" layoutY="69.0" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="CHECK" textFill="WHITE">
+                        <JFXButton fx:id="btnSearch" buttonType="RAISED" onAction="#batchStatusSearchOnAction" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="SEARCH" textFill="WHITE">
                             <font>
                                 <Font name="Arial Rounded MT Bold" size="22.0" />
                             </font>
@@ -43,12 +38,12 @@
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="497.0" prefWidth="1700.0">
                     <children>
-                        <TableView fx:id="tblBatchStatus" prefHeight="497.0" prefWidth="1440.0" style="-fx-background-color: white; -fx-border-color: gray; -fx-background-radius: 20; -fx-border-radius: 20; -fx-font-size:: 16px;">
+                        <TableView fx:id="tblBatchStatus" onMouseClicked="#onClickTable" prefHeight="497.0" prefWidth="1440.0" style="-fx-background-color: white; -fx-border-color: gray; -fx-background-radius: 20; -fx-border-radius: 20; -fx-font-size:: 16px;">
                             <columns>
                                 <TableColumn fx:id="colBatchId" prefWidth="270.0" text="Batch ID" />
                                 <TableColumn fx:id="colStatusId" prefWidth="279.0" text="Chick Status ID" />
                                 <TableColumn fx:id="colDate" prefWidth="530.0" text="Checked Date" />
-                        <TableColumn fx:id="colChickdeaths" prefWidth="359.0" text="Chick Deaths" />
+                        <TableColumn fx:id="colChickDeaths" prefWidth="359.0" text="Chick Deaths" />
                             </columns>
                         </TableView>
                     </children>
@@ -57,12 +52,12 @@
                     <children>
                         <HBox alignment="CENTER" prefHeight="134.0" prefWidth="646.0" spacing="50.0">
                             <children>
-                                <JFXButton buttonType="RAISED" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #c0392b; -fx-background-radius: 20;" text="DELETE" textFill="WHITE">
+                                <JFXButton fx:id="btnDelete" buttonType="RAISED" onAction="#deleteBatchStatusOnAction" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #c0392b; -fx-background-radius: 20;" text="DELETE" textFill="WHITE">
                                     <font>
                                         <Font name="Arial Rounded MT Bold" size="22.0" />
                                     </font>
                                 </JFXButton>
-                                <JFXButton buttonType="RAISED" layoutX="162.0" layoutY="34.0" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #16a085; -fx-background-radius: 20;" text="UPDATE" textFill="WHITE">
+                                <JFXButton fx:id="btnUpdate" buttonType="RAISED" layoutX="162.0" layoutY="34.0" onAction="#updateBatchStatusOnAction" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #16a085; -fx-background-radius: 20;" text="UPDATE" textFill="WHITE">
                                     <font>
                                         <Font name="Arial Rounded MT Bold" size="22.0" />
                                     </font>

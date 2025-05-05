@@ -1,5 +1,6 @@
 package lk.ijse.poultryfarm.controller.employee;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,6 +10,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.SalaryDto;
 import lk.ijse.poultryfarm.dto.tm.SalaryManagementTm;
 import lk.ijse.poultryfarm.model.SalaryModel;
@@ -27,6 +30,9 @@ public class SalaryManagementPageController implements Initializable {
 
     private final SalaryModel salaryModel = new SalaryModel();
     public TextField inputSearch;
+    public JFXButton btnSearch;
+    public JFXButton btnDelete;
+    public JFXButton btnUpdate;
 
     /**
      * @param url
@@ -34,6 +40,10 @@ public class SalaryManagementPageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ButtonScale.buttonScaling(btnDelete);
+        ButtonScale.buttonScaling(btnUpdate);
+        ButtonScale.buttonScaling(btnSearch);
+
         colSalaryId.setCellValueFactory(new PropertyValueFactory<>("salaryId"));
         colEmployeeId.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
         colSalary.setCellValueFactory(new PropertyValueFactory<>("amount"));
@@ -89,5 +99,14 @@ public class SalaryManagementPageController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in retrieving salary management").show();
         }
+    }
+
+    public void onClickTable(MouseEvent mouseEvent) {
+    }
+
+    public void deleteSalaryOnAction(ActionEvent actionEvent) {
+    }
+
+    public void updateSalaryOnAction(ActionEvent actionEvent) {
     }
 }

@@ -60,6 +60,7 @@ public class OwnerAccountController implements Initializable {
                 inputEmail.setEditable(true);
                 btnUpdateOwner.setText("UPDATE");
                 btnUpdateOwner.setStyle("-fx-background-color: #16a085");
+
                 ButtonScale.buttonScaling(btnUpdateOwner);
                 ButtonScale.textFieldScaling(inputFullName);
                 ButtonScale.textFieldScaling(inputUsername);

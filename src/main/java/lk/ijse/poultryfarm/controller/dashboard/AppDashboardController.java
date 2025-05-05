@@ -53,7 +53,7 @@ public class AppDashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        navigateTo("/view/owner/LoginWindow.fxml");
+        navigateTo("/view/dashboard/BatchDashboard.fxml");
         ButtonScale.buttonScaling(btnBatch);
         ButtonScale.buttonScaling(btnFood);
         ButtonScale.buttonScaling(btnBill);

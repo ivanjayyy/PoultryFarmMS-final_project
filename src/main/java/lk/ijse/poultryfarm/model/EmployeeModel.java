@@ -10,11 +10,11 @@ import java.util.ArrayList;
 public class EmployeeModel {
 
     public boolean saveEmployee(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("INSERT INTO employee VALUES (?,?,?,?,?)", employeeDto.getEmployeeId(),employeeDto.getName(),employeeDto.isFullTime(),employeeDto.getContact(),employeeDto.getDailyWage());
+        return CrudUtil.execute("INSERT INTO employee VALUES (?,?,?,?,?)", employeeDto.getEmployeeId(),employeeDto.getName(),employeeDto.getFullTime(),employeeDto.getContact(),employeeDto.getDailyWage());
     }
 
     public boolean updateEmployee(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("UPDATE employee SET name = ?, full_time = ?, contact = ?, daily_wage = ? WHERE employee_id = ?", employeeDto.getName(),employeeDto.isFullTime(),employeeDto.getContact(),employeeDto.getDailyWage(),employeeDto.getEmployeeId());
+        return CrudUtil.execute("UPDATE employee SET name = ?, full_time = ?, contact = ?, daily_wage = ? WHERE employee_id = ?", employeeDto.getName(),employeeDto.getFullTime(),employeeDto.getContact(),employeeDto.getDailyWage(),employeeDto.getEmployeeId());
     }
 
     public boolean deleteEmployee(String employeeId) throws SQLException, ClassNotFoundException {
@@ -30,7 +30,7 @@ public class EmployeeModel {
             EmployeeDto employeeDto = new EmployeeDto(
                     resultSet.getString(1),
                     resultSet.getString(2),
-                    resultSet.getBoolean(3),
+                    resultSet.getString(3),
                     resultSet.getString(4),
                     resultSet.getDouble(5)
             );
@@ -48,7 +48,7 @@ public class EmployeeModel {
             EmployeeDto employeeDto = new EmployeeDto(
                     resultSet.getString(1),
                     resultSet.getString(2),
-                    resultSet.getBoolean(3),
+                    resultSet.getString(3),
                     resultSet.getString(4),
                     resultSet.getDouble(5)
             );

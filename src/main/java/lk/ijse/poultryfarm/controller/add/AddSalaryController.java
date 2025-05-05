@@ -55,6 +55,7 @@ public class AddSalaryController implements Initializable {
             inputDate.setValue(java.time.LocalDate.now());
             loadNextId();
             ButtonScale.buttonScaling(btnSave);
+            ButtonScale.textFieldScaling(inputAmount);
             lblEmployeeId.setText(EmployeeDetailsPageController.selectedEmployeeId);
         } catch (Exception e) {
             e.printStackTrace();

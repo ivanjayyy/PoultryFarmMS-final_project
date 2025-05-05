@@ -36,6 +36,9 @@ public class WasteManagementPageController implements Initializable {
 
     private final WasteManagementModel wasteManagementModel = new WasteManagementModel();
     public TextField inputSearch;
+    public JFXButton btnSearch;
+    public JFXButton btnDelete;
+    public JFXButton btnUpdate;
 
     public void addWasteOnAction(ActionEvent actionEvent) throws IOException {
         try {
@@ -91,6 +94,9 @@ public class WasteManagementPageController implements Initializable {
         colSoldDate.setCellValueFactory(new PropertyValueFactory<>("date"));
 
         ButtonScale.buttonScaling(btnAdd);
+        ButtonScale.buttonScaling(btnSearch);
+        ButtonScale.buttonScaling(btnDelete);
+        ButtonScale.buttonScaling(btnUpdate);
 
         try {
             resetPage();
@@ -118,5 +124,11 @@ public class WasteManagementPageController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in retrieving batches").show();
         }
+    }
+
+    public void deleteWasteOnAction(ActionEvent actionEvent) {
+    }
+
+    public void updateWasteOnAction(ActionEvent actionEvent) {
     }
 }

@@ -1,5 +1,6 @@
 package lk.ijse.poultryfarm.controller.food;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,6 +10,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.FoodPaymentDto;
 import lk.ijse.poultryfarm.dto.tm.FoodPaymentTm;
 import lk.ijse.poultryfarm.model.FoodPaymentModel;
@@ -28,6 +30,7 @@ public class FoodPaymentPageController implements Initializable {
 
     private final FoodPaymentModel foodPaymentModel = new FoodPaymentModel();
     public TextField inputSearch;
+    public JFXButton btnSearch;
 
     /**
      * @param url
@@ -35,6 +38,8 @@ public class FoodPaymentPageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ButtonScale.buttonScaling(btnSearch);
+
         colPaymentId.setCellValueFactory(new PropertyValueFactory<>("foodPaymentId"));
         colFoodId.setCellValueFactory(new PropertyValueFactory<>("foodId"));
         colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));

@@ -16,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.EmployeeDto;
 import lk.ijse.poultryfarm.dto.tm.EmployeeDetailsTm;
 import lk.ijse.poultryfarm.model.EmployeeModel;
@@ -32,15 +33,21 @@ public class EmployeeDetailsPageController implements Initializable {
     public TableView<EmployeeDetailsTm> tblEmployee;
     public TableColumn<EmployeeDetailsTm,String> colEmployeeId;
     public TableColumn<EmployeeDetailsTm,String> colName;
-    public TableColumn<EmployeeDetailsTm,Boolean> colFullTime;
+    public TableColumn<EmployeeDetailsTm,String> colFullTime;
     public TableColumn<EmployeeDetailsTm,String> colContact;
     public TableColumn<EmployeeDetailsTm,Double> colDailyWage;
 
     private final EmployeeModel employeeModel = new EmployeeModel();
     public JFXButton btnSalary;
     public JFXButton btnAttendance;
+    public JFXButton btnUpdate;
 
     public static String selectedEmployeeId;
+    public static String selectedEmployeeName;
+    public static String selectedEmployeeFullTime;
+    public static String selectedEmployeeContact;
+    public static String selectedEmployeeDailyWage;
+    public static boolean updateEmployee;
 
     public void searchEmployeeOnAction(ActionEvent actionEvent) {
         try {
@@ -50,7 +57,7 @@ public class EmployeeDetailsPageController implements Initializable {
                 EmployeeDetailsTm employeeDetailsTm = new EmployeeDetailsTm(
                         employeeDto.getEmployeeId(),
                         employeeDto.getName(),
-                        employeeDto.isFullTime(),
+                        employeeDto.getFullTime(),
                         employeeDto.getContact(),
                         employeeDto.getDailyWage()
                 );
@@ -82,6 +89,7 @@ public class EmployeeDetailsPageController implements Initializable {
         btnSalary.setDisable(true);
         btnAttendance.setDisable(true);
         btnAdd.setDisable(false);
+        btnUpdate.setDisable(true);
 
         try {
             loadTableData();
@@ -99,7 +107,7 @@ public class EmployeeDetailsPageController implements Initializable {
             EmployeeDetailsTm employeeDetailsTm = new EmployeeDetailsTm(
                     employeeDto.getEmployeeId(),
                     employeeDto.getName(),
-                    employeeDto.isFullTime(),
+                    employeeDto.getFullTime(),
                     employeeDto.getContact(),
                     employeeDto.getDailyWage()
             );
@@ -109,14 +117,19 @@ public class EmployeeDetailsPageController implements Initializable {
     }
 
     public void onClickTable(MouseEvent mouseEvent) {
-        btnSalary.setDisable(false);
-        btnAttendance.setDisable(false);
-        btnAdd.setDisable(true);
-
         try {
             EmployeeDetailsTm selectedItem = tblEmployee.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
+                btnSalary.setDisable(false);
+                btnAttendance.setDisable(false);
+                btnAdd.setDisable(true);
+                btnUpdate.setDisable(false);
+
                 selectedEmployeeId = selectedItem.getEmployeeId();
+                selectedEmployeeName = selectedItem.getName();
+                selectedEmployeeFullTime = selectedItem.getFullTime();
+                selectedEmployeeContact = selectedItem.getContact();
+                selectedEmployeeDailyWage = String.valueOf(selectedItem.getDailyWage());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -130,6 +143,11 @@ public class EmployeeDetailsPageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ButtonScale.buttonScaling(btnAdd);
+        ButtonScale.buttonScaling(btnSearch);
+        ButtonScale.buttonScaling(btnSalary);
+        ButtonScale.buttonScaling(btnAttendance);
+        ButtonScale.buttonScaling(btnUpdate);
 
         colEmployeeId.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -173,5 +191,23 @@ public class EmployeeDetailsPageController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in opening add daily attendance window").show();
         }
+    }
+
+    public void updateEmployeeOnAction(ActionEvent actionEvent) {
+        updateEmployee = true;
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/add/AddEmployee.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            resetPage();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in opening update employee window").show();
+        }
+        EmployeeDetailsPageController.updateEmployee = false;
     }
 }

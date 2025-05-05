@@ -1,5 +1,6 @@
 package lk.ijse.poultryfarm.controller.employee;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,6 +10,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.DailyAttendanceDto;
 import lk.ijse.poultryfarm.dto.tm.EmployeeAttendanceTm;
 import lk.ijse.poultryfarm.model.DailyAttendanceModel;
@@ -28,6 +30,7 @@ public class EmployeeAttendancePageController implements Initializable {
 
     private final DailyAttendanceModel dailyAttendanceModel = new DailyAttendanceModel();
     public TextField inputSearch;
+    public JFXButton btnSearch;
 
     /**
      * @param url
@@ -35,6 +38,8 @@ public class EmployeeAttendancePageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ButtonScale.buttonScaling(btnSearch);
+
         colBatchId.setCellValueFactory(new PropertyValueFactory<>("batchId"));
         colAttendanceId.setCellValueFactory(new PropertyValueFactory<>("attendanceId"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));

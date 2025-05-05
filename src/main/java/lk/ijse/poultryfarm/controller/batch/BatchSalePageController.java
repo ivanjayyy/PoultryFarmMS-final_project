@@ -1,5 +1,6 @@
 package lk.ijse.poultryfarm.controller.batch;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,6 +10,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.SaleDto;
 import lk.ijse.poultryfarm.dto.tm.BatchSaleTm;
 import lk.ijse.poultryfarm.model.SaleModel;
@@ -27,6 +30,9 @@ public class BatchSalePageController implements Initializable {
 
     private final SaleModel saleModel = new SaleModel();
     public TextField inputSearch;
+    public JFXButton btnSearch;
+    public JFXButton btnDelete;
+    public JFXButton btnUpdate;
 
     /**
      * @param url
@@ -34,6 +40,10 @@ public class BatchSalePageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ButtonScale.buttonScaling(btnDelete);
+        ButtonScale.buttonScaling(btnUpdate);
+        ButtonScale.buttonScaling(btnSearch);
+
         colBatchId.setCellValueFactory(new PropertyValueFactory<>("batchId"));
         colSaleId.setCellValueFactory(new PropertyValueFactory<>("saleId"));
         colAmount.setCellValueFactory(new PropertyValueFactory<>("totalSale"));
@@ -90,5 +100,14 @@ public class BatchSalePageController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in retrieving batches").show();
         }
+    }
+
+    public void onClickTable(MouseEvent mouseEvent) {
+    }
+
+    public void deleteBatchSaleOnAction(ActionEvent actionEvent) {
+    }
+
+    public void updateBatchSaleOnAction(ActionEvent actionEvent) {
     }
 }

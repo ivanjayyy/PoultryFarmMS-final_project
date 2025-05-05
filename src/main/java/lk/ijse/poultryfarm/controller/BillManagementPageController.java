@@ -96,6 +96,8 @@ public class BillManagementPageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ButtonScale.buttonScaling(btnAddBill);
         ButtonScale.buttonScaling(btnSearch);
+        ButtonScale.buttonScaling(btnDelete);
+        ButtonScale.buttonScaling(btnUpdate);
 
         colBatchId.setCellValueFactory(new PropertyValueFactory<>("batchId"));
         colBillId.setCellValueFactory(new PropertyValueFactory<>("billId"));

@@ -9,6 +9,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import lk.ijse.poultryfarm.controller.ButtonScale;
+import lk.ijse.poultryfarm.controller.employee.EmployeeDetailsPageController;
 import lk.ijse.poultryfarm.dto.EmployeeDto;
 import lk.ijse.poultryfarm.model.EmployeeModel;
 
@@ -19,7 +21,7 @@ import java.util.ResourceBundle;
 public class AddEmployeeController implements Initializable {
     public Label lblEmployeeId;
     public TextField inputName;
-    public JFXComboBox<Boolean> inputEmployeeType;
+    public JFXComboBox<String> inputEmployeeType;
     public TextField inputContact;
     public TextField inputDailyWage;
     public JFXButton btnSave;
@@ -29,21 +31,39 @@ public class AddEmployeeController implements Initializable {
     public void saveBatchOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String employeeId = lblEmployeeId.getText();
         String name = inputName.getText();
-        String fullTime = inputEmployeeType.getValue().toString();
+        String fullTime = inputEmployeeType.getValue();
         String contact = inputContact.getText();
         String dailyWage = inputDailyWage.getText();
 
-        EmployeeDto employeeDto = new EmployeeDto(employeeId,name,Boolean.parseBoolean(fullTime),contact,Double.parseDouble(dailyWage));
+        EmployeeDto employeeDto = new EmployeeDto(employeeId,name,fullTime,contact,Double.parseDouble(dailyWage));
 
-        boolean isSaved = employeeModel.saveEmployee(employeeDto);
+        if(EmployeeDetailsPageController.updateEmployee){
+            boolean isSaved = employeeModel.updateEmployee(employeeDto);
 
-        if (isSaved) {
-            new Alert(Alert.AlertType.INFORMATION,"Employee Saved Successfully").show();
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.close();
-        } else {
-            new Alert(Alert.AlertType.ERROR,"Employee Save Failed").show();
+            if(isSaved){
+                new Alert(Alert.AlertType.INFORMATION,"Employee has been updated successfully").show();
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.close();
+
+                btnSave.setText("SAVE");
+
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Employee could not be updated").show();
+            }
+
+        }else {
+            boolean isSaved = employeeModel.saveEmployee(employeeDto);
+
+            if (isSaved) {
+                new Alert(Alert.AlertType.INFORMATION, "Employee Saved Successfully").show();
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.close();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Employee Save Failed").show();
+            }
         }
+
+        reset();
     }
 
     /**
@@ -53,12 +73,36 @@ public class AddEmployeeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            inputEmployeeType.getItems().addAll(true, false);
+            reset();
+            inputEmployeeType.getItems().addAll("Full Time","Temporary");
             loadNextId();
+            ButtonScale.buttonScaling(btnSave);
+            ButtonScale.textFieldScaling(inputContact);
+            ButtonScale.textFieldScaling(inputDailyWage);
+            ButtonScale.textFieldScaling(inputName);
+
+            if(EmployeeDetailsPageController.updateEmployee){
+                lblEmployeeId.setText(EmployeeDetailsPageController.selectedEmployeeId);
+                inputName.setText(EmployeeDetailsPageController.selectedEmployeeName);
+                inputEmployeeType.setValue(EmployeeDetailsPageController.selectedEmployeeFullTime);
+                inputContact.setText(EmployeeDetailsPageController.selectedEmployeeContact);
+                inputDailyWage.setText(EmployeeDetailsPageController.selectedEmployeeDailyWage);
+
+                btnSave.setText("UPDATE");
+            }
+
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR,"Error in retrieving employee id").show();
             e.printStackTrace();
         }
+    }
+
+    private void reset() {
+        lblEmployeeId.setText("");
+        inputName.setText("");
+        inputEmployeeType.setValue("");
+        inputContact.setText("");
+        inputDailyWage.setText("");
     }
 
     private void loadNextId() throws SQLException, ClassNotFoundException {

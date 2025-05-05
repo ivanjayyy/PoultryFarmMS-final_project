@@ -4,6 +4,7 @@ module lk.ijse.poultryfarm {
     requires com.jfoenix;
     requires javafx.controls;
     requires static lombok;
+    requires java.desktop;
 
     exports lk.ijse.poultryfarm;
     opens lk.ijse.poultryfarm.controller to javafx.fxml;

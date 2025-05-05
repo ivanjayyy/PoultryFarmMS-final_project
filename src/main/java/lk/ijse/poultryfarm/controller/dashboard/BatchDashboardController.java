@@ -1,10 +1,12 @@
 package lk.ijse.poultryfarm.controller.dashboard;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.poultryfarm.controller.ButtonScale;
 
 import java.io.IOException;
 import java.net.URL;
@@ -13,6 +15,9 @@ import java.util.ResourceBundle;
 public class BatchDashboardController implements Initializable {
 
     public AnchorPane ancBatchWindow;
+    public JFXButton btnBatchDetails;
+    public JFXButton btnBatchStatus;
+    public JFXButton btnBatchSale;
 
     public void goBatchSalePageOnAction(ActionEvent actionEvent) {
         navigateTo("/view/batch/BatchSalePage.fxml");
@@ -44,6 +49,9 @@ public class BatchDashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         navigateTo("/view/batch/BatchDetailsPage.fxml");
+        ButtonScale.buttonScaling(btnBatchDetails);
+        ButtonScale.buttonScaling(btnBatchStatus);
+        ButtonScale.buttonScaling(btnBatchSale);
     }
 
 }

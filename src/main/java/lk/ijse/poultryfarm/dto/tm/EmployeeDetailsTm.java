@@ -11,7 +11,7 @@ import lombok.*;
 public class EmployeeDetailsTm {
         private String employeeId;
         private String name;
-        private boolean fullTime;
+        private String fullTime;
         private String contact;
         private double dailyWage;
 }

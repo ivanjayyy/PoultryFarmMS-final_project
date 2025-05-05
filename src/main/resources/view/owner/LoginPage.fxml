@@ -14,7 +14,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="940.0" prefWidth="1920.0" style="-fx-background-color: #e67e22;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.poultryfarm.controller.owner.LoginPageController">
    <children>
-      <VBox alignment="CENTER" layoutX="544.0" layoutY="44.0" prefHeight="940.0" prefWidth="1920.0" style="-fx-background-color: white; -fx-background-radius: 100;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" layoutX="544.0" layoutY="44.0" prefHeight="940.0" prefWidth="1920.0" style="-fx-background-color: white; -fx-background-radius: 100;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
          <children>
             <VBox alignment="CENTER" prefHeight="555.0" prefWidth="1920.0">
                <children>

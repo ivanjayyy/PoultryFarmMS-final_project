@@ -9,6 +9,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.ChickBatchDto;
 import lk.ijse.poultryfarm.model.ChickBatchModel;
 
@@ -51,6 +52,10 @@ public class AddChickBatchController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            ButtonScale.buttonScaling(btnSave);
+            ButtonScale.textFieldScaling(inputPaymentMade);
+            ButtonScale.textFieldScaling(inputTotalChicks);
+
             inputArrivedDate.setValue(java.time.LocalDate.now());
             loadNextId();
         } catch (SQLException | ClassNotFoundException e) {

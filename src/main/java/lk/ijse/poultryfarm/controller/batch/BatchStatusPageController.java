@@ -1,5 +1,6 @@
 package lk.ijse.poultryfarm.controller.batch;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,6 +10,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.ChickBatchDto;
 import lk.ijse.poultryfarm.dto.ChickStatusDto;
 import lk.ijse.poultryfarm.dto.tm.BatchStatusTm;
@@ -24,10 +27,13 @@ public class BatchStatusPageController implements Initializable {
     public TableColumn<BatchStatusTm,String> colBatchId;
     public TableColumn<BatchStatusTm,String> colStatusId;
     public TableColumn<BatchStatusTm,String> colDate;
-    public TableColumn<BatchStatusTm,Integer> colChickdeaths;
+    public TableColumn<BatchStatusTm,Integer> colChickDeaths;
 
     private final ChickStatusModel chickStatusModel = new ChickStatusModel();
     public TextField inputSearch;
+    public JFXButton btnSearch;
+    public JFXButton btnDelete;
+    public JFXButton btnUpdate;
 
     /**
      * @param url
@@ -35,10 +41,14 @@ public class BatchStatusPageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ButtonScale.buttonScaling(btnDelete);
+        ButtonScale.buttonScaling(btnUpdate);
+        ButtonScale.buttonScaling(btnSearch);
+
         colBatchId.setCellValueFactory(new PropertyValueFactory<>("batchId"));
         colStatusId.setCellValueFactory(new PropertyValueFactory<>("chickStatusId"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
-        colChickdeaths.setCellValueFactory(new PropertyValueFactory<>("chicksDead"));
+        colChickDeaths.setCellValueFactory(new PropertyValueFactory<>("chicksDead"));
 
         try {
             resetPage();
@@ -92,5 +102,14 @@ public class BatchStatusPageController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in retrieving batches").show();
         }
+    }
+
+    public void onClickTable(MouseEvent mouseEvent) {
+    }
+
+    public void deleteBatchStatusOnAction(ActionEvent actionEvent) {
+    }
+
+    public void updateBatchStatusOnAction(ActionEvent actionEvent) {
     }
 }
