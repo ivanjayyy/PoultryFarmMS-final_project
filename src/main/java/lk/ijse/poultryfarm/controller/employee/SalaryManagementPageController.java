@@ -4,13 +4,15 @@ import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.SalaryDto;
 import lk.ijse.poultryfarm.dto.tm.SalaryManagementTm;
@@ -19,6 +21,7 @@ import lk.ijse.poultryfarm.model.SalaryModel;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class SalaryManagementPageController implements Initializable {
@@ -59,6 +62,9 @@ public class SalaryManagementPageController implements Initializable {
 
     private void resetPage() {
         try {
+            btnDelete.setDisable(true);
+            btnUpdate.setDisable(true);
+
             loadTableData();
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,12 +107,66 @@ public class SalaryManagementPageController implements Initializable {
         }
     }
 
+    public static String selectedSalaryId;
+    public static String selectedEmployeeId;
+    public static double selectedSalary;
+    public static String selectedDate;
+
     public void onClickTable(MouseEvent mouseEvent) {
+        SalaryManagementTm selectedItem = tblSalary.getSelectionModel().getSelectedItem();
+        try{
+            if (selectedItem != null) {
+                selectedSalaryId = selectedItem.getSalaryId();
+                selectedEmployeeId = selectedItem.getEmployeeId();
+                selectedSalary = selectedItem.getAmount();
+                selectedDate = selectedItem.getDate();
+
+                btnDelete.setDisable(false);
+                btnUpdate.setDisable(false);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in retrieving salary management").show();
+        }
     }
 
     public void deleteSalaryOnAction(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete?", ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.YES) {
+            try{
+                boolean isDeleted = salaryModel.deleteSalary(selectedSalaryId);
+
+                if(isDeleted){
+                    new Alert(Alert.AlertType.INFORMATION,"Employee salary deleted successfully").show();
+                }else {
+                    new Alert(Alert.AlertType.ERROR,"Error in deleting employee salary.");
+                }
+                resetPage();
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR,"Error in deleting employee salary.");
+            }
+        }
     }
 
+    public static boolean updateSalary;
+
     public void updateSalaryOnAction(ActionEvent actionEvent) {
+        updateSalary = true;
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/add/AddSalary.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            resetPage();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in opening add salary window").show();
+        }
+        updateSalary = false;
     }
 }

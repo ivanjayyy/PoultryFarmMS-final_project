@@ -18,13 +18,18 @@ import lk.ijse.poultryfarm.dto.ChickBatchDto;
 import lk.ijse.poultryfarm.dto.tm.BatchDetailsTm;
 import lk.ijse.poultryfarm.model.ChickBatchModel;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class BatchDetailsPageController implements Initializable {
+    public static boolean updateChickBatch;
+    public static String selectedBatchId;
+    public static String selectedBatchDate;
+    public static int selectedBatchTotalChicks;
+    public static double selectedBatchPayment;
+
     public JFXButton btnSearch;
     public JFXButton btnAdd;
 
@@ -44,13 +49,17 @@ public class BatchDetailsPageController implements Initializable {
     public JFXButton btnStatus;
     public JFXButton btnUpdate;
 
-
     /**
      * @param url
      * @param resourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        btnUpdate.setDisable(true);
+        btnSale.setDisable(false);
+        btnStatus.setDisable(false);
+        btnAdd.setDisable(false);
+
         ButtonScale.buttonScaling(btnAdd);
         ButtonScale.buttonScaling(btnSearch);
         ButtonScale.buttonScaling(btnSale);
@@ -134,6 +143,18 @@ public class BatchDetailsPageController implements Initializable {
     }
 
     public void onClickTable(MouseEvent mouseEvent) {
+        BatchDetailsTm selectedItem = tblBatchDetails.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            selectedBatchId = selectedItem.getBatchId();
+            selectedBatchTotalChicks = selectedItem.getChickTotal();
+            selectedBatchPayment = selectedItem.getPayment();
+            selectedBatchDate = selectedItem.getDate();
+
+            btnUpdate.setDisable(false);
+            btnSale.setDisable(true);
+            btnAdd.setDisable(true);
+            btnStatus.setDisable(true);
+        }
     }
 
     public void addBatchSaleOnAction(ActionEvent actionEvent) {
@@ -167,5 +188,19 @@ public class BatchDetailsPageController implements Initializable {
     }
 
     public void updateBatchDetailsOnAction(ActionEvent actionEvent) {
+        updateChickBatch = true;
+        try{
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/add/AddChickBatch.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            resetPage();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in opening add batch window").show();
+        }
+        updateChickBatch = false;
     }
 }

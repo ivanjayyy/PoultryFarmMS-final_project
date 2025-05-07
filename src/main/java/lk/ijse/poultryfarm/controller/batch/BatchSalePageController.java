@@ -4,13 +4,15 @@ import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.SaleDto;
 import lk.ijse.poultryfarm.dto.tm.BatchSaleTm;
@@ -19,9 +21,16 @@ import lk.ijse.poultryfarm.model.SaleModel;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class BatchSalePageController implements Initializable {
+    public static String selectedBatchId;
+    public static String selectedBatchDate;
+    public static String selectedBatchTotalSale;
+    public static String selectedSaleId;
+    public static boolean updateSale;
+
     public TableView<BatchSaleTm> tblSale;
     public TableColumn<BatchSaleTm,String> colBatchId;
     public TableColumn<BatchSaleTm,String> colSaleId;
@@ -48,6 +57,9 @@ public class BatchSalePageController implements Initializable {
         colSaleId.setCellValueFactory(new PropertyValueFactory<>("saleId"));
         colAmount.setCellValueFactory(new PropertyValueFactory<>("totalSale"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+        btnDelete.setDisable(true);
+        btnUpdate.setDisable(true);
 
         try {
             resetPage();
@@ -103,11 +115,58 @@ public class BatchSalePageController implements Initializable {
     }
 
     public void onClickTable(MouseEvent mouseEvent) {
+        try{
+            BatchSaleTm selectedItem = tblSale.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+                selectedBatchId = selectedItem.getBatchId();
+                selectedBatchDate = selectedItem.getDate();
+                selectedBatchTotalSale = String.valueOf(selectedItem.getTotalSale());
+                selectedSaleId = selectedItem.getSaleId();
+
+                btnDelete.setDisable(false);
+                btnUpdate.setDisable(false);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in retrieving batches").show();
+        }
     }
 
     public void deleteBatchSaleOnAction(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete?", ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.YES) {
+            try {
+                boolean isDeleted = saleModel.deleteSale(selectedSaleId);
+
+                if (isDeleted) {
+                    new Alert(Alert.AlertType.INFORMATION,"Batch sale deleted successfully").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR,"Error in deleting batch sale").show();
+                }
+                resetPage();
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR,"Error in deleting batch sale").show();
+            }
+        }
     }
 
     public void updateBatchSaleOnAction(ActionEvent actionEvent) {
+        updateSale = true;
+        try{
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/add/AddSale.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            resetPage();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in opening add sale window").show();
+        }
+        updateSale = false;
     }
 }

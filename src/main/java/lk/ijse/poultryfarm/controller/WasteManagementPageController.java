@@ -8,10 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
@@ -24,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class WasteManagementPageController implements Initializable {
@@ -57,6 +55,9 @@ public class WasteManagementPageController implements Initializable {
 
     private void resetPage() {
        try {
+           btnDelete.setDisable(true);
+           btnUpdate.setDisable(true);
+           btnAdd.setDisable(false);
             loadTableData();
         } catch (Exception e) {
            e.printStackTrace();
@@ -79,7 +80,29 @@ public class WasteManagementPageController implements Initializable {
         tblWaste.setItems(wasteManagementTms);
     }
 
+    public static String selectedBatchId;
+    public static String selectedWasteId;
+    public static double selectedWasteAmount;
+    public static String selectedWasteDate;
+    public static boolean updateWaste;
+
     public void onClickTable(MouseEvent mouseEvent) {
+        btnAdd.setDisable(true);
+        btnDelete.setDisable(false);
+        btnUpdate.setDisable(false);
+
+        WasteManagementTm selectedItem = tblWaste.getSelectionModel().getSelectedItem();
+        try {
+            if (selectedItem != null) {
+                selectedBatchId = selectedItem.getBatchId();
+                selectedWasteId = selectedItem.getWasteId();
+                selectedWasteAmount = selectedItem.getTotalSale();
+                selectedWasteDate = selectedItem.getDate();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in retrieving batches").show();
+        }
     }
 
     /**
@@ -127,8 +150,42 @@ public class WasteManagementPageController implements Initializable {
     }
 
     public void deleteWasteOnAction(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete?", ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.YES) {
+            try {
+                boolean isDeleted = wasteManagementModel.deleteWasteManagement(selectedWasteId);
+
+                if (isDeleted) {
+                    new Alert(Alert.AlertType.INFORMATION,"Waste deleted successfully").show();
+                }else {
+                    new Alert(Alert.AlertType.ERROR,"Error in deleting waste").show();
+                }
+                resetPage();
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR,"Error in deleting batch sale").show();
+            }
+        }
     }
 
     public void updateWasteOnAction(ActionEvent actionEvent) {
+        updateWaste = true;
+
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/add/AddWasteManagement.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            resetPage();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in opening add waste management window").show();
+        }
+
+        updateWaste = false;
     }
 }

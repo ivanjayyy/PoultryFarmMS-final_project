@@ -38,9 +38,9 @@ public class AddEmployeeController implements Initializable {
         EmployeeDto employeeDto = new EmployeeDto(employeeId,name,fullTime,contact,Double.parseDouble(dailyWage));
 
         if(EmployeeDetailsPageController.updateEmployee){
-            boolean isSaved = employeeModel.updateEmployee(employeeDto);
+            boolean isUpdated = employeeModel.updateEmployee(employeeDto);
 
-            if(isSaved){
+            if(isUpdated){
                 new Alert(Alert.AlertType.INFORMATION,"Employee has been updated successfully").show();
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                 stage.close();

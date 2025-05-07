@@ -10,12 +10,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
+import lk.ijse.poultryfarm.controller.WasteManagementPageController;
 import lk.ijse.poultryfarm.dto.WasteManagementDto;
 import lk.ijse.poultryfarm.model.ChickBatchModel;
 import lk.ijse.poultryfarm.model.WasteManagementModel;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class AddWasteManagementController implements Initializable {
@@ -36,14 +38,26 @@ public class AddWasteManagementController implements Initializable {
 
         WasteManagementDto wasteManagementDto = new WasteManagementDto(batchId,wasteId,Double.parseDouble(totalSale),date);
 
-        boolean isSaved = wasteManagementModel.saveWasteManagement(wasteManagementDto);
+        if(WasteManagementPageController.updateWaste){
+            boolean isUpdate = wasteManagementModel.updateWasteManagement(wasteManagementDto);
 
-        if (isSaved) {
-            new Alert(Alert.AlertType.INFORMATION,"Waste Saved Successfully").show();
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.close();
+            if(isUpdate){
+                new Alert(Alert.AlertType.INFORMATION,"Waste Updated Successfully").show();
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.close();
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Waste Update Failed").show();
+            }
         } else {
-            new Alert(Alert.AlertType.ERROR,"Waste Save Failed").show();
+            boolean isSaved = wasteManagementModel.saveWasteManagement(wasteManagementDto);
+
+            if (isSaved) {
+                new Alert(Alert.AlertType.INFORMATION, "Waste Saved Successfully").show();
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.close();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Waste Save Failed").show();
+            }
         }
     }
 
@@ -54,11 +68,21 @@ public class AddWasteManagementController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            btnSave.setText("SAVE");
             inputSoldDate.setValue(java.time.LocalDate.now());
             loadNextId();
             loadBatchId();
             ButtonScale.buttonScaling(btnSave);
             ButtonScale.textFieldScaling(inputTotalSale);
+
+            if(WasteManagementPageController.updateWaste){
+                lblBatchId.setText(WasteManagementPageController.selectedBatchId);
+                lblWasteId.setText(WasteManagementPageController.selectedWasteId);
+                inputSoldDate.setValue(LocalDate.parse(WasteManagementPageController.selectedWasteDate));
+                inputTotalSale.setText(String.valueOf(WasteManagementPageController.selectedWasteAmount));
+
+                btnSave.setText("UPDATE");
+            }
 
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR,"Error in retrieving customer id").show();

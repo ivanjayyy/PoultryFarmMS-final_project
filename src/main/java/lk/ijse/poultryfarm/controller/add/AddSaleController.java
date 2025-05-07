@@ -10,12 +10,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
+import lk.ijse.poultryfarm.controller.batch.BatchDetailsPageController;
+import lk.ijse.poultryfarm.controller.batch.BatchSalePageController;
 import lk.ijse.poultryfarm.dto.SaleDto;
 import lk.ijse.poultryfarm.model.ChickBatchModel;
 import lk.ijse.poultryfarm.model.SaleModel;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class AddSaleController implements Initializable {
@@ -36,14 +39,26 @@ public class AddSaleController implements Initializable {
 
         SaleDto saleDto = new SaleDto(batchId,saleId,Double.parseDouble(totalSale),date);
 
-        boolean isSaved = saleModel.saveSale(saleDto);
+        if(BatchSalePageController.updateSale){
+            boolean isUpdated = saleModel.updateSale(saleDto);
 
-        if (isSaved) {
-            new Alert(Alert.AlertType.INFORMATION,"Sale Saved Successfully").show();
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.close();
+            if(isUpdated){
+                new Alert(Alert.AlertType.INFORMATION,"Sale Updated Successfully").show();
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.close();
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Sale Update Failed").show();
+            }
         } else {
-            new Alert(Alert.AlertType.ERROR,"Sale Save Failed").show();
+            boolean isSaved = saleModel.saveSale(saleDto);
+
+            if (isSaved) {
+                new Alert(Alert.AlertType.INFORMATION,"Sale Saved Successfully").show();
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.close();
+            } else {
+                new Alert(Alert.AlertType.ERROR,"Sale Save Failed").show();
+            }
         }
     }
 
@@ -54,11 +69,21 @@ public class AddSaleController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            btnSave.setText("SAVE");
             inputSoldDate.setValue(java.time.LocalDate.now());
             loadNextId();
             loadBatchId();
             ButtonScale.buttonScaling(btnSave);
             ButtonScale.textFieldScaling(inputTotalSale);
+
+            if(BatchSalePageController.updateSale){
+                lblBatchId.setText(BatchSalePageController.selectedBatchId);
+                lblSaleId.setText(BatchSalePageController.selectedSaleId);
+                inputSoldDate.setValue(LocalDate.parse(BatchSalePageController.selectedBatchDate));
+                inputTotalSale.setText(String.valueOf(BatchSalePageController.selectedBatchTotalSale));
+
+                btnSave.setText("UPDATE");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in retrieving customer id").show();

@@ -105,6 +105,7 @@ public class BatchStatusPageController implements Initializable {
     }
 
     public void onClickTable(MouseEvent mouseEvent) {
+
     }
 
     public void deleteBatchStatusOnAction(ActionEvent actionEvent) {

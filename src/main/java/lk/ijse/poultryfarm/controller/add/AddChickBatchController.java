@@ -10,11 +10,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
+import lk.ijse.poultryfarm.controller.batch.BatchDetailsPageController;
 import lk.ijse.poultryfarm.dto.ChickBatchDto;
 import lk.ijse.poultryfarm.model.ChickBatchModel;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class AddChickBatchController implements Initializable {
@@ -32,14 +34,28 @@ public class AddChickBatchController implements Initializable {
 
         ChickBatchDto chickBatchDto = new ChickBatchDto(batchId, Integer.parseInt(totalChicks),Double.parseDouble(paymentMade),arrivedDate);
 
-        boolean isSaved = chickBatchModel.saveChickBatch(chickBatchDto);
+        if(BatchDetailsPageController.updateChickBatch){
+            boolean isUpdated = chickBatchModel.updateChickBatch(chickBatchDto);
 
-        if (isSaved) {
-            new Alert(Alert.AlertType.INFORMATION,"Batch Saved Successfully").show();
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.close();
+            if(isUpdated){
+                new Alert(Alert.AlertType.INFORMATION,"Batch Updated Successfully").show();
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.close();
+
+            }else{
+                new Alert(Alert.AlertType.ERROR,"Batch Update Failed").show();
+            }
+
         } else {
-            new Alert(Alert.AlertType.ERROR,"Batch Save Failed").show();
+            boolean isSaved = chickBatchModel.saveChickBatch(chickBatchDto);
+
+            if (isSaved) {
+                new Alert(Alert.AlertType.INFORMATION,"Batch Saved Successfully").show();
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.close();
+            } else {
+                new Alert(Alert.AlertType.ERROR,"Batch Save Failed").show();
+            }
         }
     }
 
@@ -55,9 +71,19 @@ public class AddChickBatchController implements Initializable {
             ButtonScale.buttonScaling(btnSave);
             ButtonScale.textFieldScaling(inputPaymentMade);
             ButtonScale.textFieldScaling(inputTotalChicks);
+            btnSave.setText("SAVE");
 
             inputArrivedDate.setValue(java.time.LocalDate.now());
             loadNextId();
+
+            if(BatchDetailsPageController.updateChickBatch){
+                lblBatchId.setText(BatchDetailsPageController.selectedBatchId);
+                inputTotalChicks.setText(String.valueOf(BatchDetailsPageController.selectedBatchTotalChicks));
+                inputArrivedDate.setValue(LocalDate.parse(BatchDetailsPageController.selectedBatchDate));
+                inputPaymentMade.setText(String.valueOf(BatchDetailsPageController.selectedBatchPayment));
+
+                btnSave.setText("UPDATE");
+            }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in retrieving customer id").show();
