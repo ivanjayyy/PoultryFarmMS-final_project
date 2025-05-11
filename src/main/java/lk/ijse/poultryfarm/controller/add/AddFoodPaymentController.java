@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.controller.food.FoodInventoryPageController;
 import lk.ijse.poultryfarm.dto.FoodPaymentDto;
+import lk.ijse.poultryfarm.model.FoodModel;
 import lk.ijse.poultryfarm.model.FoodPaymentModel;
 
 import java.net.URL;
@@ -27,6 +28,7 @@ public class AddFoodPaymentController implements Initializable {
     public JFXButton btnSave;
 
     private final FoodPaymentModel foodPaymentModel = new FoodPaymentModel();
+    private final FoodModel foodModel = new FoodModel();
 
     public void saveFoodPaymentOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String paymentId = lblPaymentId.getText();
@@ -40,6 +42,11 @@ public class AddFoodPaymentController implements Initializable {
         boolean isSaved = foodPaymentModel.saveFoodPayment(foodPaymentDto);
 
         if (isSaved) {
+            boolean isChanged = foodModel.updateAfterFoodOrder(foodPaymentDto);
+            if(!isChanged){
+                new Alert(Alert.AlertType.ERROR,"Food Order Failed").show();
+            }
+
             new Alert(Alert.AlertType.INFORMATION,"Food Payment Saved").show();
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.close();

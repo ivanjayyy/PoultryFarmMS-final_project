@@ -21,6 +21,14 @@ public class DailyAttendanceModel {
         return CrudUtil.execute("DELETE FROM daily_attendance WHERE attendance_id = ?", attendanceId);
     }
 
+    public int countAttendance(String employeeId, String batchId) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT COUNT(date) from daily_attendance WHERE batch_id = ? AND employee_id = ? AND attendance = true GROUP BY attendance", batchId,employeeId);
+        if(resultSet.next()){
+            return resultSet.getInt(1);
+        }
+        return 0;
+    }
+
     public ArrayList<DailyAttendanceDto> searchDailyAttendance(String employeeId) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM daily_attendance WHERE employee_id = ?", employeeId);
         ArrayList<DailyAttendanceDto> dailyAttendanceDtos = new ArrayList<>();

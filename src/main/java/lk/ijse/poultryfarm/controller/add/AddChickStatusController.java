@@ -10,12 +10,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
+import lk.ijse.poultryfarm.controller.batch.BatchStatusPageController;
 import lk.ijse.poultryfarm.dto.ChickStatusDto;
 import lk.ijse.poultryfarm.model.ChickBatchModel;
 import lk.ijse.poultryfarm.model.ChickStatusModel;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class AddChickStatusController implements Initializable {
@@ -36,14 +38,26 @@ public class AddChickStatusController implements Initializable {
 
         ChickStatusDto chickStatusDto = new ChickStatusDto(batchId,chickStatusId,checkedDate,Integer.parseInt(chicksDead));
 
-        boolean isSaved = chickStatusModel.saveChickStatus(chickStatusDto);
+        if(BatchStatusPageController.updateStatus){
+            boolean isUpdated = chickStatusModel.updateChickStatus(chickStatusDto);
 
-        if(isSaved) {
-            new Alert(Alert.AlertType.INFORMATION,"Chick Status Saved Successfully").show();
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.close();
-        }else {
-            new Alert(Alert.AlertType.ERROR,"Chick Status Save Failed").show();
+            if (isUpdated) {
+                new Alert(Alert.AlertType.INFORMATION, "Chick Status Updated Successfully").show();
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.close();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Chick Status Update Failed").show();
+            }
+        } else {
+            boolean isSaved = chickStatusModel.saveChickStatus(chickStatusDto);
+
+            if (isSaved) {
+                new Alert(Alert.AlertType.INFORMATION, "Chick Status Saved Successfully").show();
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.close();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Chick Status Save Failed").show();
+            }
         }
     }
 
@@ -54,11 +68,21 @@ public class AddChickStatusController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            btnSave.setText("SAVE");
             inputCheckedDate.setValue(java.time.LocalDate.now());
             loadNextId();
             loadBatchId();
             ButtonScale.buttonScaling(btnSave);
             ButtonScale.textFieldScaling(inputChicksDead);
+
+            if(BatchStatusPageController.updateStatus){
+                lblBatchId.setText(BatchStatusPageController.selectedBatchId);
+                lblChickStatusId.setText(BatchStatusPageController.selectedBatchStatusId);
+                inputCheckedDate.setValue(LocalDate.parse(BatchStatusPageController.selectedBatchDate));
+                inputChicksDead.setText(String.valueOf(BatchStatusPageController.selectedBatchChickDeaths));
+
+                btnSave.setText("UPDATE");
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

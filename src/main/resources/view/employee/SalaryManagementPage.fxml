@@ -29,7 +29,7 @@
                      <font>
                         <Font name="Arial Rounded MT Bold" size="24.0" />
                      </font></TextField>
-                  <JFXButton fx:id="btnSearch" buttonType="RAISED" onAction="#searchSalaryOnAction" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="SEARCH" textFill="WHITE">
+                  <JFXButton fx:id="btnSearch" buttonType="RAISED" onAction="#searchSalaryOnAction" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #f39c12; -fx-background-radius: 20;" text="SEARCH" textFill="WHITE">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="22.0" />
                      </font>

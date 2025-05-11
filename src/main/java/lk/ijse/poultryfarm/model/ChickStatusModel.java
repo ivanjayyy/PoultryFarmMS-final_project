@@ -21,6 +21,14 @@ public class ChickStatusModel {
         return CrudUtil.execute("DELETE FROM chick_status WHERE chick_status_id = ?", chickStatusId);
     }
 
+    public int selectedBatchChickDeaths(String batchId) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT SUM(chicks_dead) from chick_status WHERE batch_id = ? GROUP BY batch_id", batchId);
+        if(resultSet.next()){
+            return resultSet.getInt(1);
+        }
+        return 0;
+    }
+
     public ArrayList<ChickStatusDto> searchChickStatus(String batchId) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM chick_status WHERE batch_id = ?", batchId);
         ArrayList<ChickStatusDto> chickStatusDtos = new ArrayList<>();

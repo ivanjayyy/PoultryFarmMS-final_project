@@ -17,9 +17,12 @@ import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.ChickBatchDto;
 import lk.ijse.poultryfarm.dto.tm.BatchDetailsTm;
 import lk.ijse.poultryfarm.model.ChickBatchModel;
+import lk.ijse.poultryfarm.model.ChickStatusModel;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -48,6 +51,8 @@ public class BatchDetailsPageController implements Initializable {
     public JFXButton btnSale;
     public JFXButton btnStatus;
     public JFXButton btnUpdate;
+
+    public ChickStatusModel chickStatusModel = new ChickStatusModel();
 
     /**
      * @param url
@@ -82,12 +87,27 @@ public class BatchDetailsPageController implements Initializable {
     private void resetPage() {
         try {
             loadTableData();
+            lblTotalDays.setText("");
+
+            String currentBatchId = chickBatchModel.getCurrentBatchId();
+            selectedBatchId = currentBatchId;
+            selectedBatchTotalChicks = chickBatchModel.searchChickBatch(currentBatchId).getFirst().getChickTotal();
+            loadBatchDetails();
 
             inputSearch.setText("");
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in retrieving batches").show();
         }
+    }
+
+    private void loadBatchDetails() throws SQLException, ClassNotFoundException {
+
+        int sumOfChickDead = chickStatusModel.selectedBatchChickDeaths(selectedBatchId);
+        int batchChicksLeft = (selectedBatchTotalChicks - sumOfChickDead);
+
+        lblChicksDead.setText(String.valueOf(sumOfChickDead));
+        lblChicksLeft.setText(String.valueOf(batchChicksLeft));
     }
 
     private void loadTableData() throws SQLException, ClassNotFoundException {
@@ -142,13 +162,20 @@ public class BatchDetailsPageController implements Initializable {
         }
     }
 
-    public void onClickTable(MouseEvent mouseEvent) {
+    public void onClickTable(MouseEvent mouseEvent) throws SQLException, ClassNotFoundException {
         BatchDetailsTm selectedItem = tblBatchDetails.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
             selectedBatchId = selectedItem.getBatchId();
             selectedBatchTotalChicks = selectedItem.getChickTotal();
             selectedBatchPayment = selectedItem.getPayment();
             selectedBatchDate = selectedItem.getDate();
+
+            LocalDate givenDate = LocalDate.parse(selectedBatchDate);
+            LocalDate today = LocalDate.now();
+            long daysBetween = ChronoUnit.DAYS.between(givenDate, today);
+            lblTotalDays.setText(String.valueOf(daysBetween));
+
+            loadBatchDetails();
 
             btnUpdate.setDisable(false);
             btnSale.setDisable(true);

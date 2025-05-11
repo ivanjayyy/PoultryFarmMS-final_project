@@ -13,6 +13,9 @@ import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.controller.employee.EmployeeDetailsPageController;
 import lk.ijse.poultryfarm.controller.employee.SalaryManagementPageController;
 import lk.ijse.poultryfarm.dto.SalaryDto;
+import lk.ijse.poultryfarm.model.ChickBatchModel;
+import lk.ijse.poultryfarm.model.DailyAttendanceModel;
+import lk.ijse.poultryfarm.model.EmployeeModel;
 import lk.ijse.poultryfarm.model.SalaryModel;
 
 import java.net.URL;
@@ -28,6 +31,9 @@ public class AddSalaryController implements Initializable {
     public JFXButton btnSave;
 
     private final SalaryModel salaryModel = new SalaryModel();
+    private final DailyAttendanceModel dailyAttendanceModel = new DailyAttendanceModel();
+    private final ChickBatchModel chickBatchModel = new ChickBatchModel();
+    private final EmployeeModel employeeModel = new EmployeeModel();
 
     public void saveSalaryOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String salaryId = lblSalaryId.getText();
@@ -69,9 +75,19 @@ public class AddSalaryController implements Initializable {
             btnSave.setText("SAVE");
             inputDate.setValue(java.time.LocalDate.now());
             loadNextId();
+
             ButtonScale.buttonScaling(btnSave);
             ButtonScale.textFieldScaling(inputAmount);
-            lblEmployeeId.setText(EmployeeDetailsPageController.selectedEmployeeId);
+
+            String employeeId = EmployeeDetailsPageController.selectedEmployeeId;
+            lblEmployeeId.setText(employeeId);
+
+            String currentBatchId = chickBatchModel.getCurrentBatchId();
+            int attendanceCount = dailyAttendanceModel.countAttendance(employeeId,currentBatchId);
+
+            double dailyWage = employeeModel.getDailyWage(employeeId);
+            double salary = dailyWage * attendanceCount;
+            inputAmount.setText(String.valueOf(salary));
 
             if(SalaryManagementPageController.updateSalary){
                 lblSalaryId.setText(SalaryManagementPageController.selectedSalaryId);

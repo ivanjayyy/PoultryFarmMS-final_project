@@ -21,6 +21,14 @@ public class EmployeeModel {
         return CrudUtil.execute("DELETE FROM employee WHERE employee_id = ?", employeeId);
     }
 
+    public double getDailyWage(String employeeId) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT daily_wage from employee WHERE employee_id = ?", employeeId);
+        if(resultSet.next()){
+            return resultSet.getDouble(1);
+        }
+        return 0;
+    }
+
     public ArrayList<EmployeeDto> searchEmployee(String fullTime) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM employee WHERE full_time = ?", fullTime);
 

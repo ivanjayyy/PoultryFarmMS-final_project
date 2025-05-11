@@ -14,6 +14,7 @@ import lk.ijse.poultryfarm.controller.food.FoodInventoryPageController;
 import lk.ijse.poultryfarm.dto.FoodConsumptionDto;
 import lk.ijse.poultryfarm.model.ChickBatchModel;
 import lk.ijse.poultryfarm.model.FoodConsumptionModel;
+import lk.ijse.poultryfarm.model.FoodModel;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -29,6 +30,7 @@ public class AddFoodConsumptionController implements Initializable {
 
     private final ChickBatchModel chickBatchModel = new ChickBatchModel();
     private final FoodConsumptionModel foodConsumptionModel = new FoodConsumptionModel();
+    private final FoodModel foodModel = new FoodModel();
 
     public void saveFoodConsumptionOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String batchId = lblBatchId.getText();
@@ -47,6 +49,11 @@ public class AddFoodConsumptionController implements Initializable {
 
         boolean isSaved = foodConsumptionModel.saveFoodConsumption(foodConsumptionDto);
         if (isSaved) {
+            boolean isChanged = foodModel.updateAfterFoodConsumption(foodConsumptionDto);
+            if(!isChanged){
+                new Alert(Alert.AlertType.ERROR,"Food Consumption Failed").show();
+            }
+
             new Alert(Alert.AlertType.INFORMATION,"Food Consumption Saved").show();
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.close();

@@ -1,6 +1,8 @@
 package lk.ijse.poultryfarm.model;
 
+import lk.ijse.poultryfarm.dto.FoodConsumptionDto;
 import lk.ijse.poultryfarm.dto.FoodDto;
+import lk.ijse.poultryfarm.dto.FoodPaymentDto;
 import lk.ijse.poultryfarm.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -13,8 +15,12 @@ public class FoodModel {
         return CrudUtil.execute("INSERT INTO food VALUES (?,?,?)", foodDto.getFoodId(),foodDto.getFoodName(),foodDto.getQuantityRemain());
     }
 
-    public boolean updateFood(FoodDto foodDto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("UPDATE food SET food_name = ?, quantity_remain = ? WHERE food_id = ?", foodDto.getFoodName(),foodDto.getQuantityRemain(),foodDto.getFoodId());
+    public boolean updateAfterFoodConsumption(FoodConsumptionDto foodConsumptionDto) throws SQLException, ClassNotFoundException {
+        return CrudUtil.execute("UPDATE food SET quantity_remain = (quantity_remain - ?) WHERE food_id = ?", foodConsumptionDto.getConsumption(),foodConsumptionDto.getFoodId());
+    }
+
+    public boolean updateAfterFoodOrder(FoodPaymentDto foodPaymentDto) throws SQLException, ClassNotFoundException {
+        return CrudUtil.execute("UPDATE food SET quantity_remain = (quantity_remain + ?) WHERE food_id = ?", foodPaymentDto.getQuantity(),foodPaymentDto.getFoodId());
     }
 
     public boolean deleteFood(String foodId) throws SQLException, ClassNotFoundException {
