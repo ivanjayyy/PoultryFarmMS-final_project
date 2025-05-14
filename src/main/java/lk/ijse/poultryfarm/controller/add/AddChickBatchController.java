@@ -69,8 +69,6 @@ public class AddChickBatchController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             ButtonScale.buttonScaling(btnSave);
-            ButtonScale.textFieldScaling(inputPaymentMade);
-            ButtonScale.textFieldScaling(inputTotalChicks);
             btnSave.setText("SAVE");
 
             inputArrivedDate.setValue(java.time.LocalDate.now());

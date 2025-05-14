@@ -36,28 +36,44 @@ public class AddChickStatusController implements Initializable {
         String checkedDate = inputCheckedDate.getValue().toString();
         String chicksDead = inputChicksDead.getText();
 
-        ChickStatusDto chickStatusDto = new ChickStatusDto(batchId,chickStatusId,checkedDate,Integer.parseInt(chicksDead));
+        int sumOfChickDead = chickStatusModel.selectedBatchChickDeaths(batchId);
+        int chickDeadToday = Integer.parseInt(chicksDead);
+        int batchChickTotal = chickBatchModel.getChickTotal(batchId);
 
-        if(BatchStatusPageController.updateStatus){
-            boolean isUpdated = chickStatusModel.updateChickStatus(chickStatusDto);
+        boolean isValid = (chickDeadToday + sumOfChickDead) <= batchChickTotal;
 
-            if (isUpdated) {
-                new Alert(Alert.AlertType.INFORMATION, "Chick Status Updated Successfully").show();
-                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                stage.close();
+        int todayChickStatusCheckedCount = chickStatusModel.checkStatus(checkedDate);
+
+        if(todayChickStatusCheckedCount == 0){
+            if(isValid) {
+                ChickStatusDto chickStatusDto = new ChickStatusDto(batchId,chickStatusId,checkedDate,Integer.parseInt(chicksDead));
+
+                if(BatchStatusPageController.updateStatus){
+                    boolean isUpdated = chickStatusModel.updateChickStatus(chickStatusDto);
+
+                    if (isUpdated) {
+                        new Alert(Alert.AlertType.INFORMATION, "Chick Status Updated Successfully").show();
+                        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                        stage.close();
+                    } else {
+                        new Alert(Alert.AlertType.ERROR, "Chick Status Update Failed").show();
+                    }
+                } else {
+                    boolean isSaved = chickStatusModel.saveChickStatus(chickStatusDto);
+
+                    if (isSaved) {
+                        new Alert(Alert.AlertType.INFORMATION, "Chick Status Saved Successfully").show();
+                        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                        stage.close();
+                    } else {
+                        new Alert(Alert.AlertType.ERROR, "Chick Status Save Failed").show();
+                    }
+                }
             } else {
-                new Alert(Alert.AlertType.ERROR, "Chick Status Update Failed").show();
+                new Alert(Alert.AlertType.ERROR,"Error: Total Chicks Dead cannot exceed the total chicks in the batch.").show();
             }
         } else {
-            boolean isSaved = chickStatusModel.saveChickStatus(chickStatusDto);
-
-            if (isSaved) {
-                new Alert(Alert.AlertType.INFORMATION, "Chick Status Saved Successfully").show();
-                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                stage.close();
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Chick Status Save Failed").show();
-            }
+            new Alert(Alert.AlertType.ERROR,"Error: You have already checked today's chick status.").show();
         }
     }
 
@@ -73,7 +89,6 @@ public class AddChickStatusController implements Initializable {
             loadNextId();
             loadBatchId();
             ButtonScale.buttonScaling(btnSave);
-            ButtonScale.textFieldScaling(inputChicksDead);
 
             if(BatchStatusPageController.updateStatus){
                 lblBatchId.setText(BatchStatusPageController.selectedBatchId);

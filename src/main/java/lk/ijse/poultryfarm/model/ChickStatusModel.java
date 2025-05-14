@@ -66,4 +66,12 @@ public class ChickStatusModel {
 
         return "M001";
     }
+
+    public int checkStatus(String date) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT COUNT(chick_status_id) FROM chick_status WHERE date = ? GROUP BY date", date);
+        if(resultSet.next()){
+            return resultSet.getInt(1);
+        }
+        return 0;
+    }
 }

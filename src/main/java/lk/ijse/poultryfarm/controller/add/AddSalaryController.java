@@ -77,7 +77,6 @@ public class AddSalaryController implements Initializable {
             loadNextId();
 
             ButtonScale.buttonScaling(btnSave);
-            ButtonScale.textFieldScaling(inputAmount);
 
             String employeeId = EmployeeDetailsPageController.selectedEmployeeId;
             lblEmployeeId.setText(employeeId);

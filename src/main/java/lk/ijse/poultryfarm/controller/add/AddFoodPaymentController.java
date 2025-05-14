@@ -65,8 +65,6 @@ public class AddFoodPaymentController implements Initializable {
             inputDate.setValue(java.time.LocalDate.now());
             loadNextId();
             lblFoodId.setText(FoodInventoryPageController.globalFoodId);
-            ButtonScale.textFieldScaling(inputQuantity);
-            ButtonScale.textFieldScaling(inputPaidAmount);
             ButtonScale.buttonScaling(btnSave);
         } catch (Exception e) {
             e.printStackTrace();

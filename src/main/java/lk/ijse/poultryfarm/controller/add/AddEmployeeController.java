@@ -77,9 +77,6 @@ public class AddEmployeeController implements Initializable {
             inputEmployeeType.getItems().addAll("Full Time","Temporary");
             loadNextId();
             ButtonScale.buttonScaling(btnSave);
-            ButtonScale.textFieldScaling(inputContact);
-            ButtonScale.textFieldScaling(inputDailyWage);
-            ButtonScale.textFieldScaling(inputName);
 
             if(EmployeeDetailsPageController.updateEmployee){
                 lblEmployeeId.setText(EmployeeDetailsPageController.selectedEmployeeId);

@@ -59,12 +59,6 @@ public class OwnerAccountController implements Initializable {
                 inputPassword.setEditable(true);
                 inputEmail.setEditable(true);
                 btnUpdateOwner.setText("UPDATE");
-
-                ButtonScale.buttonScaling(btnUpdateOwner);
-                ButtonScale.textFieldScaling(inputFullName);
-                ButtonScale.textFieldScaling(inputUsername);
-                ButtonScale.textFieldScaling(inputPassword);
-                ButtonScale.textFieldScaling(inputEmail);
             }
 
         }
@@ -102,5 +96,6 @@ public class OwnerAccountController implements Initializable {
         inputPassword.setEditable(false);
         inputEmail.setEditable(false);
         btnUpdateOwner.setText("EDIT DETAILS");
+        ButtonScale.buttonScaling(btnUpdateOwner);
     }
 }

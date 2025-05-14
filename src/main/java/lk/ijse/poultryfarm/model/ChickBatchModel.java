@@ -80,4 +80,14 @@ public class ChickBatchModel {
 
         return null;
     }
+
+    public int getChickTotal(String batchId) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT chick_total FROM chick_batch WHERE batch_id = ?", batchId);
+
+        if (resultSet.next()) {
+            return resultSet.getInt(1);
+        }
+
+        return -1;
+    }
 }

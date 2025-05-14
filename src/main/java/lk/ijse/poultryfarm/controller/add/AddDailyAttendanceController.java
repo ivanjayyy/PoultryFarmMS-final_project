@@ -37,15 +37,21 @@ public class AddDailyAttendanceController implements Initializable {
         String employeeId = lblEmployeeId.getText();
         String attendance = inputAttendance.getValue().toString();
 
-        DailyAttendanceDto dailyAttendanceDto = new DailyAttendanceDto(batchId, attendanceId, date, employeeId, Boolean.parseBoolean(attendance));
-        boolean isSaved = dailyAttendanceModel.saveDailyAttendance(dailyAttendanceDto);
-        
-        if (isSaved) {
-            new Alert(Alert.AlertType.INFORMATION, "Daily Attendance Saved").show();
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.close();
+        int todayAttendanceCount = dailyAttendanceModel.checkAttendance(date, employeeId);
+
+        if(todayAttendanceCount == 0){
+            DailyAttendanceDto dailyAttendanceDto = new DailyAttendanceDto(batchId, attendanceId, date, employeeId, Boolean.parseBoolean(attendance));
+            boolean isSaved = dailyAttendanceModel.saveDailyAttendance(dailyAttendanceDto);
+
+            if (isSaved) {
+                new Alert(Alert.AlertType.INFORMATION, "Daily Attendance Saved").show();
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.close();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Daily Attendance Failed").show();
+            }
         } else {
-            new Alert(Alert.AlertType.ERROR, "Daily Attendance Failed").show();
+            new Alert(Alert.AlertType.ERROR, "Attendance already marked").show();
         }
     }
 

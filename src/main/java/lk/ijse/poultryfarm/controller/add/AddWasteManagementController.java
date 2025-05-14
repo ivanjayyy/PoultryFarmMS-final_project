@@ -73,7 +73,6 @@ public class AddWasteManagementController implements Initializable {
             loadNextId();
             loadBatchId();
             ButtonScale.buttonScaling(btnSave);
-            ButtonScale.textFieldScaling(inputTotalSale);
 
             if(WasteManagementPageController.updateWaste){
                 lblBatchId.setText(WasteManagementPageController.selectedBatchId);

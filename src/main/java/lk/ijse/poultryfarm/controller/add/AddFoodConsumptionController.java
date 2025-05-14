@@ -39,27 +39,36 @@ public class AddFoodConsumptionController implements Initializable {
         String foodId = lblFoodId.getText();
         String consumption = inputConsumption.getText();
 
-        FoodConsumptionDto foodConsumptionDto = new FoodConsumptionDto(
-                batchId,
-                consumptionId,
-                date,
-                foodId,
-                Double.parseDouble(consumption)
-        );
+        double foodRemain = Double.parseDouble(foodModel.foodInventory(foodId));
+        double foodConsumed = Double.parseDouble(consumption);
+        boolean canConsume = foodRemain >= foodConsumed;
 
-        boolean isSaved = foodConsumptionModel.saveFoodConsumption(foodConsumptionDto);
-        if (isSaved) {
-            boolean isChanged = foodModel.updateAfterFoodConsumption(foodConsumptionDto);
-            if(!isChanged){
+        if(canConsume){
+            FoodConsumptionDto foodConsumptionDto = new FoodConsumptionDto(
+                    batchId,
+                    consumptionId,
+                    date,
+                    foodId,
+                    Double.parseDouble(consumption)
+            );
+
+            boolean isSaved = foodConsumptionModel.saveFoodConsumption(foodConsumptionDto);
+            if (isSaved) {
+                boolean isChanged = foodModel.updateAfterFoodConsumption(foodConsumptionDto);
+                if(!isChanged){
+                    new Alert(Alert.AlertType.ERROR,"Food Consumption Failed").show();
+                }
+
+                new Alert(Alert.AlertType.INFORMATION,"Food Consumption Saved").show();
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.close();
+            } else {
                 new Alert(Alert.AlertType.ERROR,"Food Consumption Failed").show();
             }
-
-            new Alert(Alert.AlertType.INFORMATION,"Food Consumption Saved").show();
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.close();
         } else {
-            new Alert(Alert.AlertType.ERROR,"Food Consumption Failed").show();
+            new Alert(Alert.AlertType.ERROR,"Not Enough Food In Inventory").show();
         }
+
     }
 
     /**
@@ -73,7 +82,6 @@ public class AddFoodConsumptionController implements Initializable {
             loadNextId();
             loadBatchId();
             lblFoodId.setText(FoodInventoryPageController.globalFoodId);
-            ButtonScale.textFieldScaling(inputConsumption);
             ButtonScale.buttonScaling(btnSave);
         } catch (Exception e) {
             e.printStackTrace();

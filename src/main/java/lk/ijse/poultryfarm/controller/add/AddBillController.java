@@ -76,7 +76,6 @@ public class AddBillController implements Initializable {
             loadNextId();
             loadBatchId();
             ButtonScale.buttonScaling(btnSave);
-            ButtonScale.textFieldScaling(inputPaidAmount);
 
             btnSave.setText("SAVE");
 

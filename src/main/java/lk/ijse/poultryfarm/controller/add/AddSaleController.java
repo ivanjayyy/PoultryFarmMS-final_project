@@ -74,7 +74,6 @@ public class AddSaleController implements Initializable {
             loadNextId();
             loadBatchId();
             ButtonScale.buttonScaling(btnSave);
-            ButtonScale.textFieldScaling(inputTotalSale);
 
             if(BatchSalePageController.updateSale){
                 lblBatchId.setText(BatchSalePageController.selectedBatchId);
