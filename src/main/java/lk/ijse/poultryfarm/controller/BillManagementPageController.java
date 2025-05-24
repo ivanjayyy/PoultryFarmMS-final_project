@@ -1,6 +1,7 @@
 package lk.ijse.poultryfarm.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,8 +15,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.dto.BillDto;
+import lk.ijse.poultryfarm.dto.WasteManagementDto;
 import lk.ijse.poultryfarm.dto.tm.BillManagementTm;
+import lk.ijse.poultryfarm.dto.tm.WasteManagementTm;
 import lk.ijse.poultryfarm.model.BillModel;
+import lk.ijse.poultryfarm.model.ChickBatchModel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,6 +44,10 @@ public class BillManagementPageController implements Initializable {
     public JFXButton btnUpdate;
 
     private final BillModel billModel = new BillModel();
+    public Label lblWaterBillStatus;
+    public Label lblElecBillStatus;
+    public JFXButton btnReset;
+    public JFXComboBox searchBillType;
 
     public void searchBillOnAction(ActionEvent actionEvent) {
         try {
@@ -176,11 +184,38 @@ public class BillManagementPageController implements Initializable {
             btnUpdate.setDisable(true);
             btnAddBill.setDisable(false);
 
+            loadData();
+
             loadTableData();
             inputSearch.setText("");
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in retrieving bills").show();
+        }
+    }
+
+    private void loadData() throws SQLException, ClassNotFoundException {
+        ChickBatchModel chickBatchModel = new ChickBatchModel();
+
+        String currentBatchId = chickBatchModel.getCurrentBatchId();
+        int waterBillStatus = billModel.billPaidStatus(currentBatchId,"Water");
+
+        if(waterBillStatus == 1){
+            lblWaterBillStatus.setText("Paid");
+        }else if(waterBillStatus == 0){
+            lblWaterBillStatus.setText("Not Paid");
+        } else {
+            new Alert(Alert.AlertType.ERROR,"Error in retrieving water bill status").show();
+        }
+
+        int elecBillStatus = billModel.billPaidStatus(currentBatchId,"Electricity");
+
+        if(elecBillStatus == 1){
+            lblElecBillStatus.setText("Paid");
+        }else if(elecBillStatus == 0){
+            lblElecBillStatus.setText("Not Paid");
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Error in retrieving electricity bill status").show();
         }
     }
 
@@ -198,5 +233,9 @@ public class BillManagementPageController implements Initializable {
             billManagementTms.add(billManagementTm);
         }
         tblBill.setItems(billManagementTms);
+    }
+
+    public void btnResetOnAction(ActionEvent actionEvent) {
+        resetPage();
     }
 }

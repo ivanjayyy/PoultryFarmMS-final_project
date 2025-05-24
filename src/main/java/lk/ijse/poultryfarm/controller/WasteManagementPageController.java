@@ -1,6 +1,7 @@
 package lk.ijse.poultryfarm.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -37,6 +38,8 @@ public class WasteManagementPageController implements Initializable {
     public JFXButton btnSearch;
     public JFXButton btnDelete;
     public JFXButton btnUpdate;
+    public JFXButton btnReset;
+    public JFXComboBox searchBatchId;
 
     public void addWasteOnAction(ActionEvent actionEvent) throws IOException {
         try {
@@ -58,7 +61,8 @@ public class WasteManagementPageController implements Initializable {
            btnDelete.setDisable(true);
            btnUpdate.setDisable(true);
            btnAdd.setDisable(false);
-            loadTableData();
+           loadTableData();
+           inputSearch.clear();
         } catch (Exception e) {
            e.printStackTrace();
            new Alert(Alert.AlertType.ERROR,"Error in retrieving batches").show();
@@ -187,5 +191,9 @@ public class WasteManagementPageController implements Initializable {
         }
 
         updateWaste = false;
+    }
+
+    public void btnResetOnAction(ActionEvent actionEvent) {
+        resetPage();
     }
 }

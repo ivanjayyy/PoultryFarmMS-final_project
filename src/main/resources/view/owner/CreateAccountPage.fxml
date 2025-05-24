@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="940.0" prefWidth="1920.0" style="-fx-background-color: #e67e22;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.poultryfarm.controller.owner.CreateAccountPageController">
    <children>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white; -fx-background-radius: 100;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white; -fx-background-radius: 40;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
          <children>
             <VBox prefHeight="703.0" prefWidth="1920.0">
                <children>
@@ -61,7 +61,7 @@
                   </HBox>
                   <HBox alignment="BOTTOM_CENTER" layoutX="10.0" layoutY="410.0" prefHeight="98.0" prefWidth="1880.0">
                      <children>
-                        <JFXButton fx:id="btnCreate" buttonType="RAISED" onAction="#createAccountOnAction" prefHeight="70.0" prefWidth="180.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="CREATE" textFill="WHITE">
+                        <JFXButton fx:id="btnCreate" buttonType="RAISED" onAction="#createAccountOnAction" prefHeight="70.0" prefWidth="247.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="CREATE" textFill="WHITE">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="27.0" />
                            </font>

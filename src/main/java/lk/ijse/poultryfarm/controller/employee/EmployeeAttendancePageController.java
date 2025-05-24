@@ -5,10 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.DailyAttendanceDto;
@@ -31,6 +28,8 @@ public class EmployeeAttendancePageController implements Initializable {
     private final DailyAttendanceModel dailyAttendanceModel = new DailyAttendanceModel();
     public TextField inputSearch;
     public JFXButton btnSearch;
+    public JFXButton btnReset;
+    public DatePicker searchDate;
 
     /**
      * @param url
@@ -57,6 +56,7 @@ public class EmployeeAttendancePageController implements Initializable {
     private void resetPage() {
         try {
             loadTableData();
+            inputSearch.clear();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,5 +101,9 @@ public class EmployeeAttendancePageController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in retrieving daily attendance").show();
         }
+    }
+
+    public void btnResetOnAction(ActionEvent actionEvent) {
+        resetPage();
     }
 }

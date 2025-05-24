@@ -71,4 +71,14 @@ public class BillModel {
 
         return "X001";
     }
+
+    public int billPaidStatus(String batchId, String billType) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT COUNT(bill_id) FROM bill WHERE batch_id = ? AND bill_variant = ?", batchId,billType);
+
+        if(resultSet.next()){
+            return resultSet.getInt(1);
+        }
+
+        return 0;
+    }
 }

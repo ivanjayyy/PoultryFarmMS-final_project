@@ -1,6 +1,7 @@
 package lk.ijse.poultryfarm.controller.food;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,6 +32,8 @@ public class FoodPaymentPageController implements Initializable {
     private final FoodPaymentModel foodPaymentModel = new FoodPaymentModel();
     public TextField inputSearch;
     public JFXButton btnSearch;
+    public JFXButton btnReset;
+    public JFXComboBox searchFoodName;
 
     /**
      * @param url
@@ -57,6 +60,7 @@ public class FoodPaymentPageController implements Initializable {
     private void resetPage() {
         try {
             loadTableData();
+            inputSearch.clear();
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in retrieving food payment").show();
@@ -98,5 +102,9 @@ public class FoodPaymentPageController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in retrieving food payment").show();
         }
+    }
+
+    public void btnResetOnAction(ActionEvent actionEvent) {
+        resetPage();
     }
 }

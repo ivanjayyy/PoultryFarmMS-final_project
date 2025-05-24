@@ -1,6 +1,7 @@
 package lk.ijse.poultryfarm.controller.batch;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -42,6 +43,8 @@ public class BatchSalePageController implements Initializable {
     public JFXButton btnSearch;
     public JFXButton btnDelete;
     public JFXButton btnUpdate;
+    public JFXButton btnReset;
+    public JFXComboBox searchBatchId;
 
     /**
      * @param url
@@ -72,6 +75,7 @@ public class BatchSalePageController implements Initializable {
     private void resetPage() {
         try {
             loadTableData();
+            inputSearch.clear();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -168,5 +172,9 @@ public class BatchSalePageController implements Initializable {
             new Alert(Alert.AlertType.ERROR,"Error in opening add sale window").show();
         }
         updateSale = false;
+    }
+
+    public void btnResetOnAction(ActionEvent actionEvent) {
+        resetPage();
     }
 }

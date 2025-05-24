@@ -1,6 +1,7 @@
 package lk.ijse.poultryfarm.controller.batch;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -53,6 +54,8 @@ public class BatchDetailsPageController implements Initializable {
     public JFXButton btnUpdate;
 
     public ChickStatusModel chickStatusModel = new ChickStatusModel();
+    public JFXButton btnReset;
+    public JFXComboBox searchBatchId;
 
     /**
      * @param url
@@ -60,10 +63,6 @@ public class BatchDetailsPageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        btnUpdate.setDisable(true);
-        btnSale.setDisable(false);
-        btnStatus.setDisable(false);
-        btnAdd.setDisable(false);
 
         ButtonScale.buttonScaling(btnAdd);
         ButtonScale.buttonScaling(btnSearch);
@@ -86,6 +85,11 @@ public class BatchDetailsPageController implements Initializable {
 
     private void resetPage() {
         try {
+            btnUpdate.setDisable(true);
+            btnSale.setDisable(true);
+            btnStatus.setDisable(true);
+            btnAdd.setDisable(false);
+
             loadTableData();
             lblTotalDays.setText("");
 
@@ -176,11 +180,15 @@ public class BatchDetailsPageController implements Initializable {
             lblTotalDays.setText(String.valueOf(daysBetween));
 
             loadBatchDetails();
-
             btnUpdate.setDisable(false);
-            btnSale.setDisable(true);
             btnAdd.setDisable(true);
+            btnSale.setDisable(true);
             btnStatus.setDisable(true);
+
+            if(daysBetween < 40) {
+                btnSale.setDisable(false);
+                btnStatus.setDisable(false);
+            }
         }
     }
 
@@ -229,5 +237,9 @@ public class BatchDetailsPageController implements Initializable {
             new Alert(Alert.AlertType.ERROR,"Error in opening add batch window").show();
         }
         updateChickBatch = false;
+    }
+
+    public void btnResetOnAction(ActionEvent actionEvent) {
+        resetPage();
     }
 }

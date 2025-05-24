@@ -1,6 +1,7 @@
 package lk.ijse.poultryfarm.controller.employee;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,6 +37,8 @@ public class SalaryManagementPageController implements Initializable {
     public JFXButton btnSearch;
     public JFXButton btnDelete;
     public JFXButton btnUpdate;
+    public JFXButton btnReset;
+    public JFXComboBox searchEmployeeId;
 
     /**
      * @param url
@@ -64,6 +67,7 @@ public class SalaryManagementPageController implements Initializable {
         try {
             btnDelete.setDisable(true);
             btnUpdate.setDisable(true);
+            inputSearch.clear();
 
             loadTableData();
         } catch (Exception e) {
@@ -168,5 +172,9 @@ public class SalaryManagementPageController implements Initializable {
             new Alert(Alert.AlertType.ERROR,"Error in opening add salary window").show();
         }
         updateSalary = false;
+    }
+
+    public void btnResetOnAction(ActionEvent actionEvent) {
+        resetPage();
     }
 }

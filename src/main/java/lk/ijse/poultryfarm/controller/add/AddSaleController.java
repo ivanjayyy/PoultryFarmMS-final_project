@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.controller.batch.BatchDetailsPageController;
 import lk.ijse.poultryfarm.controller.batch.BatchSalePageController;
+import lk.ijse.poultryfarm.controller.batch.BatchStatusPageController;
 import lk.ijse.poultryfarm.dto.SaleDto;
 import lk.ijse.poultryfarm.model.ChickBatchModel;
 import lk.ijse.poultryfarm.model.SaleModel;
@@ -90,10 +91,10 @@ public class AddSaleController implements Initializable {
     }
 
     private void loadBatchId() throws SQLException, ClassNotFoundException {
-        String currentBatchId = chickBatchModel.getCurrentBatchId();
+        String batchId = BatchDetailsPageController.selectedBatchId;
 
-        if (currentBatchId != null) {
-            lblBatchId.setText(currentBatchId);
+        if (batchId != null) {
+            lblBatchId.setText(batchId);
         }else {
             new Alert(Alert.AlertType.WARNING,"No Chicken Batch Exists. Please add a new chicken batch first.").show();
         }

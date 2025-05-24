@@ -1,6 +1,7 @@
 package lk.ijse.poultryfarm.controller.batch;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -40,6 +41,8 @@ public class BatchStatusPageController implements Initializable {
     public JFXButton btnUpdate;
 
     private final ChickBatchModel chickBatchModel = new ChickBatchModel();
+    public JFXButton btnReset;
+    public JFXComboBox searchBatchId;
 
     /**
      * @param url
@@ -70,6 +73,7 @@ public class BatchStatusPageController implements Initializable {
             btnUpdate.setDisable(true);
 
             loadTableData();
+            inputSearch.clear();
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in retrieving batches").show();
@@ -179,5 +183,9 @@ public class BatchStatusPageController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "You can't update old batch status").show();
         }
         updateStatus = false;
+    }
+
+    public void btnResetOnAction(ActionEvent actionEvent) {
+        resetPage();
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -12,7 +13,7 @@
 
 <AnchorPane prefHeight="940.0" prefWidth="1720.0" style="-fx-background-color: #e67e22;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.poultryfarm.controller.food.FoodConsumptionPageController">
    <children>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-radius: 100; -fx-background-color: white;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-radius: 40; -fx-background-color: white;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox alignment="CENTER" prefHeight="130.0" prefWidth="1700.0">
                <children>
@@ -25,11 +26,12 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="116.0" prefWidth="1700.0" spacing="50.0">
                <children>
-                  <TextField fx:id="inputSearch" alignment="CENTER" prefHeight="53.0" prefWidth="988.0" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;">
+                  <JFXComboBox fx:id="searchBatchId" focusColor="WHITE" prefHeight="54.0" prefWidth="193.0" promptText="Search Batch ID" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;" unFocusColor="WHITE" />
+                  <TextField fx:id="inputSearch" alignment="CENTER" prefHeight="53.0" prefWidth="972.0" promptText="search here . . ." style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="24.0" />
                      </font></TextField>
-                  <JFXButton fx:id="btnSearch" buttonType="RAISED" onAction="#searchFoodConsumptionOnAction" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #f39c12; -fx-background-radius: 20;" text="SEARCH" textFill="WHITE">
+                  <JFXButton fx:id="btnSearch" buttonType="RAISED" onAction="#searchFoodConsumptionOnAction" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="SEARCH" textFill="WHITE">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="22.0" />
                      </font>
@@ -47,6 +49,19 @@
                         <TableColumn fx:id="colConsumption" prefWidth="367.0" text="Consumed Food" />
                      </columns>
                   </TableView>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="142.0" prefWidth="1700.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="142.0" prefWidth="1576.0" spacing="50.0">
+                     <children>
+                        <JFXButton fx:id="btnReset" buttonType="RAISED" layoutX="162.0" layoutY="34.0" onAction="#btnResetOnAction" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 20;" text="RESET" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="22.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </HBox>
                </children>
             </HBox>
          </children>
