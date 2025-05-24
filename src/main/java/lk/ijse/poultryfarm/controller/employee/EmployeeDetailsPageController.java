@@ -50,7 +50,7 @@ public class EmployeeDetailsPageController implements Initializable {
     public static boolean updateEmployee;
     public Label lblAttendDays;
     public JFXButton btnReset;
-    public JFXComboBox searchEmployeeType;
+    public JFXComboBox<String> searchEmployeeType;
 
     public void searchEmployeeOnAction(ActionEvent actionEvent) {
         try {
@@ -97,6 +97,10 @@ public class EmployeeDetailsPageController implements Initializable {
         try {
             loadTableData();
             inputSearch.setText("");
+
+            searchEmployeeType.getItems().clear();
+            searchEmployeeType.getItems().addAll("Full Time","Temporary");
+
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in retrieving employees").show();
@@ -158,6 +162,7 @@ public class EmployeeDetailsPageController implements Initializable {
         ButtonScale.buttonScaling(btnSalary);
         ButtonScale.buttonScaling(btnAttendance);
         ButtonScale.buttonScaling(btnUpdate);
+        ButtonScale.buttonScaling(btnReset);
 
         colEmployeeId.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -223,5 +228,10 @@ public class EmployeeDetailsPageController implements Initializable {
 
     public void btnResetOnAction(ActionEvent actionEvent) {
         resetPage();
+    }
+
+    public void searchEmployeeTypeOnAction(ActionEvent actionEvent) {
+        String employeeType = searchEmployeeType.getSelectionModel().getSelectedItem();
+        inputSearch.setText(employeeType);
     }
 }

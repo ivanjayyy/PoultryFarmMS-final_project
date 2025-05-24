@@ -47,7 +47,7 @@ public class BillManagementPageController implements Initializable {
     public Label lblWaterBillStatus;
     public Label lblElecBillStatus;
     public JFXButton btnReset;
-    public JFXComboBox searchBillType;
+    public JFXComboBox<String> searchBillType;
 
     public void searchBillOnAction(ActionEvent actionEvent) {
         try {
@@ -163,6 +163,7 @@ public class BillManagementPageController implements Initializable {
         ButtonScale.buttonScaling(btnSearch);
         ButtonScale.buttonScaling(btnDelete);
         ButtonScale.buttonScaling(btnUpdate);
+        ButtonScale.buttonScaling(btnReset);
 
         colBatchId.setCellValueFactory(new PropertyValueFactory<>("batchId"));
         colBillId.setCellValueFactory(new PropertyValueFactory<>("billId"));
@@ -183,6 +184,9 @@ public class BillManagementPageController implements Initializable {
             btnDelete.setDisable(true);
             btnUpdate.setDisable(true);
             btnAddBill.setDisable(false);
+
+            searchBillType.getItems().clear();
+            searchBillType.getItems().addAll("Water","Electricity");
 
             loadData();
 
@@ -237,5 +241,10 @@ public class BillManagementPageController implements Initializable {
 
     public void btnResetOnAction(ActionEvent actionEvent) {
         resetPage();
+    }
+
+    public void searchBillTypeOnAction(ActionEvent actionEvent) {
+        String billType = searchBillType.getSelectionModel().getSelectedItem();
+        inputSearch.setText(billType);
     }
 }

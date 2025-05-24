@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.SaleDto;
 import lk.ijse.poultryfarm.dto.tm.BatchSaleTm;
+import lk.ijse.poultryfarm.model.ChickBatchModel;
 import lk.ijse.poultryfarm.model.SaleModel;
 
 import java.net.URL;
@@ -39,12 +40,13 @@ public class BatchSalePageController implements Initializable {
     public TableColumn<BatchSaleTm,String> colDate;
 
     private final SaleModel saleModel = new SaleModel();
+
     public TextField inputSearch;
     public JFXButton btnSearch;
     public JFXButton btnDelete;
     public JFXButton btnUpdate;
     public JFXButton btnReset;
-    public JFXComboBox searchBatchId;
+    public JFXComboBox<String> searchBatchId;
 
     /**
      * @param url
@@ -55,6 +57,7 @@ public class BatchSalePageController implements Initializable {
         ButtonScale.buttonScaling(btnDelete);
         ButtonScale.buttonScaling(btnUpdate);
         ButtonScale.buttonScaling(btnSearch);
+        ButtonScale.buttonScaling(btnReset);
 
         colBatchId.setCellValueFactory(new PropertyValueFactory<>("batchId"));
         colSaleId.setCellValueFactory(new PropertyValueFactory<>("saleId"));
@@ -76,6 +79,10 @@ public class BatchSalePageController implements Initializable {
         try {
             loadTableData();
             inputSearch.clear();
+
+            ChickBatchModel chickBatchModel = new ChickBatchModel();
+            searchBatchId.getItems().clear();
+            searchBatchId.setItems(chickBatchModel.getAllBatchIds());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -176,5 +183,10 @@ public class BatchSalePageController implements Initializable {
 
     public void btnResetOnAction(ActionEvent actionEvent) {
         resetPage();
+    }
+
+    public void searchBatchIdOnAction(ActionEvent actionEvent) {
+        String batchId = searchBatchId.getSelectionModel().getSelectedItem();
+        inputSearch.setText(batchId);
     }
 }

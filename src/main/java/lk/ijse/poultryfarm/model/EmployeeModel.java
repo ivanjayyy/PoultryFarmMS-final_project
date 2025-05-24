@@ -1,5 +1,7 @@
 package lk.ijse.poultryfarm.model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import lk.ijse.poultryfarm.dto.EmployeeDto;
 import lk.ijse.poultryfarm.util.CrudUtil;
 
@@ -78,5 +80,26 @@ public class EmployeeModel {
         }
 
         return "E001";
+    }
+
+    public ObservableList<String> getAllEmployeeNames() throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.execute("SELECT name FROM employee");
+        ArrayList<String> list = new ArrayList<>();
+        while (rst.next()) {
+            String id = rst.getString(1);
+            list.add(id);
+        }
+
+        ObservableList<String> employeeNames = FXCollections.observableArrayList();
+        employeeNames.addAll(list);
+        return employeeNames;
+    }
+
+    public String getEmployeeId(String name) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT employee_id FROM employee WHERE name = ?", name);
+        if (resultSet.next()) {
+            return resultSet.getString(1);
+        }
+        return null;
     }
 }

@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.FoodPaymentDto;
 import lk.ijse.poultryfarm.dto.tm.FoodPaymentTm;
+import lk.ijse.poultryfarm.model.FoodModel;
 import lk.ijse.poultryfarm.model.FoodPaymentModel;
 
 import java.net.URL;
@@ -33,7 +34,7 @@ public class FoodPaymentPageController implements Initializable {
     public TextField inputSearch;
     public JFXButton btnSearch;
     public JFXButton btnReset;
-    public JFXComboBox searchFoodName;
+    public JFXComboBox<String> searchFoodName;
 
     /**
      * @param url
@@ -42,6 +43,7 @@ public class FoodPaymentPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ButtonScale.buttonScaling(btnSearch);
+        ButtonScale.buttonScaling(btnReset);
 
         colPaymentId.setCellValueFactory(new PropertyValueFactory<>("foodPaymentId"));
         colFoodId.setCellValueFactory(new PropertyValueFactory<>("foodId"));
@@ -61,6 +63,10 @@ public class FoodPaymentPageController implements Initializable {
         try {
             loadTableData();
             inputSearch.clear();
+
+            searchFoodName.getItems().clear();
+            searchFoodName.getItems().addAll("Booster","Starter","Finisher");
+
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in retrieving food payment").show();
@@ -106,5 +112,12 @@ public class FoodPaymentPageController implements Initializable {
 
     public void btnResetOnAction(ActionEvent actionEvent) {
         resetPage();
+    }
+
+    public void searchFoodNameOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        String foodName = searchFoodName.getSelectionModel().getSelectedItem();
+
+        FoodModel foodModel = new FoodModel();
+        inputSearch.setText(foodModel.getFoodId(foodName));
     }
 }

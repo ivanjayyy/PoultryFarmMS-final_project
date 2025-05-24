@@ -26,7 +26,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="116.0" prefWidth="1700.0" spacing="50.0">
                <children>
-                  <JFXComboBox fx:id="searchBatchId" focusColor="WHITE" prefHeight="54.0" prefWidth="193.0" promptText="Search Batch ID" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;" unFocusColor="WHITE" />
+                  <JFXComboBox fx:id="searchBatchId" focusColor="WHITE" onAction="#searchBatchIdOnAction" prefHeight="54.0" prefWidth="193.0" promptText="Search Batch ID" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;" unFocusColor="WHITE" />
                   <TextField fx:id="inputSearch" alignment="CENTER" prefHeight="53.0" prefWidth="753.0" promptText="search here . . ." style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="24.0" />

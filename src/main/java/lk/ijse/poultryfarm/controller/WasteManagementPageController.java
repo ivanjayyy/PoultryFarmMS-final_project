@@ -16,6 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.dto.WasteManagementDto;
 import lk.ijse.poultryfarm.dto.tm.WasteManagementTm;
+import lk.ijse.poultryfarm.model.ChickBatchModel;
 import lk.ijse.poultryfarm.model.WasteManagementModel;
 
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class WasteManagementPageController implements Initializable {
     public JFXButton btnDelete;
     public JFXButton btnUpdate;
     public JFXButton btnReset;
-    public JFXComboBox searchBatchId;
+    public JFXComboBox<String> searchBatchId;
 
     public void addWasteOnAction(ActionEvent actionEvent) throws IOException {
         try {
@@ -63,6 +64,11 @@ public class WasteManagementPageController implements Initializable {
            btnAdd.setDisable(false);
            loadTableData();
            inputSearch.clear();
+
+           ChickBatchModel chickBatchModel = new ChickBatchModel();
+           searchBatchId.getItems().clear();
+           searchBatchId.setItems(chickBatchModel.getAllBatchIds());
+
         } catch (Exception e) {
            e.printStackTrace();
            new Alert(Alert.AlertType.ERROR,"Error in retrieving batches").show();
@@ -124,6 +130,7 @@ public class WasteManagementPageController implements Initializable {
         ButtonScale.buttonScaling(btnSearch);
         ButtonScale.buttonScaling(btnDelete);
         ButtonScale.buttonScaling(btnUpdate);
+        ButtonScale.buttonScaling(btnReset);
 
         try {
             resetPage();
@@ -195,5 +202,10 @@ public class WasteManagementPageController implements Initializable {
 
     public void btnResetOnAction(ActionEvent actionEvent) {
         resetPage();
+    }
+
+    public void searchBatchIdOnAction(ActionEvent actionEvent) {
+        String batchId = searchBatchId.getSelectionModel().getSelectedItem();
+        inputSearch.setText(batchId);
     }
 }

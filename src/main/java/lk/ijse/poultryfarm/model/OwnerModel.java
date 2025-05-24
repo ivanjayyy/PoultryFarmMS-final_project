@@ -48,4 +48,14 @@ public class OwnerModel {
         }
         return null;
     }
+
+    public boolean hasOwner() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT COUNT(owner_id) FROM owner");
+        if (resultSet.next()) {
+            if(resultSet.getInt(1)>0){
+                return true;
+            }
+        }
+        return false;
+    }
 }

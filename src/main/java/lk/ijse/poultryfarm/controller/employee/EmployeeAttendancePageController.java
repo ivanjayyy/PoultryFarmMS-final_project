@@ -38,6 +38,7 @@ public class EmployeeAttendancePageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ButtonScale.buttonScaling(btnSearch);
+        ButtonScale.buttonScaling(btnReset);
 
         colBatchId.setCellValueFactory(new PropertyValueFactory<>("batchId"));
         colAttendanceId.setCellValueFactory(new PropertyValueFactory<>("attendanceId"));
@@ -105,5 +106,10 @@ public class EmployeeAttendancePageController implements Initializable {
 
     public void btnResetOnAction(ActionEvent actionEvent) {
         resetPage();
+    }
+
+    public void searchDateOnAction(ActionEvent actionEvent) {
+        String date = searchDate.getValue().toString();
+        inputSearch.setText(date);
     }
 }

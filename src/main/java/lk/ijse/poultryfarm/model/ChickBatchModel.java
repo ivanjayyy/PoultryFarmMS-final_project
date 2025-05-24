@@ -1,5 +1,7 @@
 package lk.ijse.poultryfarm.model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import lk.ijse.poultryfarm.dto.ChickBatchDto;
 import lk.ijse.poultryfarm.util.CrudUtil;
 
@@ -39,7 +41,7 @@ public class ChickBatchModel {
     }
 
     public ArrayList<ChickBatchDto> getAllChickBatch() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM chick_batch");
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM chick_batch ORDER BY batch_id DESC");
 
         ArrayList<ChickBatchDto> chickBatchDtos = new ArrayList<>();
 
@@ -89,5 +91,18 @@ public class ChickBatchModel {
         }
 
         return -1;
+    }
+
+    public ObservableList<String> getAllBatchIds() throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.execute("SELECT batch_id FROM chick_batch ORDER BY batch_id DESC");
+        ArrayList<String> list = new ArrayList<>();
+        while (rst.next()) {
+            String id = rst.getString(1);
+            list.add(id);
+        }
+
+        ObservableList<String> batchIds = FXCollections.observableArrayList();
+        batchIds.addAll(list);
+        return batchIds;
     }
 }

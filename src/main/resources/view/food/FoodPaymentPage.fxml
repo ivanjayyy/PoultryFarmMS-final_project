@@ -26,7 +26,7 @@
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="116.0" prefWidth="1700.0" spacing="50.0">
                     <children>
-                  <JFXComboBox fx:id="searchFoodName" focusColor="WHITE" prefHeight="54.0" prefWidth="193.0" promptText="Search Food Name" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;" unFocusColor="WHITE" />
+                  <JFXComboBox fx:id="searchFoodName" focusColor="WHITE" onAction="#searchFoodNameOnAction" prefHeight="54.0" prefWidth="193.0" promptText="Search Food Name" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;" unFocusColor="WHITE" />
                         <TextField fx:id="inputSearch" alignment="CENTER" prefHeight="53.0" prefWidth="971.0" promptText="search here . . ." style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;">
                             <font>
                                 <Font name="Arial Rounded MT Bold" size="24.0" />

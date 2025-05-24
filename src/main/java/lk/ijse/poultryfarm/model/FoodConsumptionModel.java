@@ -21,8 +21,8 @@ public class FoodConsumptionModel {
         return CrudUtil.execute("DELETE FROM food_consumption WHERE consumption_id = ?", consumptionId);
     }
 
-    public ArrayList<FoodConsumptionDto> searchFoodConsumption(String foodId) throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM food_consumption WHERE food_id = ?", foodId);
+    public ArrayList<FoodConsumptionDto> searchFoodConsumption(String batchId) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM food_consumption WHERE batch_id = ?", batchId);
         ArrayList<FoodConsumptionDto> foodConsumptionDtos = new ArrayList<>();
 
         while (resultSet.next()) {
@@ -39,7 +39,7 @@ public class FoodConsumptionModel {
     }
 
     public ArrayList<FoodConsumptionDto> getAllFoodConsumption() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM food_consumption");
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM food_consumption ORDER BY consumption_id DESC");
 
         ArrayList<FoodConsumptionDto> foodConsumptionDtos = new ArrayList<>();
 

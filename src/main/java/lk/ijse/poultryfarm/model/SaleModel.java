@@ -39,7 +39,7 @@ public class SaleModel {
     }
 
     public ArrayList<SaleDto> getAllSale() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM sale");
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM sale ORDER BY sale_id DESC");
 
         ArrayList<SaleDto> saleDtos = new ArrayList<>();
 

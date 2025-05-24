@@ -9,11 +9,13 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import javafx.animation.ScaleTransition;
 import javafx.util.Duration;
 import lk.ijse.poultryfarm.controller.ButtonScale;
+import lk.ijse.poultryfarm.model.OwnerModel;
 
 public class LoginDashboardController implements Initializable {
 
@@ -35,6 +37,17 @@ public class LoginDashboardController implements Initializable {
 
         ButtonScale.buttonScaling(btnLogin);
         ButtonScale.buttonScaling(btnCreate);
+
+        OwnerModel ownerModel = new OwnerModel();
+        try {
+            if(ownerModel.hasOwner()) {
+                btnCreate.setDisable(true);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error");
+        }
 
     }
 

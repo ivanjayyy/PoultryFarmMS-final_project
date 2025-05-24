@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.SalaryDto;
 import lk.ijse.poultryfarm.dto.tm.SalaryManagementTm;
+import lk.ijse.poultryfarm.model.EmployeeModel;
 import lk.ijse.poultryfarm.model.SalaryModel;
 
 import java.net.URL;
@@ -38,7 +39,7 @@ public class SalaryManagementPageController implements Initializable {
     public JFXButton btnDelete;
     public JFXButton btnUpdate;
     public JFXButton btnReset;
-    public JFXComboBox searchEmployeeId;
+    public JFXComboBox<String> searchEmployeeName;
 
     /**
      * @param url
@@ -49,6 +50,7 @@ public class SalaryManagementPageController implements Initializable {
         ButtonScale.buttonScaling(btnDelete);
         ButtonScale.buttonScaling(btnUpdate);
         ButtonScale.buttonScaling(btnSearch);
+        ButtonScale.buttonScaling(btnReset);
 
         colSalaryId.setCellValueFactory(new PropertyValueFactory<>("salaryId"));
         colEmployeeId.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
@@ -68,6 +70,10 @@ public class SalaryManagementPageController implements Initializable {
             btnDelete.setDisable(true);
             btnUpdate.setDisable(true);
             inputSearch.clear();
+
+            EmployeeModel employeeModel = new EmployeeModel();
+            searchEmployeeName.getItems().clear();
+            searchEmployeeName.setItems(employeeModel.getAllEmployeeNames());
 
             loadTableData();
         } catch (Exception e) {
@@ -176,5 +182,14 @@ public class SalaryManagementPageController implements Initializable {
 
     public void btnResetOnAction(ActionEvent actionEvent) {
         resetPage();
+    }
+
+    public void searchEmployeeNameOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        String name = searchEmployeeName.getSelectionModel().getSelectedItem();
+
+        EmployeeModel employeeModel = new EmployeeModel();
+        String employeeId = employeeModel.getEmployeeId(name);
+
+        inputSearch.setText(employeeId);
     }
 }

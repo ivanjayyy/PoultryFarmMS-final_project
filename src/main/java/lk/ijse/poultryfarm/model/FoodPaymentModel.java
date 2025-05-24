@@ -39,7 +39,7 @@ public class FoodPaymentModel {
     }
 
     public ArrayList<FoodPaymentDto> getAllFoodPayment() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM food_payment");
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM food_payment ORDER BY food_payment_id DESC");
 
         ArrayList<FoodPaymentDto> foodPaymentDtos = new ArrayList<>();
 

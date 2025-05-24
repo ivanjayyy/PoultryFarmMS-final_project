@@ -41,7 +41,7 @@ public class ChickStatusModel {
     }
 
     public ArrayList<ChickStatusDto> getAllChickStatus() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM chick_status");
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM chick_status ORDER BY chick_status_id DESC");
 
         ArrayList<ChickStatusDto> chickStatusDtos = new ArrayList<>();
 

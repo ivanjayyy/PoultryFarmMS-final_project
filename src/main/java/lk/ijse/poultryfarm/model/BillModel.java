@@ -40,7 +40,7 @@ public class BillModel {
     }
 
     public ArrayList<BillDto> getAllBill() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM bill");
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM bill ORDER BY bill_id DESC");
 
         ArrayList<BillDto> billDtos = new ArrayList<>();
 

@@ -38,7 +38,7 @@ public class SalaryModel {
     }
 
     public ArrayList<SalaryDto> getAllSalary() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM salary");
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM salary ORDER BY salary_id DESC");
 
         ArrayList<SalaryDto> salaryDtos = new ArrayList<>();
 

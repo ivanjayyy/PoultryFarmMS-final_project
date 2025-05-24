@@ -9,16 +9,16 @@
    <children>
       <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="1920.0" style="-fx-background-color: #e67e22;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="316.0" spacing="50.0">
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="356.0" spacing="50.0">
                <children>
                   <JFXButton fx:id="btnLogin" onAction="#goLoginPageOnAction" ripplerFill="#d35400" text="LOG IN" textAlignment="CENTER" textFill="WHITE">
                      <font>
-                        <Font name="Arial Black" size="15.0" />
+                        <Font name="Arial Black" size="18.0" />
                      </font>
                   </JFXButton>
                   <JFXButton fx:id="btnCreate" layoutX="351.0" layoutY="25.0" onAction="#goCreateAccountPageOnAction" ripplerFill="#d15000" text="NEW ACCOUNT" textAlignment="CENTER" textFill="WHITE">
                      <font>
-                        <Font name="Arial Black" size="15.0" />
+                        <Font name="Arial Black" size="18.0" />
                      </font>
                   </JFXButton>
                </children>

@@ -42,7 +42,7 @@ public class BatchStatusPageController implements Initializable {
 
     private final ChickBatchModel chickBatchModel = new ChickBatchModel();
     public JFXButton btnReset;
-    public JFXComboBox searchBatchId;
+    public JFXComboBox<String> searchBatchId;
 
     /**
      * @param url
@@ -53,6 +53,7 @@ public class BatchStatusPageController implements Initializable {
         ButtonScale.buttonScaling(btnDelete);
         ButtonScale.buttonScaling(btnUpdate);
         ButtonScale.buttonScaling(btnSearch);
+        ButtonScale.buttonScaling(btnReset);
 
         colBatchId.setCellValueFactory(new PropertyValueFactory<>("batchId"));
         colStatusId.setCellValueFactory(new PropertyValueFactory<>("chickStatusId"));
@@ -71,6 +72,9 @@ public class BatchStatusPageController implements Initializable {
         try{
             btnDelete.setDisable(true);
             btnUpdate.setDisable(true);
+
+            searchBatchId.getItems().clear();
+            searchBatchId.setItems(chickBatchModel.getAllBatchIds());
 
             loadTableData();
             inputSearch.clear();
@@ -187,5 +191,10 @@ public class BatchStatusPageController implements Initializable {
 
     public void btnResetOnAction(ActionEvent actionEvent) {
         resetPage();
+    }
+
+    public void searchBatchIdOnAction(ActionEvent actionEvent) {
+        String batchId = searchBatchId.getSelectionModel().getSelectedItem();
+        inputSearch.setText(batchId);
     }
 }

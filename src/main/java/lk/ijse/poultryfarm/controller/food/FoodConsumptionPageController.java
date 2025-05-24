@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.FoodConsumptionDto;
 import lk.ijse.poultryfarm.dto.tm.FoodConsumptionTm;
+import lk.ijse.poultryfarm.model.ChickBatchModel;
 import lk.ijse.poultryfarm.model.FoodConsumptionModel;
 
 import java.net.URL;
@@ -33,7 +34,7 @@ public class FoodConsumptionPageController implements Initializable {
     public TextField inputSearch;
     public JFXButton btnSearch;
     public JFXButton btnReset;
-    public JFXComboBox searchBatchId;
+    public JFXComboBox<String> searchBatchId;
 
     /**
      * @param url
@@ -42,6 +43,7 @@ public class FoodConsumptionPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ButtonScale.buttonScaling(btnSearch);
+        ButtonScale.buttonScaling(btnReset);
 
         colBatchId.setCellValueFactory(new PropertyValueFactory<>("batchId"));
         colConsumptionId.setCellValueFactory(new PropertyValueFactory<>("consumptionId"));
@@ -61,6 +63,11 @@ public class FoodConsumptionPageController implements Initializable {
         try {
             loadTableDate();
             inputSearch.clear();
+
+            ChickBatchModel chickBatchModel = new ChickBatchModel();
+            searchBatchId.getItems().clear();
+            searchBatchId.setItems(chickBatchModel.getAllBatchIds());
+
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in retrieving food consumption").show();
@@ -108,5 +115,10 @@ public class FoodConsumptionPageController implements Initializable {
 
     public void btnResetOnAction(ActionEvent actionEvent) {
         resetPage();
+    }
+
+    public void searchBatchIdOnAction(ActionEvent actionEvent) {
+        String batchId = searchBatchId.getSelectionModel().getSelectedItem();
+        inputSearch.setText(batchId);
     }
 }

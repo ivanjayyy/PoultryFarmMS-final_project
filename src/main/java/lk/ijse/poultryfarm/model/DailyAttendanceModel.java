@@ -29,8 +29,8 @@ public class DailyAttendanceModel {
         return 0;
     }
 
-    public ArrayList<DailyAttendanceDto> searchDailyAttendance(String employeeId) throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM daily_attendance WHERE employee_id = ?", employeeId);
+    public ArrayList<DailyAttendanceDto> searchDailyAttendance(String date) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM daily_attendance WHERE date = ?", date);
         ArrayList<DailyAttendanceDto> dailyAttendanceDtos = new ArrayList<>();
 
         while (resultSet.next()) {
@@ -47,7 +47,7 @@ public class DailyAttendanceModel {
     }
 
     public ArrayList<DailyAttendanceDto> getAllDailyAttendance() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM daily_attendance");
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM daily_attendance ORDER BY attendance_id DESC");
 
         ArrayList<DailyAttendanceDto> dailyAttendanceDtos = new ArrayList<>();
 

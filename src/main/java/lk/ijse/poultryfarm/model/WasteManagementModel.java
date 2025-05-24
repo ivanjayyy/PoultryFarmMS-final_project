@@ -39,7 +39,7 @@ public class WasteManagementModel {
     }
 
     public ArrayList<WasteManagementDto> getAllWasteManagement() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM waste_management");
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM waste_management ORDER BY waste_id DESC");
 
         ArrayList<WasteManagementDto> wasteManagementDtos = new ArrayList<>();
 
