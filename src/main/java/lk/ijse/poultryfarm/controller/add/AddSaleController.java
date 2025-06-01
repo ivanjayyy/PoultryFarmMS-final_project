@@ -30,7 +30,7 @@ public class AddSaleController implements Initializable {
     public TextField inputChicksSold;
     public JFXButton btnSave;
 
-    private final String patternChicksSold = "^(0|[1-9][0-9]*)$\n$";
+    private final String patternChicksSold = "^[0-9]+$";
     private final String patternTotalSale = "^(0|[1-9][0-9]*)?(\\.[0-9]{1,2})?$";
 
     private final SaleModel saleModel = new SaleModel();

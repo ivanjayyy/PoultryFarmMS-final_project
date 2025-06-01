@@ -6,6 +6,7 @@ module lk.ijse.poultryfarm {
     requires static lombok;
     requires java.desktop;
     requires java.mail;
+    requires net.sf.jasperreports.core;
 
     exports lk.ijse.poultryfarm;
     opens lk.ijse.poultryfarm.controller to javafx.fxml;

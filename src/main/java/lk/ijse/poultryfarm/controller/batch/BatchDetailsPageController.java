@@ -15,17 +15,26 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
+import lk.ijse.poultryfarm.database.DBConnection;
 import lk.ijse.poultryfarm.dto.ChickBatchDto;
 import lk.ijse.poultryfarm.dto.tm.BatchDetailsTm;
 import lk.ijse.poultryfarm.model.ChickBatchModel;
 import lk.ijse.poultryfarm.model.ChickStatusModel;
 import lk.ijse.poultryfarm.model.SaleModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class BatchDetailsPageController implements Initializable {
@@ -60,6 +69,7 @@ public class BatchDetailsPageController implements Initializable {
     public JFXButton btnReset;
     public JFXComboBox<String> searchBatchId;
     public Label lblBatchSold;
+    public JFXButton btnReport;
 
     /**
      * @param url
@@ -74,6 +84,7 @@ public class BatchDetailsPageController implements Initializable {
         ButtonScale.buttonScaling(btnStatus);
         ButtonScale.buttonScaling(btnUpdate);
         ButtonScale.buttonScaling(btnReset);
+        ButtonScale.buttonScaling(btnReport);
 
         colBatchId.setCellValueFactory(new PropertyValueFactory<>("batchId"));
         colTotalChicks.setCellValueFactory(new PropertyValueFactory<>("chickTotal"));
@@ -94,6 +105,7 @@ public class BatchDetailsPageController implements Initializable {
             btnSale.setDisable(true);
             btnStatus.setDisable(true);
             btnAdd.setDisable(false);
+            btnReport.setDisable(true);
 
             searchBatchId.getItems().clear();
             searchBatchId.setItems(chickBatchModel.getAllBatchIds());
@@ -211,6 +223,13 @@ public class BatchDetailsPageController implements Initializable {
                 btnStatus.setDisable(false);
                 btnUpdate.setDisable(false);
             }
+
+            String currentBatchId = chickBatchModel.getCurrentBatchId();
+            if(selectedBatchId.equals(currentBatchId)){
+                btnReport.setDisable(false);
+            } else {
+                btnReport.setDisable(true);
+            }
         }
     }
 
@@ -268,5 +287,32 @@ public class BatchDetailsPageController implements Initializable {
     public void searchBatchIdOnAction(ActionEvent actionEvent) {
         String batchId = searchBatchId.getSelectionModel().getSelectedItem();
         inputSearch.setText(batchId);
+    }
+
+    public void createBatchReportOnAction(ActionEvent actionEvent) {
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+
+            JasperReport report = JasperCompileManager.compileReport(
+                    getClass().getResourceAsStream("/report/BatchRevenueReport.jrxml")
+            );
+
+            String batchId = selectedBatchId;
+
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("P_Date", LocalDate.now().toString());
+            parameters.put("P_Batch_ID", batchId);
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(
+                    report,
+                    parameters,
+                    connection
+            );
+            JasperViewer.viewReport(jasperPrint, false);
+
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR,"Error in creating batch report").show();
+            e.printStackTrace();
+        }
     }
 }

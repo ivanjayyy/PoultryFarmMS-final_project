@@ -31,7 +31,7 @@ public class AddChickStatusController implements Initializable {
     private final ChickStatusModel chickStatusModel = new ChickStatusModel();
     private final ChickBatchModel chickBatchModel = new ChickBatchModel();
 
-    private final String patternChicksDead = "^(0|[1-9][0-9]*)$\n$";
+    private final String patternChicksDead = "^[0-9]+$";
 
     public void saveChickStatusOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String batchId = lblBatchId.getText();

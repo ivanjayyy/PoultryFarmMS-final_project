@@ -19,8 +19,9 @@ public class ChangePasswordController {
     public Label lblPasswordDifficulty;
     public JFXButton btnSave;
 
-    private final String patternStrongPassword = "^(?=\\S+$)(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$\n";
-    private final String patternWeakPassword = "^[A-Za-z0-9]{6,}$\n";
+    private final String pattern1WeakPassword = "^[A-Za-z]+$";
+    private final String pattern2WeakPassword = "^[0-9]+$";
+    private final String patternNormalPassword = "^[A-Za-z0-9]+$";
 
     public void savePasswordOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         if(inputPassword.getText().equals(confirmPassword.getText())){
@@ -40,14 +41,18 @@ public class ChangePasswordController {
     }
 
     public void checkPasswordDifficultyOnMouseEntered(MouseEvent mouseEvent) {
-        if(inputPassword.getText().matches(patternStrongPassword)){
-            lblPasswordDifficulty.setText("Strong Password");
-            lblPasswordDifficulty.setStyle("-fx-text-fill: green");
-        } else if (inputPassword.getText().matches(patternWeakPassword)) {
+        if (inputPassword.getText().matches(pattern1WeakPassword) || inputPassword.getText().matches(pattern2WeakPassword)) {
             lblPasswordDifficulty.setText("Weak Password");
             lblPasswordDifficulty.setStyle("-fx-text-fill: red");
         } else if (inputPassword.getText().isEmpty()) {
             lblPasswordDifficulty.setText("Enter Password");
+            lblPasswordDifficulty.setStyle("-fx-text-fill: gray");
+        } else if(inputPassword.getText().matches(patternNormalPassword)) {
+            lblPasswordDifficulty.setText("Normal Password");
+            lblPasswordDifficulty.setStyle("-fx-text-fill: orange");
+        } else {
+            lblPasswordDifficulty.setText("Strong Password");
+            lblPasswordDifficulty.setStyle("-fx-text-fill: green");
         }
     }
 }
