@@ -1,6 +1,7 @@
 package lk.ijse.poultryfarm.controller.add;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -21,20 +22,33 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class AddWasteManagementController implements Initializable {
-    public Label lblBatchId;
+    public JFXComboBox<String> lblBatchId;
     public Label lblWasteId;
     public TextField inputTotalSale;
     public DatePicker inputSoldDate;
     public JFXButton btnSave;
 
+    private final String patternTotalSale = "^[0-9]+(\\.[0-9]{1,2})?$";
+
     private final WasteManagementModel wasteManagementModel = new WasteManagementModel();
     private final ChickBatchModel chickBatchModel = new ChickBatchModel();
 
     public void saveBatchOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        String batchId = lblBatchId.getText();
+        String batchId = lblBatchId.getValue();
         String wasteId = lblWasteId.getText();
         String totalSale = inputTotalSale.getText();
         String date = inputSoldDate.getValue().toString();
+
+        boolean isValidTotalSale = totalSale.matches(patternTotalSale);
+        inputTotalSale.setStyle("-fx-text-inner-color: black");
+
+        if(!isValidTotalSale){
+            inputTotalSale.setStyle("-fx-text-inner-color: red");
+        }
+        if(!isValidTotalSale){
+            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
+            return;
+        }
 
         WasteManagementDto wasteManagementDto = new WasteManagementDto(batchId,wasteId,Double.parseDouble(totalSale),date);
 
@@ -75,7 +89,7 @@ public class AddWasteManagementController implements Initializable {
             ButtonScale.buttonScaling(btnSave);
 
             if(WasteManagementPageController.updateWaste){
-                lblBatchId.setText(WasteManagementPageController.selectedBatchId);
+                lblBatchId.setValue(WasteManagementPageController.selectedBatchId);
                 lblWasteId.setText(WasteManagementPageController.selectedWasteId);
                 inputSoldDate.setValue(LocalDate.parse(WasteManagementPageController.selectedWasteDate));
                 inputTotalSale.setText(String.valueOf(WasteManagementPageController.selectedWasteAmount));
@@ -93,7 +107,8 @@ public class AddWasteManagementController implements Initializable {
         String currentBatchId = chickBatchModel.getCurrentBatchId();
 
         if (currentBatchId != null) {
-            lblBatchId.setText(currentBatchId);
+            lblBatchId.setValue(currentBatchId);
+            lblBatchId.setItems(chickBatchModel.getAllBatchIds());
         }else {
             new Alert(Alert.AlertType.WARNING,"No Chicken Batch Exists. Please add a new chicken batch first.").show();
         }

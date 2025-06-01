@@ -31,6 +31,8 @@ public class AddChickStatusController implements Initializable {
     private final ChickStatusModel chickStatusModel = new ChickStatusModel();
     private final ChickBatchModel chickBatchModel = new ChickBatchModel();
 
+    private final String patternChicksDead = "^(0|[1-9][0-9]*)$\n$";
+
     public void saveChickStatusOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String batchId = lblBatchId.getText();
         String chickStatusId = lblChickStatusId.getText();
@@ -40,6 +42,18 @@ public class AddChickStatusController implements Initializable {
         int sumOfChickDead = chickStatusModel.selectedBatchChickDeaths(batchId);
         int chickDeadToday = Integer.parseInt(chicksDead);
         int batchChickTotal = chickBatchModel.getChickTotal(batchId);
+
+        boolean isValidChicksDead = chicksDead.matches(patternChicksDead);
+        inputChicksDead.setStyle("-fx-text-inner-color: black");
+
+        if(!isValidChicksDead){
+            inputChicksDead.setStyle("-fx-text-inner-color: red");
+        }
+
+        if(!isValidChicksDead){
+            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
+            return;
+        }
 
         boolean isValid = (chickDeadToday + sumOfChickDead) <= batchChickTotal;
 

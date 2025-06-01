@@ -22,7 +22,7 @@ public class BillModel {
     }
 
     public ArrayList<BillDto> searchBill(String billVariant) throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM bill WHERE bill_variant = ?", billVariant);
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM bill WHERE bill_variant = ? ORDER BY bill_id DESC", billVariant);
 
         ArrayList<BillDto> billDtos = new ArrayList<>();
 

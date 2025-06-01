@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.model.OwnerModel;
@@ -23,6 +24,7 @@ public class LoginPageController implements Initializable {
     public JFXButton btnLogin;
     public PasswordField inputPassword;
     public TextField inputUsername;
+    public JFXButton btnForgotPassword;
 
     OwnerModel ownerModel = new OwnerModel();
 
@@ -62,5 +64,19 @@ public class LoginPageController implements Initializable {
         ButtonScale.buttonScaling(btnLogin);
         ButtonScale.textFieldScaling(inputUsername);
         ButtonScale.textFieldScaling(inputPassword);
+    }
+
+    public void goForgotPasswordWindowOnAction(ActionEvent actionEvent) {
+        try{
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/ForgotPassword.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in opening Forgot Password window").show();
+        }
     }
 }

@@ -27,7 +27,11 @@ public class AddSaleController implements Initializable {
     public Label lblSaleId;
     public TextField inputTotalSale;
     public DatePicker inputSoldDate;
+    public TextField inputChicksSold;
     public JFXButton btnSave;
+
+    private final String patternChicksSold = "^(0|[1-9][0-9]*)$\n$";
+    private final String patternTotalSale = "^(0|[1-9][0-9]*)?(\\.[0-9]{1,2})?$";
 
     private final SaleModel saleModel = new SaleModel();
     private final ChickBatchModel chickBatchModel = new ChickBatchModel();
@@ -37,8 +41,27 @@ public class AddSaleController implements Initializable {
         String saleId = lblSaleId.getText();
         String totalSale = inputTotalSale.getText();
         String date = inputSoldDate.getValue().toString();
+        String chicksSold = inputChicksSold.getText();
 
-        SaleDto saleDto = new SaleDto(batchId,saleId,Double.parseDouble(totalSale),date);
+        boolean isValidTotalSale = totalSale.matches(patternTotalSale);
+        boolean isValidChicksSold = chicksSold.matches(patternChicksSold);
+
+        inputChicksSold.setStyle("-fx-text-inner-color: black");
+        inputTotalSale.setStyle("-fx-text-inner-color: black");
+
+        if(!isValidChicksSold){
+            inputChicksSold.setStyle("-fx-text-inner-color: red");
+        }
+        if(!isValidTotalSale){
+            inputTotalSale.setStyle("-fx-text-inner-color: red");
+        }
+
+        if(!isValidChicksSold || !isValidTotalSale){
+            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
+            return;
+        }
+
+        SaleDto saleDto = new SaleDto(batchId,saleId,Double.parseDouble(totalSale),date,Integer.parseInt(chicksSold));
 
         if(BatchSalePageController.updateSale){
             boolean isUpdated = saleModel.updateSale(saleDto);
@@ -51,14 +74,18 @@ public class AddSaleController implements Initializable {
                 new Alert(Alert.AlertType.ERROR,"Sale Update Failed").show();
             }
         } else {
-            boolean isSaved = saleModel.saveSale(saleDto);
+            if(BatchDetailsPageController.selectedBatchChicksLeft < Integer.parseInt(chicksSold)) {
+                new Alert(Alert.AlertType.INFORMATION,"This Amount Of Chicks Not Available In The Current Batch.").show();
+            } else{
+                boolean isSaved = saleModel.saveSale(saleDto);
 
-            if (isSaved) {
-                new Alert(Alert.AlertType.INFORMATION,"Sale Saved Successfully").show();
-                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                stage.close();
-            } else {
-                new Alert(Alert.AlertType.ERROR,"Sale Save Failed").show();
+                if (isSaved) {
+                    new Alert(Alert.AlertType.INFORMATION,"Sale Saved Successfully").show();
+                    Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                    stage.close();
+                } else {
+                    new Alert(Alert.AlertType.ERROR,"Sale Save Failed").show();
+                }
             }
         }
     }
@@ -72,6 +99,7 @@ public class AddSaleController implements Initializable {
         try {
             btnSave.setText("SAVE");
             inputSoldDate.setValue(java.time.LocalDate.now());
+            inputChicksSold.setText(String.valueOf(BatchDetailsPageController.selectedBatchChicksLeft));
             loadNextId();
             loadBatchId();
             ButtonScale.buttonScaling(btnSave);
@@ -81,6 +109,7 @@ public class AddSaleController implements Initializable {
                 lblSaleId.setText(BatchSalePageController.selectedSaleId);
                 inputSoldDate.setValue(LocalDate.parse(BatchSalePageController.selectedBatchDate));
                 inputTotalSale.setText(String.valueOf(BatchSalePageController.selectedBatchTotalSale));
+                inputChicksSold.setText(String.valueOf(BatchSalePageController.selectedBatchChicksSold));
 
                 btnSave.setText("UPDATE");
             }

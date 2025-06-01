@@ -19,6 +19,7 @@ import lk.ijse.poultryfarm.dto.ChickBatchDto;
 import lk.ijse.poultryfarm.dto.tm.BatchDetailsTm;
 import lk.ijse.poultryfarm.model.ChickBatchModel;
 import lk.ijse.poultryfarm.model.ChickStatusModel;
+import lk.ijse.poultryfarm.model.SaleModel;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -33,6 +34,7 @@ public class BatchDetailsPageController implements Initializable {
     public static String selectedBatchDate;
     public static int selectedBatchTotalChicks;
     public static double selectedBatchPayment;
+    public static int selectedBatchChicksLeft;
 
     public JFXButton btnSearch;
     public JFXButton btnAdd;
@@ -53,9 +55,11 @@ public class BatchDetailsPageController implements Initializable {
     public JFXButton btnStatus;
     public JFXButton btnUpdate;
 
-    public ChickStatusModel chickStatusModel = new ChickStatusModel();
+    private final SaleModel saleModel = new SaleModel();
+    private final ChickStatusModel chickStatusModel = new ChickStatusModel();
     public JFXButton btnReset;
     public JFXComboBox<String> searchBatchId;
+    public Label lblBatchSold;
 
     /**
      * @param url
@@ -113,6 +117,16 @@ public class BatchDetailsPageController implements Initializable {
 
         int sumOfChickDead = chickStatusModel.selectedBatchChickDeaths(selectedBatchId);
         int batchChicksLeft = (selectedBatchTotalChicks - sumOfChickDead);
+        int totalChickSold = saleModel.selectedBatchTotalSold(selectedBatchId);
+
+        selectedBatchChicksLeft = (batchChicksLeft - totalChickSold);
+        boolean isSold = (batchChicksLeft == totalChickSold);
+
+        if (isSold) {
+            lblBatchSold.setText("YES");
+        } else {
+            lblBatchSold.setText("NO");
+        }
 
         lblChicksDead.setText(String.valueOf(sumOfChickDead));
         lblChicksLeft.setText(String.valueOf(batchChicksLeft));
@@ -184,14 +198,18 @@ public class BatchDetailsPageController implements Initializable {
             lblTotalDays.setText(String.valueOf(daysBetween));
 
             loadBatchDetails();
-            btnUpdate.setDisable(false);
+            btnUpdate.setDisable(true);
             btnAdd.setDisable(true);
             btnSale.setDisable(true);
             btnStatus.setDisable(true);
 
-            if(daysBetween < 40) {
+            if(25 < daysBetween && daysBetween < 30 && lblBatchSold.getText().equals("NO")) {
                 btnSale.setDisable(false);
+            }
+
+            if(lblBatchSold.getText().equals("NO") && daysBetween < 30) {
                 btnStatus.setDisable(false);
+                btnUpdate.setDisable(false);
             }
         }
     }

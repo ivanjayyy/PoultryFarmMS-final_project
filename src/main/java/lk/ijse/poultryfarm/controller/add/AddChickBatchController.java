@@ -26,11 +26,33 @@ public class AddChickBatchController implements Initializable {
     public JFXButton btnSave;
     public DatePicker inputArrivedDate;
 
+    private final String patternTotalChicks = "^[0-9]+$";
+    private final String patternPaymentMade = "^[0-9]+(\\.[0-9]{1,2})?$";
+
     public void saveBatchOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String batchId = lblBatchId.getText();
         String totalChicks = inputTotalChicks.getText();
         String paymentMade = inputPaymentMade.getText();
         String arrivedDate = inputArrivedDate.getValue().toString();
+
+        boolean isValidTotalChicks = totalChicks.matches(patternTotalChicks);
+        boolean isValidPaymentMade = paymentMade.matches(patternPaymentMade);
+
+        inputTotalChicks.setStyle("-fx-text-inner-color: black");
+        inputPaymentMade.setStyle("-fx-text-inner-color: black");
+
+        if(!isValidTotalChicks){
+            inputTotalChicks.setStyle("-fx-text-inner-color: red");
+        }
+
+        if(!isValidPaymentMade){
+            inputPaymentMade.setStyle("-fx-text-inner-color: red");
+        }
+
+        if(!isValidTotalChicks || !isValidPaymentMade){
+            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
+            return;
+        }
 
         ChickBatchDto chickBatchDto = new ChickBatchDto(batchId, Integer.parseInt(totalChicks),Double.parseDouble(paymentMade),arrivedDate);
 

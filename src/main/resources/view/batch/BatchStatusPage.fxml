@@ -40,7 +40,7 @@
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="497.0" prefWidth="1700.0">
                     <children>
-                        <TableView fx:id="tblBatchStatus" onMouseClicked="#onClickTable" prefHeight="497.0" prefWidth="1440.0" style="-fx-background-color: white; -fx-border-color: gray; -fx-background-radius: 20; -fx-border-radius: 20; -fx-font-size:: 16px;">
+                        <TableView fx:id="tblBatchStatus" onMouseClicked="#onClickTable" prefHeight="497.0" prefWidth="1440.0" style="-fx-font-size: 24px; -fx-background-color: white; -fx-border-color: gray; -fx-background-radius: 20; -fx-border-radius: 20; -fx-font-size:: 16px;">
                             <columns>
                                 <TableColumn fx:id="colBatchId" prefWidth="270.0" text="Batch ID" />
                                 <TableColumn fx:id="colStatusId" prefWidth="279.0" text="Chick Status ID" />

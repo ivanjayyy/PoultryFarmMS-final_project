@@ -45,7 +45,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="497.0" prefWidth="1700.0">
                <children>
-                  <TableView fx:id="tblWaste" onMouseClicked="#onClickTable" prefHeight="497.0" prefWidth="1439.0" style="-fx-background-color: white; -fx-border-color: gray; -fx-background-radius: 20; -fx-border-radius: 20;">
+                  <TableView fx:id="tblWaste" onMouseClicked="#onClickTable" prefHeight="497.0" prefWidth="1439.0" style="-fx-font-size: 24px; -fx-background-color: white; -fx-border-color: gray; -fx-background-radius: 20; -fx-border-radius: 20;">
                      <columns>
                         <TableColumn fx:id="colBatchId" prefWidth="243.0" text="Batch ID" />
                         <TableColumn fx:id="colWasteId" prefWidth="244.0" text="Waste ID" />

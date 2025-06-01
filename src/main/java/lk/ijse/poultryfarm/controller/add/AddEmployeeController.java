@@ -26,6 +26,10 @@ public class AddEmployeeController implements Initializable {
     public TextField inputDailyWage;
     public JFXButton btnSave;
 
+    private final String patternName = "^[A-Za-z ]+$";
+    private final String patternContact = "^(\\d+)||((\\d+\\.)(\\d){2})$";
+    private final String patternDailyWage = "^[0-9]+(\\.[0-9]{1,2})?$";
+
     private final EmployeeModel employeeModel = new EmployeeModel();
 
     public void saveBatchOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
@@ -34,6 +38,29 @@ public class AddEmployeeController implements Initializable {
         String fullTime = inputEmployeeType.getValue();
         String contact = inputContact.getText();
         String dailyWage = inputDailyWage.getText();
+
+        boolean isValidName = name.matches(patternName);
+        boolean isValidContact = contact.matches(patternContact);
+        boolean isValidDailyWage = dailyWage.matches(patternDailyWage);
+
+        inputName.setStyle("-fx-text-inner-color: black");
+        inputContact.setStyle("-fx-text-inner-color: black");
+        inputDailyWage.setStyle("-fx-text-inner-color: black");
+
+        if(!isValidName){
+            inputName.setStyle("-fx-text-inner-color: red");
+        }
+        if(!isValidContact){
+            inputContact.setStyle("-fx-text-inner-color: red");
+        }
+        if(!isValidDailyWage){
+            inputDailyWage.setStyle("-fx-text-inner-color: red");
+        }
+
+        if(!isValidContact || !isValidName || !isValidDailyWage){
+            new Alert(Alert.AlertType.ERROR,"Invalid input").show();
+            return;
+        }
 
         EmployeeDto employeeDto = new EmployeeDto(employeeId,name,fullTime,contact,Double.parseDouble(dailyWage));
 
@@ -75,6 +102,7 @@ public class AddEmployeeController implements Initializable {
         try {
             reset();
             inputEmployeeType.getItems().addAll("Full Time","Temporary");
+            inputEmployeeType.setValue("Temporary");
             loadNextId();
             ButtonScale.buttonScaling(btnSave);
 

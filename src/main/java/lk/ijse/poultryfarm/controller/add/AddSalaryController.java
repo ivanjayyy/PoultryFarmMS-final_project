@@ -30,6 +30,8 @@ public class AddSalaryController implements Initializable {
     public DatePicker inputDate;
     public JFXButton btnSave;
 
+    private final String patternAmount = "^[0-9]+(\\.[0-9]{1,2})?$";
+
     private final SalaryModel salaryModel = new SalaryModel();
     private final DailyAttendanceModel dailyAttendanceModel = new DailyAttendanceModel();
     private final ChickBatchModel chickBatchModel = new ChickBatchModel();
@@ -40,6 +42,17 @@ public class AddSalaryController implements Initializable {
         String employeeId = lblEmployeeId.getText();
         String amount = inputAmount.getText();
         String date = inputDate.getValue().toString();
+
+        inputAmount.setStyle("-fx-text-inner-color: black");
+        boolean isValidAmount = amount.matches(patternAmount);
+
+        if(!isValidAmount){
+            inputAmount.setStyle("-fx-text-inner-color: red");
+        }
+        if(!isValidAmount){
+            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
+            return;
+        }
 
         SalaryDto salaryDto = new SalaryDto(salaryId,employeeId,Double.parseDouble(amount),date);
         if(SalaryManagementPageController.updateSalary){

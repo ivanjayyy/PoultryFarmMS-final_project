@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -27,11 +28,11 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="253.0">
                      <children>
-                        <Label fx:id="lblBatchId" alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="191.0" style="-fx-border-width: 0 0 1px 0; -fx-border-color: gray;">
-                           <font>
-                              <Font name="Arial Black" size="25.0" />
-                           </font>
-                        </Label>
+                        <JFXComboBox fx:id="lblBatchId" focusColor="WHITE" prefHeight="54.0" prefWidth="193.0" style="-fx-font-size: 25px; -fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;" unFocusColor="WHITE">
+                           <HBox.margin>
+                              <Insets left="1.0" />
+                           </HBox.margin>
+                        </JFXComboBox>
                      </children>
                   </HBox>
                </children>
@@ -71,7 +72,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="232.0">
                             <children>
-                        <JFXComboBox fx:id="inputBillVariant" focusColor="WHITE" prefHeight="54.0" prefWidth="193.0" promptText="Select Variant" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;" unFocusColor="WHITE" />
+                        <JFXComboBox fx:id="inputBillVariant" focusColor="WHITE" prefHeight="54.0" prefWidth="193.0" promptText="Select Variant" style="-fx-font-size: 20px; -fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;" unFocusColor="WHITE" />
                             </children>
                         </HBox>
                     </children>
@@ -111,7 +112,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="253.0">
                             <children>
-                                <DatePicker fx:id="inputPaidDate" editable="false" prefHeight="50.0" prefWidth="205.0" promptText="Select Date" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;" />
+                                <DatePicker fx:id="inputPaidDate" editable="false" prefHeight="50.0" prefWidth="205.0" promptText="Select Date" style="-fx-font-size: 24px; -fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;" />
                             </children>
                         </HBox>
                     </children>

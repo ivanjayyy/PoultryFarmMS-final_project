@@ -11,11 +11,11 @@ import java.util.ArrayList;
 public class SaleModel {
 
     public boolean saveSale(SaleDto saleDto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("INSERT INTO sale VALUES (?,?,?,?)", saleDto.getBatchId(),saleDto.getSaleId(),saleDto.getTotalSale(),saleDto.getDate());
+        return CrudUtil.execute("INSERT INTO sale VALUES (?,?,?,?,?)", saleDto.getBatchId(),saleDto.getSaleId(),saleDto.getTotalSale(),saleDto.getDate(),saleDto.getChicksSold());
     }
 
     public boolean updateSale(SaleDto saleDto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("UPDATE sale SET batch_id = ?, total_sale = ?, date = ? WHERE sale_id = ?", saleDto.getBatchId(),saleDto.getTotalSale(),saleDto.getDate(),saleDto.getSaleId());
+        return CrudUtil.execute("UPDATE sale SET batch_id = ?, total_sale = ?, date = ?, chicks_sold = ? WHERE sale_id = ?", saleDto.getBatchId(),saleDto.getTotalSale(),saleDto.getDate(),saleDto.getChicksSold(),saleDto.getSaleId());
     }
 
     public boolean deleteSale(String saleId) throws SQLException, ClassNotFoundException {
@@ -31,7 +31,8 @@ public class SaleModel {
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getDouble(3),
-                    resultSet.getString(4)
+                    resultSet.getString(4),
+                    resultSet.getInt(5)
             );
             saleDtos.add(saleDto);
         }
@@ -48,7 +49,8 @@ public class SaleModel {
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getDouble(3),
-                    resultSet.getString(4)
+                    resultSet.getString(4),
+                    resultSet.getInt(5)
             );
             saleDtos.add(saleDto);
         }
@@ -68,5 +70,13 @@ public class SaleModel {
         }
 
         return "R001";
+    }
+
+    public int selectedBatchTotalSold(String batchId) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT SUM(chicks_sold) FROM sale WHERE batch_id = ? GROUP BY batch_id", batchId);
+        if(resultSet.next()){
+            return resultSet.getInt(1);
+        }
+        return 0;
     }
 }

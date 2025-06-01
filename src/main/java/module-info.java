@@ -5,6 +5,7 @@ module lk.ijse.poultryfarm {
     requires javafx.controls;
     requires static lombok;
     requires java.desktop;
+    requires java.mail;
 
     exports lk.ijse.poultryfarm;
     opens lk.ijse.poultryfarm.controller to javafx.fxml;
@@ -15,4 +16,5 @@ module lk.ijse.poultryfarm {
     opens lk.ijse.poultryfarm.controller.owner to javafx.fxml;
     opens lk.ijse.poultryfarm.controller.employee to javafx.fxml;
     opens lk.ijse.poultryfarm.controller.food to javafx.fxml;
+    opens lk.ijse.poultryfarm.controller.mail to javafx.fxml;
 }

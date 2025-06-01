@@ -40,7 +40,7 @@
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="497.0" prefWidth="1700.0">
                     <children>
-                        <TableView fx:id="tblFoodPayment" prefHeight="497.0" prefWidth="1440.0" style="-fx-background-color: white; -fx-border-color: gray; -fx-background-radius: 20; -fx-border-radius: 20;">
+                        <TableView fx:id="tblFoodPayment" prefHeight="497.0" prefWidth="1440.0" style="-fx-font-size: 24px; -fx-background-color: white; -fx-border-color: gray; -fx-background-radius: 20; -fx-border-radius: 20;">
                             <columns>
                                 <TableColumn fx:id="colPaymentId" prefWidth="241.0" text="Food Payment ID" />
                                 <TableColumn fx:id="colFoodId" prefWidth="248.0" text="Food ID" />

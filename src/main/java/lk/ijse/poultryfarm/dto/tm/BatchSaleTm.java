@@ -14,4 +14,5 @@ public class BatchSaleTm {
         private String saleId;
         private double totalSale;
         private String date;
+        private int chicksSold;
 }

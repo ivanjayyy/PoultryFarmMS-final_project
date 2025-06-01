@@ -44,7 +44,7 @@
                   </JFXButton>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="215.0" prefWidth="1700.0" spacing="150.0">
+            <HBox alignment="CENTER" prefHeight="215.0" prefWidth="1700.0" spacing="79.0">
                <children>
                   <VBox alignment="CENTER" layoutX="625.0" layoutY="10.0" prefHeight="94.0" prefWidth="300.0" style="-fx-background-color: #d35400; -fx-background-radius: 50;">
                      <HBox.margin>
@@ -97,11 +97,28 @@
                         <Insets bottom="20.0" top="20.0" />
                      </HBox.margin>
                   </VBox>
+                  <VBox alignment="CENTER" layoutX="1160.0" layoutY="30.0" prefHeight="94.0" prefWidth="300.0" style="-fx-background-color: #d35400; -fx-background-radius: 50;">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="BATCH SOLD" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Black" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblBatchSold" alignment="CENTER" contentDisplay="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="64.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="20.0" top="20.0" />
+                     </HBox.margin>
+                  </VBox>
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="497.0" prefWidth="1700.0">
                <children>
-                  <TableView fx:id="tblBatchDetails" onMouseClicked="#onClickTable" prefHeight="497.0" prefWidth="1440.0" style="-fx-background-color: white; -fx-border-color: gray; -fx-background-radius: 20; -fx-border-radius: 20;">
+                  <TableView fx:id="tblBatchDetails" onMouseClicked="#onClickTable" prefHeight="497.0" prefWidth="1440.0" style="-fx-background-color: white; -fx-border-color: gray; -fx-background-radius: 20; -fx-border-radius: 20; -fx-font-size: 24px;">
                     <columns>
                       <TableColumn fx:id="colBatchId" prefWidth="232.0" text="Batch ID" />
                       <TableColumn fx:id="colTotalChicks" prefWidth="324.0" text="Total Chicks" />

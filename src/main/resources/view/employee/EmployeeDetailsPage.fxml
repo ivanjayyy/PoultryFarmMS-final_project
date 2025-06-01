@@ -67,7 +67,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="391.0" prefWidth="1700.0">
                <children>
-                  <TableView fx:id="tblEmployee" onMouseClicked="#onClickTable" prefHeight="452.0" prefWidth="1440.0" style="-fx-background-color: white; -fx-border-color: gray; -fx-background-radius: 20; -fx-border-radius: 20;">
+                  <TableView fx:id="tblEmployee" onMouseClicked="#onClickTable" prefHeight="452.0" prefWidth="1440.0" style="-fx-font-size: 24px; -fx-background-color: white; -fx-border-color: gray; -fx-background-radius: 20; -fx-border-radius: 20;">
                      <columns>
                         <TableColumn fx:id="colEmployeeId" prefWidth="171.0" text="Employee ID" />
                         <TableColumn fx:id="colName" prefWidth="396.0" text="Name" />

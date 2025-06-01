@@ -22,22 +22,37 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class AddBillController implements Initializable {
-    public Label lblBatchId;
+    public JFXComboBox<String> lblBatchId;
     public Label lblBillId;
     public TextField inputPaidAmount;
     public DatePicker inputPaidDate;
     public JFXButton btnSave;
     public JFXComboBox<String> inputBillVariant;
 
+    private final String patternPaidAmount = "^[0-9]+(\\.[0-9]{1,2})?$";
+
     private final BillModel billModel = new BillModel();
     private final ChickBatchModel chickBatchModel = new ChickBatchModel();
 
     public void saveBatchOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        String batchId = lblBatchId.getText();
+        String batchId = lblBatchId.getValue();
         String billId = lblBillId.getText();
         String billVariant = inputBillVariant.getValue();
         String paidAmount = inputPaidAmount.getText();
         String paidDate = inputPaidDate.getValue().toString();
+
+        boolean isValidPaidAmount = paidAmount.matches(patternPaidAmount);
+
+        inputPaidAmount.setStyle("-fx-text-inner-color: black;");
+
+        if(!isValidPaidAmount){
+            inputPaidAmount.setStyle("-fx-text-inner-color: red;");
+        }
+
+        if(!isValidPaidAmount){
+            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
+            return;
+        }
 
         BillDto billDto = new BillDto(batchId,billId,billVariant,Double.parseDouble(paidAmount),paidDate);
 
@@ -72,6 +87,7 @@ public class AddBillController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             inputBillVariant.getItems().addAll("Electricity","Water");
+            inputBillVariant.setValue("Electricity");
             inputPaidDate.setValue(java.time.LocalDate.now());
             loadNextId();
             loadBatchId();
@@ -80,7 +96,7 @@ public class AddBillController implements Initializable {
             btnSave.setText("SAVE");
 
             if(BillManagementPageController.updateBill){
-                lblBatchId.setText(BillManagementPageController.selectedBatchId);
+                lblBatchId.setValue(BillManagementPageController.selectedBatchId);
                 lblBillId.setText(BillManagementPageController.selectedBillId);
                 inputPaidDate.setValue(LocalDate.parse(BillManagementPageController.selectedBillDate));
                 inputBillVariant.setValue(BillManagementPageController.selectedBillVariant);
@@ -99,7 +115,8 @@ public class AddBillController implements Initializable {
         String currentBatchId = chickBatchModel.getCurrentBatchId();
 
         if (currentBatchId != null) {
-            lblBatchId.setText(currentBatchId);
+            lblBatchId.setValue(currentBatchId);
+            lblBatchId.setItems(chickBatchModel.getAllBatchIds());
         }else {
             new Alert(Alert.AlertType.WARNING,"No Chicken Batch Exists. Please add a new chicken batch first.").show();
         }

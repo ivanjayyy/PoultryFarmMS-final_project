@@ -1,6 +1,7 @@
 package lk.ijse.poultryfarm.controller.add;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -21,7 +22,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AddFoodConsumptionController implements Initializable {
-    public Label lblBatchId;
+    public JFXComboBox<String> lblBatchId;
     public Label lblConsumptionId;
     public DatePicker inputDate;
     public Label lblFoodId;
@@ -32,8 +33,10 @@ public class AddFoodConsumptionController implements Initializable {
     private final FoodConsumptionModel foodConsumptionModel = new FoodConsumptionModel();
     private final FoodModel foodModel = new FoodModel();
 
+    private final String patternConsumption = "^[0-9]+(\\.[0-9]{1,2})?$";
+
     public void saveFoodConsumptionOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        String batchId = lblBatchId.getText();
+        String batchId = lblBatchId.getValue();
         String consumptionId = lblConsumptionId.getText();
         String date = inputDate.getValue().toString();
         String foodId = lblFoodId.getText();
@@ -42,6 +45,16 @@ public class AddFoodConsumptionController implements Initializable {
         double foodRemain = Double.parseDouble(foodModel.foodInventory(foodId));
         double foodConsumed = Double.parseDouble(consumption);
         boolean canConsume = foodRemain >= foodConsumed;
+
+        boolean isValidConsumption = consumption.matches(patternConsumption);
+        if(!isValidConsumption){
+            inputConsumption.setStyle("-fx-text-inner-color: red");
+        }
+
+        if(!isValidConsumption){
+            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
+            return;
+        }
 
         if(canConsume){
             FoodConsumptionDto foodConsumptionDto = new FoodConsumptionDto(
@@ -98,7 +111,8 @@ public class AddFoodConsumptionController implements Initializable {
         String currentBatchId = chickBatchModel.getCurrentBatchId();
 
         if (currentBatchId != null) {
-            lblBatchId.setText(currentBatchId);
+            lblBatchId.setValue(currentBatchId);
+            lblBatchId.setItems(chickBatchModel.getAllBatchIds());
         }else {
             new Alert(Alert.AlertType.WARNING,"No Chicken Batch Exists. Please add a new chicken batch first.").show();
         }

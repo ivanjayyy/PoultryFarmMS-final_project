@@ -58,6 +58,7 @@ public class EmployeeAttendancePageController implements Initializable {
         try {
             loadTableData();
             inputSearch.clear();
+            searchDate.setValue(null);
 
         } catch (Exception e) {
             e.printStackTrace();

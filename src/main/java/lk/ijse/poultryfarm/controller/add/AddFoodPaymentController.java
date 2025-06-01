@@ -27,6 +27,9 @@ public class AddFoodPaymentController implements Initializable {
     public DatePicker inputDate;
     public JFXButton btnSave;
 
+    private final String patternQuantity = "^[0-9]+(\\.[0-9]{1,2})?$";
+    private final String patternPaidAmount = "^[0-9]+(\\.[0-9]{1,2})?$";
+
     private final FoodPaymentModel foodPaymentModel = new FoodPaymentModel();
     private final FoodModel foodModel = new FoodModel();
 
@@ -36,6 +39,24 @@ public class AddFoodPaymentController implements Initializable {
         String quantity = inputQuantity.getText();
         String paidAmount = inputPaidAmount.getText();
         String date = inputDate.getValue().toString();
+
+        boolean isValidQuantity = quantity.matches(patternQuantity);
+        boolean isValidPaidAmount = paidAmount.matches(patternPaidAmount);
+
+        inputQuantity.setStyle("-fx-text-inner-color: black");
+        inputPaidAmount.setStyle("-fx-text-inner-color: black");
+
+        if(!isValidQuantity){
+            inputQuantity.setStyle("-fx-text-inner-color: red");
+        }
+        if(!isValidPaidAmount){
+            inputPaidAmount.setStyle("-fx-text-inner-color: red");
+        }
+
+        if(!isValidQuantity || !isValidPaidAmount){
+            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
+            return;
+        }
 
         FoodPaymentDto foodPaymentDto = new FoodPaymentDto(paymentId,foodId,Double.parseDouble(quantity),Double.parseDouble(paidAmount),date);
 

@@ -58,4 +58,16 @@ public class OwnerModel {
         }
         return false;
     }
+
+    public String getEmail() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT email FROM owner WHERE owner_id = 'O001'");
+        if (resultSet.next()) {
+            return resultSet.getString("email");
+        }
+        return null;
+    }
+
+    public boolean changePassword(String password) throws SQLException, ClassNotFoundException {
+        return CrudUtil.execute("UPDATE owner SET password = ? WHERE owner_id = 'O001'", password);
+    }
 }

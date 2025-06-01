@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -27,11 +28,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="253.0">
                             <children>
-                                <Label fx:id="lblBatchId" alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="191.0" style="-fx-border-width: 0 0 1px 0; -fx-border-color: gray;">
-                                    <font>
-                                        <Font name="Arial Black" size="25.0" />
-                                    </font>
-                                </Label>
+                        <JFXComboBox fx:id="lblBatchId" focusColor="WHITE" prefHeight="54.0" prefWidth="193.0" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;" unFocusColor="WHITE" />
                             </children>
                         </HBox>
                     </children>

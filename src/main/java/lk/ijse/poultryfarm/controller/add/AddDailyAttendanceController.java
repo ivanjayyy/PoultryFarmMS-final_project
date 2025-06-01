@@ -63,6 +63,7 @@ public class AddDailyAttendanceController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             inputAttendance.getItems().addAll(true,false);
+            inputAttendance.setValue(true);
             inputDate.setValue(java.time.LocalDate.now());
             loadNextId();
             loadBatchId();

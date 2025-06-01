@@ -32,12 +32,14 @@ public class BatchSalePageController implements Initializable {
     public static String selectedBatchTotalSale;
     public static String selectedSaleId;
     public static boolean updateSale;
+    public static String selectedBatchChicksSold;
 
     public TableView<BatchSaleTm> tblSale;
     public TableColumn<BatchSaleTm,String> colBatchId;
     public TableColumn<BatchSaleTm,String> colSaleId;
     public TableColumn<BatchSaleTm,Double> colAmount;
     public TableColumn<BatchSaleTm,String> colDate;
+    public TableColumn<BatchSaleTm,Integer> colChicksSold;
 
     private final SaleModel saleModel = new SaleModel();
 
@@ -63,6 +65,7 @@ public class BatchSalePageController implements Initializable {
         colSaleId.setCellValueFactory(new PropertyValueFactory<>("saleId"));
         colAmount.setCellValueFactory(new PropertyValueFactory<>("totalSale"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        colChicksSold.setCellValueFactory(new PropertyValueFactory<>("chicksSold"));
 
         btnDelete.setDisable(true);
         btnUpdate.setDisable(true);
@@ -98,7 +101,8 @@ public class BatchSalePageController implements Initializable {
                     saleDto.getBatchId(),
                     saleDto.getSaleId(),
                     saleDto.getTotalSale(),
-                    saleDto.getDate()
+                    saleDto.getDate(),
+                    saleDto.getChicksSold()
             );
             batchSaleTms.add(batchSaleTm);
         }
@@ -114,7 +118,8 @@ public class BatchSalePageController implements Initializable {
                         saleDto.getBatchId(),
                         saleDto.getSaleId(),
                         saleDto.getTotalSale(),
-                        saleDto.getDate()
+                        saleDto.getDate(),
+                        saleDto.getChicksSold()
                 );
                 batchSaleTms.add(batchSaleTm);
             }
@@ -133,6 +138,7 @@ public class BatchSalePageController implements Initializable {
                 selectedBatchDate = selectedItem.getDate();
                 selectedBatchTotalSale = String.valueOf(selectedItem.getTotalSale());
                 selectedSaleId = selectedItem.getSaleId();
+                selectedBatchChicksSold = String.valueOf(selectedItem.getChicksSold());
 
                 btnDelete.setDisable(false);
                 btnUpdate.setDisable(false);
