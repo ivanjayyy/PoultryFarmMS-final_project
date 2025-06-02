@@ -93,6 +93,7 @@ public class EmployeeDetailsPageController implements Initializable {
         btnAttendance.setDisable(true);
         btnAdd.setDisable(false);
         btnUpdate.setDisable(true);
+        btnSearch.setDisable(true);
 
         try {
             loadTableData();
@@ -231,6 +232,7 @@ public class EmployeeDetailsPageController implements Initializable {
     }
 
     public void searchEmployeeTypeOnAction(ActionEvent actionEvent) {
+        btnSearch.setDisable(false);
         String employeeType = searchEmployeeType.getSelectionModel().getSelectedItem();
         inputSearch.setText(employeeType);
     }

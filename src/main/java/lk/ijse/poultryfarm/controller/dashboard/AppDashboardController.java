@@ -1,16 +1,27 @@
 package lk.ijse.poultryfarm.controller.dashboard;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.scene.control.Label;
+import javafx.util.Duration;
+
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class AppDashboardController implements Initializable {
     
@@ -22,6 +33,18 @@ public class AppDashboardController implements Initializable {
     public JFXButton btnUser;
     public JFXButton btnEmployee;
     public JFXButton btnTemperature;
+    public Label lblTime;
+
+    public void currentTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            LocalTime currentTime = LocalTime.now();
+            lblTime.setText(currentTime.format(formatter));
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
 
     public void openEmployeeWindowOnAction(ActionEvent actionEvent) {
         navigateTo("/view/dashboard/EmployeeDashboard.fxml");
@@ -49,6 +72,8 @@ public class AppDashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        currentTime();
+
         navigateTo("/view/dashboard/BatchDashboard.fxml");
         ButtonScale.buttonScaling(btnBatch);
         ButtonScale.buttonScaling(btnFood);

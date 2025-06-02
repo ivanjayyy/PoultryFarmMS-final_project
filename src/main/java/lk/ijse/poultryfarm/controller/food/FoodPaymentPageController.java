@@ -63,6 +63,7 @@ public class FoodPaymentPageController implements Initializable {
         try {
             loadTableData();
             inputSearch.clear();
+            btnSearch.setDisable(true);
 
             searchFoodName.getItems().clear();
             searchFoodName.getItems().addAll("Booster","Starter","Finisher");
@@ -115,6 +116,7 @@ public class FoodPaymentPageController implements Initializable {
     }
 
     public void searchFoodNameOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        btnSearch.setDisable(false);
         String foodName = searchFoodName.getSelectionModel().getSelectedItem();
 
         FoodModel foodModel = new FoodModel();

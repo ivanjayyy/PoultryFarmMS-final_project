@@ -64,13 +64,6 @@ public class OwnerAccountController implements Initializable {
         }
     }
 
-    private void resetPage() {
-        inputFullName.clear();
-        inputUsername.clear();
-        inputPassword.clear();
-        inputEmail.clear();
-    }
-
     /**
      * @param url
      * @param resourceBundle

@@ -67,9 +67,6 @@ public class BatchSalePageController implements Initializable {
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colChicksSold.setCellValueFactory(new PropertyValueFactory<>("chicksSold"));
 
-        btnDelete.setDisable(true);
-        btnUpdate.setDisable(true);
-
         try {
             resetPage();
         } catch (Exception e) {
@@ -80,6 +77,9 @@ public class BatchSalePageController implements Initializable {
 
     private void resetPage() {
         try {
+            btnDelete.setDisable(true);
+            btnUpdate.setDisable(true);
+            btnSearch.setDisable(true);
             loadTableData();
             inputSearch.clear();
 
@@ -140,8 +140,13 @@ public class BatchSalePageController implements Initializable {
                 selectedSaleId = selectedItem.getSaleId();
                 selectedBatchChicksSold = String.valueOf(selectedItem.getChicksSold());
 
-                btnDelete.setDisable(false);
-                btnUpdate.setDisable(false);
+                ChickBatchModel chickBatchModel = new ChickBatchModel();
+                String currentBatchId = chickBatchModel.getCurrentBatchId();
+
+                if(selectedBatchId.equals(currentBatchId)){
+                    btnDelete.setDisable(false);
+                    btnUpdate.setDisable(false);
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -192,6 +197,7 @@ public class BatchSalePageController implements Initializable {
     }
 
     public void searchBatchIdOnAction(ActionEvent actionEvent) {
+        btnSearch.setDisable(false);
         String batchId = searchBatchId.getSelectionModel().getSelectedItem();
         inputSearch.setText(batchId);
     }

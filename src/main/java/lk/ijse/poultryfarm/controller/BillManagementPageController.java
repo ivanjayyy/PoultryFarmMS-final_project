@@ -15,9 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.dto.BillDto;
-import lk.ijse.poultryfarm.dto.WasteManagementDto;
 import lk.ijse.poultryfarm.dto.tm.BillManagementTm;
-import lk.ijse.poultryfarm.dto.tm.WasteManagementTm;
 import lk.ijse.poultryfarm.model.BillModel;
 import lk.ijse.poultryfarm.model.ChickBatchModel;
 
@@ -76,9 +74,14 @@ public class BillManagementPageController implements Initializable {
     public static double selectedBillAmount;
     public static String selectedBillDate;
 
-    public void onClickTable(MouseEvent mouseEvent) {
-        btnDelete.setDisable(false);
-        btnUpdate.setDisable(false);
+    public void onClickTable(MouseEvent mouseEvent) throws SQLException, ClassNotFoundException {
+        ChickBatchModel chickBatchModel = new ChickBatchModel();
+        String currentBatchId = chickBatchModel.getCurrentBatchId();
+
+        if(selectedBatchId.equals(currentBatchId)){
+            btnDelete.setDisable(false);
+            btnUpdate.setDisable(false);
+        }
         btnAddBill.setDisable(true);
 
         try {
@@ -184,6 +187,7 @@ public class BillManagementPageController implements Initializable {
             btnDelete.setDisable(true);
             btnUpdate.setDisable(true);
             btnAddBill.setDisable(false);
+            btnSearch.setDisable(true);
 
             searchBillType.getItems().clear();
             searchBillType.getItems().addAll("Water","Electricity");
@@ -244,6 +248,7 @@ public class BillManagementPageController implements Initializable {
     }
 
     public void searchBillTypeOnAction(ActionEvent actionEvent) {
+        btnSearch.setDisable(false);
         String billType = searchBillType.getSelectionModel().getSelectedItem();
         inputSearch.setText(billType);
     }

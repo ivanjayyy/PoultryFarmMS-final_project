@@ -64,6 +64,7 @@ public class WasteManagementPageController implements Initializable {
            btnAdd.setDisable(false);
            loadTableData();
            inputSearch.clear();
+           btnSearch.setDisable(true);
 
            ChickBatchModel chickBatchModel = new ChickBatchModel();
            searchBatchId.getItems().clear();
@@ -96,10 +97,16 @@ public class WasteManagementPageController implements Initializable {
     public static String selectedWasteDate;
     public static boolean updateWaste;
 
-    public void onClickTable(MouseEvent mouseEvent) {
+    public void onClickTable(MouseEvent mouseEvent) throws SQLException, ClassNotFoundException {
         btnAdd.setDisable(true);
-        btnDelete.setDisable(false);
-        btnUpdate.setDisable(false);
+
+        ChickBatchModel chickBatchModel = new ChickBatchModel();
+        String currentBatchId = chickBatchModel.getCurrentBatchId();
+
+        if(selectedBatchId.equals(currentBatchId)){
+            btnDelete.setDisable(false);
+            btnUpdate.setDisable(false);
+        }
 
         WasteManagementTm selectedItem = tblWaste.getSelectionModel().getSelectedItem();
         try {
@@ -205,6 +212,7 @@ public class WasteManagementPageController implements Initializable {
     }
 
     public void searchBatchIdOnAction(ActionEvent actionEvent) {
+        btnSearch.setDisable(false);
         String batchId = searchBatchId.getSelectionModel().getSelectedItem();
         inputSearch.setText(batchId);
     }

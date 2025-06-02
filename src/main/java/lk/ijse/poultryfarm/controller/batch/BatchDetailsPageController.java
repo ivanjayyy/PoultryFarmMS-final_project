@@ -101,6 +101,7 @@ public class BatchDetailsPageController implements Initializable {
 
     private void resetPage() {
         try {
+            btnSearch.setDisable(true);
             btnUpdate.setDisable(true);
             btnSale.setDisable(true);
             btnStatus.setDisable(true);
@@ -214,21 +215,19 @@ public class BatchDetailsPageController implements Initializable {
             btnAdd.setDisable(true);
             btnSale.setDisable(true);
             btnStatus.setDisable(true);
+            btnReport.setDisable(true);
 
-            if(25 < daysBetween && daysBetween < 30 && lblBatchSold.getText().equals("NO")) {
+            if(25 <= daysBetween && daysBetween <= 30 && lblBatchSold.getText().equals("NO")) {
                 btnSale.setDisable(false);
             }
 
-            if(lblBatchSold.getText().equals("NO") && daysBetween < 30) {
+            if(lblBatchSold.getText().equals("NO") && daysBetween <= 30) {
                 btnStatus.setDisable(false);
                 btnUpdate.setDisable(false);
             }
 
-            String currentBatchId = chickBatchModel.getCurrentBatchId();
-            if(selectedBatchId.equals(currentBatchId)){
+            if(25 <= daysBetween && daysBetween <= 30 && lblBatchSold.getText().equals("YES")){
                 btnReport.setDisable(false);
-            } else {
-                btnReport.setDisable(true);
             }
         }
     }
@@ -285,6 +284,7 @@ public class BatchDetailsPageController implements Initializable {
     }
 
     public void searchBatchIdOnAction(ActionEvent actionEvent) {
+        btnSearch.setDisable(false);
         String batchId = searchBatchId.getSelectionModel().getSelectedItem();
         inputSearch.setText(batchId);
     }

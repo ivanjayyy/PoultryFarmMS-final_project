@@ -70,6 +70,7 @@ public class SalaryManagementPageController implements Initializable {
             btnDelete.setDisable(true);
             btnUpdate.setDisable(true);
             inputSearch.clear();
+            btnSearch.setDisable(true);
 
             EmployeeModel employeeModel = new EmployeeModel();
             searchEmployeeName.getItems().clear();
@@ -185,6 +186,7 @@ public class SalaryManagementPageController implements Initializable {
     }
 
     public void searchEmployeeNameOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        btnSearch.setDisable(false);
         String name = searchEmployeeName.getSelectionModel().getSelectedItem();
 
         EmployeeModel employeeModel = new EmployeeModel();

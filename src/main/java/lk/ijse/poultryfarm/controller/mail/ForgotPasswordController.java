@@ -53,12 +53,16 @@ public class ForgotPasswordController implements Initializable {
 
     static int code;
 
-    public void resendEmailOnAction(ActionEvent actionEvent) {
+    OwnerModel ownerModel = new OwnerModel();
+
+    public void resendEmailOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         Random random = new Random();
         code = 100000 + random.nextInt(900000);
 
-        String subject = "Forgot Password Verification Code";
-        String messageText = "Your verification code is: " + code;
+        String username = ownerModel.ownerUsername();
+
+        String subject = "Change Password Verification Code";
+        String messageText = "Hello "+username+",\nYour verification code is: " + code;
         sendMail(subject,messageText);
         setTimer();
     }
@@ -130,8 +134,15 @@ public class ForgotPasswordController implements Initializable {
         Random random = new Random();
         code = 100000 + random.nextInt(900000);
 
-        String subject = "Forgot Password Verification Code";
-        String messageText = "Your verification code is: " + code;
+        String username;
+        try {
+            username = ownerModel.ownerUsername();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String subject = "Change Password Verification Code";
+        String messageText = "Hello "+username+",\nYour verification code is: " + code;
         sendMail(subject,messageText);
         setTimer();
 

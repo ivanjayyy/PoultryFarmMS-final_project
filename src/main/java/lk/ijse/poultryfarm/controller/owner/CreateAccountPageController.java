@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import lk.ijse.poultryfarm.controller.ButtonScale;
+import lk.ijse.poultryfarm.controller.mail.ForgotPasswordController;
 import lk.ijse.poultryfarm.dto.OwnerDto;
 import lk.ijse.poultryfarm.model.OwnerModel;
 
@@ -36,6 +37,9 @@ public class CreateAccountPageController implements Initializable {
 
             if(isSaved) {
                 new Alert(Alert.AlertType.INFORMATION,"Account Created Successfully").show();
+
+                String message = "Hello "+username+",\nWelcome to J.M.R. Farm House Management System.\nYou created a New Account successfully";
+                ForgotPasswordController.sendMail("New Account Created Successfully.", message);
 
             } else {
                 new Alert(Alert.AlertType.ERROR,"Account Creation Failed").show();

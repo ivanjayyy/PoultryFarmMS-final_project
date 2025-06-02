@@ -59,6 +59,7 @@ public class EmployeeAttendancePageController implements Initializable {
             loadTableData();
             inputSearch.clear();
             searchDate.setValue(null);
+            btnSearch.setDisable(true);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -110,6 +111,7 @@ public class EmployeeAttendancePageController implements Initializable {
     }
 
     public void searchDateOnAction(ActionEvent actionEvent) {
+        btnSearch.setDisable(false);
         String date = searchDate.getValue().toString();
         inputSearch.setText(date);
     }

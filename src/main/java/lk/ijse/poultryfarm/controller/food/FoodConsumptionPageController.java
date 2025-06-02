@@ -63,6 +63,7 @@ public class FoodConsumptionPageController implements Initializable {
         try {
             loadTableDate();
             inputSearch.clear();
+            btnSearch.setDisable(true);
 
             ChickBatchModel chickBatchModel = new ChickBatchModel();
             searchBatchId.getItems().clear();
@@ -118,6 +119,7 @@ public class FoodConsumptionPageController implements Initializable {
     }
 
     public void searchBatchIdOnAction(ActionEvent actionEvent) {
+        btnSearch.setDisable(false);
         String batchId = searchBatchId.getSelectionModel().getSelectedItem();
         inputSearch.setText(batchId);
     }

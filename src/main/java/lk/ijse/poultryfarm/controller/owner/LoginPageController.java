@@ -1,7 +1,6 @@
 package lk.ijse.poultryfarm.controller.owner;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -47,12 +46,12 @@ public class LoginPageController implements Initializable {
             stage.setResizable(false);
             stage.show();
 
+        } else if(!txtUsername.equals(username)) {
+            new Alert(Alert.AlertType.ERROR,"Invalid Username").show();
+        } else if(!txtPassword.equals(password)) {
+            new Alert(Alert.AlertType.ERROR,"Invalid Password").show();
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Incorrect Username or Password");
-            alert.showAndWait();
+            new Alert(Alert.AlertType.ERROR,"Invalid Username and Password").show();
         }
     }
 
