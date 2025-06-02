@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="940.0" prefWidth="1720.0" style="-fx-background-color: #e67e22;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.poultryfarm.controller.food.FoodInventoryPageController">
    <children>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-radius: 40; -fx-background-color: white;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-radius: 20; -fx-background-color: white;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox alignment="CENTER" prefHeight="130.0" prefWidth="1700.0">
                <children>
@@ -68,7 +68,7 @@
                         <Font name="Arial Rounded MT Bold" size="27.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton fx:id="btnBoosterOrder" buttonType="RAISED" onAction="#orderBoosterOnAction" prefHeight="71.0" prefWidth="195.0" style="-fx-background-color: #e67e22; -fx-background-radius: 30;" text="ORDER" textFill="WHITE">
+                  <JFXButton fx:id="btnBoosterOrder" buttonType="RAISED" onAction="#orderBoosterOnAction" prefHeight="71.0" prefWidth="195.0" style="-fx-background-color: #e67e22; -fx-background-radius: 30;" text="PAID" textFill="WHITE">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="27.0" />
                      </font>
@@ -100,7 +100,7 @@
                         <Font name="Arial Rounded MT Bold" size="27.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton fx:id="btnStarterOrder" buttonType="RAISED" layoutX="1008.0" layoutY="25.0" onAction="#orderStarterOnAction" prefHeight="71.0" prefWidth="195.0" style="-fx-background-color: #e67e22; -fx-background-radius: 30;" text="ORDER" textFill="WHITE">
+                  <JFXButton fx:id="btnStarterOrder" buttonType="RAISED" layoutX="1008.0" layoutY="25.0" onAction="#orderStarterOnAction" prefHeight="71.0" prefWidth="195.0" style="-fx-background-color: #e67e22; -fx-background-radius: 30;" text="PAID" textFill="WHITE">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="27.0" />
                      </font>
@@ -132,7 +132,7 @@
                         <Font name="Arial Rounded MT Bold" size="27.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton fx:id="btnFinisherOrder" buttonType="RAISED" layoutX="1009.0" layoutY="25.0" onAction="#orderFinisherOnAction" prefHeight="71.0" prefWidth="195.0" style="-fx-background-color: #e67e22; -fx-background-radius: 30;" text="ORDER" textFill="WHITE">
+                  <JFXButton fx:id="btnFinisherOrder" buttonType="RAISED" layoutX="1009.0" layoutY="25.0" onAction="#orderFinisherOnAction" prefHeight="71.0" prefWidth="195.0" style="-fx-background-color: #e67e22; -fx-background-radius: 30;" text="PAID" textFill="WHITE">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="27.0" />
                      </font>

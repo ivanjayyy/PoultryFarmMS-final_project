@@ -18,4 +18,5 @@ module lk.ijse.poultryfarm {
     opens lk.ijse.poultryfarm.controller.employee to javafx.fxml;
     opens lk.ijse.poultryfarm.controller.food to javafx.fxml;
     opens lk.ijse.poultryfarm.controller.mail to javafx.fxml;
+    opens lk.ijse.poultryfarm.controller.temperature to javafx.fxml;
 }

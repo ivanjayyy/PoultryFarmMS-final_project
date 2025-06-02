@@ -19,9 +19,9 @@ public class AppDashboardController implements Initializable {
     public JFXButton btnFood;
     public JFXButton btnBill;
     public JFXButton btnWaste;
-    public JFXButton btnReport;
     public JFXButton btnUser;
     public JFXButton btnEmployee;
+    public JFXButton btnTemperature;
 
     public void openEmployeeWindowOnAction(ActionEvent actionEvent) {
         navigateTo("/view/dashboard/EmployeeDashboard.fxml");
@@ -47,10 +47,6 @@ public class AppDashboardController implements Initializable {
         navigateTo("/view/WasteManagementPage.fxml");
     }
 
-    public void openReportWindowOnAction(ActionEvent actionEvent) {
-        navigateTo("/");
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         navigateTo("/view/dashboard/BatchDashboard.fxml");
@@ -58,7 +54,7 @@ public class AppDashboardController implements Initializable {
         ButtonScale.buttonScaling(btnFood);
         ButtonScale.buttonScaling(btnBill);
         ButtonScale.buttonScaling(btnWaste);
-        ButtonScale.buttonScaling(btnReport);
+        ButtonScale.buttonScaling(btnTemperature);
         ButtonScale.buttonScaling(btnUser);
         ButtonScale.buttonScaling(btnEmployee);
     }
@@ -76,5 +72,9 @@ public class AppDashboardController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Page not found").show();
             e.printStackTrace();
         }
+    }
+
+    public void checkTemperatureOnAction(ActionEvent actionEvent) {
+        navigateTo("/view/temperature/CheckTemperature.fxml");
     }
 }

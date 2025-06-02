@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="940.0" prefWidth="1720.0" style="-fx-background-color: #e67e22;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.poultryfarm.controller.food.FoodPaymentPageController">
     <children>
-        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-radius: 40; -fx-background-color: white;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-radius: 20; -fx-background-color: white;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
             <children>
                 <HBox alignment="CENTER" prefHeight="130.0" prefWidth="1700.0">
                     <children>
@@ -26,8 +26,8 @@
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="116.0" prefWidth="1700.0" spacing="50.0">
                     <children>
-                  <JFXComboBox fx:id="searchFoodName" focusColor="WHITE" onAction="#searchFoodNameOnAction" prefHeight="54.0" prefWidth="193.0" promptText="Search Food Name" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;" unFocusColor="WHITE" />
-                        <TextField fx:id="inputSearch" alignment="CENTER" prefHeight="53.0" prefWidth="971.0" promptText="search here . . ." style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;">
+                  <JFXComboBox fx:id="searchFoodName" focusColor="WHITE" onAction="#searchFoodNameOnAction" prefHeight="54.0" prefWidth="193.0" promptText="Search Food" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0; -fx-font-size: 20px;" unFocusColor="WHITE" />
+                        <TextField fx:id="inputSearch" alignment="CENTER" editable="false" prefHeight="53.0" prefWidth="971.0" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;">
                             <font>
                                 <Font name="Arial Rounded MT Bold" size="24.0" />
                             </font></TextField>
@@ -40,7 +40,7 @@
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="497.0" prefWidth="1700.0">
                     <children>
-                        <TableView fx:id="tblFoodPayment" prefHeight="497.0" prefWidth="1440.0" style="-fx-font-size: 24px; -fx-background-color: white; -fx-border-color: gray; -fx-background-radius: 20; -fx-border-radius: 20;">
+                        <TableView fx:id="tblFoodPayment" prefHeight="497.0" prefWidth="1440.0" style="-fx-font-size: 24px; -fx-background-color: white; -fx-border-color: gray;">
                             <columns>
                                 <TableColumn fx:id="colPaymentId" prefWidth="241.0" text="Food Payment ID" />
                                 <TableColumn fx:id="colFoodId" prefWidth="248.0" text="Food ID" />

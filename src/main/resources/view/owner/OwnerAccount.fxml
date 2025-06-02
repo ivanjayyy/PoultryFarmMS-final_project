@@ -14,7 +14,7 @@
 
 <AnchorPane prefHeight="1000.0" prefWidth="1720.0" style="-fx-background-color: #e67e22;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.poultryfarm.controller.owner.OwnerAccountController">
    <children>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white; -fx-background-radius: 40;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white; -fx-background-radius: 20;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
             <HBox alignment="CENTER" prefHeight="105.0" prefWidth="1720.0">
                <children>

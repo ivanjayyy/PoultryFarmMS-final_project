@@ -1,6 +1,7 @@
 package lk.ijse.poultryfarm.controller.owner;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -78,5 +79,6 @@ public class LoginPageController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in opening Forgot Password window").show();
         }
+
     }
 }

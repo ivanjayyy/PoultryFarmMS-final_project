@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="705.0" prefWidth="741.0" style="-fx-background-color: #e67e22;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.poultryfarm.controller.add.AddDailyAttendanceController">
     <children>
-        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="500.0" style="-fx-background-color: white; -fx-background-radius: 40;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="500.0" style="-fx-background-color: white; -fx-background-radius: 20;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
             <children>
                 <HBox alignment="CENTER" layoutX="10.0" layoutY="210.0" prefHeight="100.0" prefWidth="200.0">
                     <children>
@@ -70,7 +70,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="253.0">
                             <children>
-                                <DatePicker fx:id="inputDate" editable="false" prefHeight="50.0" prefWidth="205.0" promptText="Select Date" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;" />
+                                <DatePicker fx:id="inputDate" editable="false" prefHeight="50.0" prefWidth="205.0" promptText="Select Date" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0; -fx-font-size: 20px;" />
                             </children>
                         </HBox>
                     </children>
@@ -110,14 +110,14 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="250.0">
                      <children>
-                        <JFXComboBox fx:id="inputAttendance" focusColor="WHITE" prefHeight="54.0" prefWidth="193.0" promptText="Mark" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;" unFocusColor="WHITE" />
+                        <JFXComboBox fx:id="inputAttendance" focusColor="WHITE" prefHeight="54.0" prefWidth="193.0" promptText="Mark" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0; -fx-font-size: 20px;" unFocusColor="WHITE" />
                      </children>
                         </HBox>
                     </children>
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="76.0" prefWidth="701.0">
                     <children>
-                        <JFXButton fx:id="btnSave" buttonType="RAISED" onAction="#saveDailyAttendanceOnAction" prefHeight="62.0" prefWidth="259.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="SAVE" textFill="WHITE">
+                        <JFXButton fx:id="btnSave" buttonType="RAISED" onAction="#saveDailyAttendanceOnAction" prefHeight="62.0" prefWidth="220.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="SAVE" textFill="WHITE">
                             <font>
                                 <Font name="Arial Rounded MT Bold" size="31.0" />
                             </font>
