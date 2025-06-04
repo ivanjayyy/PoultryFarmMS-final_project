@@ -45,8 +45,8 @@
                         <TableColumn fx:id="colBatchId" prefWidth="209.0" text="Batch ID" />
                         <TableColumn fx:id="colConsumptionId" prefWidth="286.0" text="Food Consumption ID" />
                         <TableColumn fx:id="colDate" prefWidth="372.0" text="Consumed Date" />
-                        <TableColumn fx:id="colFoodId" prefWidth="227.0" text="Food ID" />
-                        <TableColumn fx:id="colConsumption" prefWidth="344.0" text="Consumed Food" />
+                        <TableColumn fx:id="colFoodId" prefWidth="306.0" text="Food Name" />
+                        <TableColumn fx:id="colConsumption" prefWidth="265.0" text="Consumed Food" />
                      </columns>
                   </TableView>
                </children>

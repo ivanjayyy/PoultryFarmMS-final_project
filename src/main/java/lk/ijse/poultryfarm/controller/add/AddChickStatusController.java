@@ -43,17 +43,17 @@ public class AddChickStatusController implements Initializable {
         int chickDeadToday = Integer.parseInt(chicksDead);
         int batchChickTotal = chickBatchModel.getChickTotal(batchId);
 
-        boolean isValidChicksDead = chicksDead.matches(patternChicksDead);
-        inputChicksDead.setStyle("-fx-text-inner-color: black");
-
-        if(!isValidChicksDead){
-            inputChicksDead.setStyle("-fx-text-inner-color: red");
-        }
-
-        if(!isValidChicksDead){
-            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
-            return;
-        }
+//        boolean isValidChicksDead = chicksDead.matches(patternChicksDead);
+//        inputChicksDead.setStyle("-fx-text-inner-color: black");
+//
+//        if(!isValidChicksDead){
+//            inputChicksDead.setStyle("-fx-text-inner-color: red");
+//        }
+//
+//        if(!isValidChicksDead){
+//            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
+//            return;
+//        }
 
         boolean isValid = (chickDeadToday + sumOfChickDead) <= batchChickTotal;
 
@@ -99,6 +99,17 @@ public class AddChickStatusController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            inputChicksDead.textProperty().addListener((observable, oldVal, newVal) -> {
+                if (newVal.matches(patternChicksDead) || newVal.isEmpty()) {
+                    inputChicksDead.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(false);
+
+                } else {
+                    inputChicksDead.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(true);
+                }
+            });
+
             btnSave.setText("SAVE");
             inputCheckedDate.setValue(java.time.LocalDate.now());
             loadNextId();

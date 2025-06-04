@@ -43,16 +43,16 @@ public class AddSalaryController implements Initializable {
         String amount = inputAmount.getText();
         String date = inputDate.getValue().toString();
 
-        inputAmount.setStyle("-fx-text-inner-color: black");
-        boolean isValidAmount = amount.matches(patternAmount);
-
-        if(!isValidAmount){
-            inputAmount.setStyle("-fx-text-inner-color: red");
-        }
-        if(!isValidAmount){
-            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
-            return;
-        }
+//        inputAmount.setStyle("-fx-text-inner-color: black");
+//        boolean isValidAmount = amount.matches(patternAmount);
+//
+//        if(!isValidAmount){
+//            inputAmount.setStyle("-fx-text-inner-color: red");
+//        }
+//        if(!isValidAmount){
+//            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
+//            return;
+//        }
 
         SalaryDto salaryDto = new SalaryDto(salaryId,employeeId,Double.parseDouble(amount),date);
         if(SalaryManagementPageController.updateSalary){
@@ -85,6 +85,17 @@ public class AddSalaryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            inputAmount.textProperty().addListener((observable, oldVal, newVal) -> {
+                if (newVal.matches(patternAmount) || newVal.isEmpty()) {
+                    inputAmount.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(false);
+
+                } else {
+                    inputAmount.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(true);
+                }
+            });
+
             btnSave.setText("SAVE");
             inputDate.setValue(java.time.LocalDate.now());
             loadNextId();

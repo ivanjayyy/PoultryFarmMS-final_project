@@ -43,9 +43,9 @@
                   <TableView fx:id="tblSalary" onMouseClicked="#onClickTable" prefHeight="497.0" prefWidth="1440.0" style="-fx-font-size: 24px; -fx-background-color: white; -fx-border-color: gray; -fx-background-radius: 20; -fx-border-radius: 20;">
                      <columns>
                         <TableColumn fx:id="colSalaryId" prefWidth="238.0" text="Salary ID" />
-                        <TableColumn fx:id="colEmployeeId" prefWidth="256.0" text="Employee ID" />
-                        <TableColumn fx:id="colSalary" prefWidth="511.0" text="Salary(Rs.)" />
-                        <TableColumn fx:id="colDate" prefWidth="433.0" text="Paid Date" />
+                        <TableColumn fx:id="colEmployeeId" prefWidth="540.0" text="Employee Name" />
+                        <TableColumn fx:id="colSalary" prefWidth="342.0" text="Salary(Rs.)" />
+                        <TableColumn fx:id="colDate" prefWidth="318.0" text="Paid Date" />
                      </columns>
                   </TableView>
                </children>

@@ -39,16 +39,16 @@ public class AddWasteManagementController implements Initializable {
         String totalSale = inputTotalSale.getText();
         String date = inputSoldDate.getValue().toString();
 
-        boolean isValidTotalSale = totalSale.matches(patternTotalSale);
-        inputTotalSale.setStyle("-fx-text-inner-color: black");
-
-        if(!isValidTotalSale){
-            inputTotalSale.setStyle("-fx-text-inner-color: red");
-        }
-        if(!isValidTotalSale){
-            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
-            return;
-        }
+//        boolean isValidTotalSale = totalSale.matches(patternTotalSale);
+//        inputTotalSale.setStyle("-fx-text-inner-color: black");
+//
+//        if(!isValidTotalSale){
+//            inputTotalSale.setStyle("-fx-text-inner-color: red");
+//        }
+//        if(!isValidTotalSale){
+//            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
+//            return;
+//        }
 
         WasteManagementDto wasteManagementDto = new WasteManagementDto(batchId,wasteId,Double.parseDouble(totalSale),date);
 
@@ -82,6 +82,17 @@ public class AddWasteManagementController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            inputTotalSale.textProperty().addListener((observable, oldVal, newVal) -> {
+                if (newVal.matches(patternTotalSale) || newVal.isEmpty()) {
+                    inputTotalSale.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(false);
+
+                } else {
+                    inputTotalSale.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(true);
+                }
+            });
+
             btnSave.setText("SAVE");
             inputSoldDate.setValue(java.time.LocalDate.now());
             loadNextId();

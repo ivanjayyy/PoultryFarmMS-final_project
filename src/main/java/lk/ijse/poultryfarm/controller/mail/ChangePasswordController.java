@@ -2,18 +2,20 @@ package lk.ijse.poultryfarm.controller.mail;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.model.OwnerModel;
 
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class ChangePasswordController {
+public class ChangePasswordController implements Initializable {
     public TextField inputPassword;
     public TextField confirmPassword;
     public Label lblPasswordDifficulty;
@@ -21,7 +23,8 @@ public class ChangePasswordController {
 
     private final String pattern1WeakPassword = "^[A-Za-z]+$";
     private final String pattern2WeakPassword = "^[0-9]+$";
-    private final String patternNormalPassword = "^[A-Za-z0-9]+$";
+    private final String pattern3WeakPassword = "^[A-Za-z0-9]+$";
+    private final String patternNormalPassword = "^[A-Za-z0-9]{7,}$";
 
     public void savePasswordOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         if(inputPassword.getText().equals(confirmPassword.getText())){
@@ -40,19 +43,39 @@ public class ChangePasswordController {
         }
     }
 
-    public void checkPasswordDifficultyOnMouseEntered(MouseEvent mouseEvent) {
-        if (inputPassword.getText().matches(pattern1WeakPassword) || inputPassword.getText().matches(pattern2WeakPassword)) {
-            lblPasswordDifficulty.setText("Weak Password");
-            lblPasswordDifficulty.setStyle("-fx-text-fill: red");
-        } else if (inputPassword.getText().isEmpty()) {
-            lblPasswordDifficulty.setText("Enter Password");
-            lblPasswordDifficulty.setStyle("-fx-text-fill: gray");
-        } else if(inputPassword.getText().matches(patternNormalPassword)) {
-            lblPasswordDifficulty.setText("Normal Password");
-            lblPasswordDifficulty.setStyle("-fx-text-fill: orange");
-        } else {
-            lblPasswordDifficulty.setText("Strong Password");
-            lblPasswordDifficulty.setStyle("-fx-text-fill: green");
-        }
+    /**
+     * @param url
+     * @param resourceBundle
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        ButtonScale.buttonScaling(btnSave);
+
+        inputPassword.textProperty().addListener((observable, oldVal, newVal) -> {
+            if (newVal.matches(patternNormalPassword)) {
+                inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 20; -fx-border-color: orange; -fx-border-width: 3");
+
+                lblPasswordDifficulty.setText("Normal Password");
+                lblPasswordDifficulty.setStyle("-fx-text-fill: orange");
+
+            } else if (newVal.matches(pattern1WeakPassword) || newVal.matches(pattern2WeakPassword) || newVal.matches(pattern3WeakPassword)) {
+                inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 20; -fx-border-color: red; -fx-border-width: 3");
+
+                lblPasswordDifficulty.setText("Weak Password");
+                lblPasswordDifficulty.setStyle("-fx-text-fill: red");
+
+            } else if (newVal.isEmpty()){
+                inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 20; -fx-border-color: gray;");
+
+                lblPasswordDifficulty.setText("");
+                lblPasswordDifficulty.setStyle("-fx-text-fill: gray");
+
+            } else {
+                inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 20; -fx-border-color: green; -fx-border-width: 3");
+
+                lblPasswordDifficulty.setText("Strong Password");
+                lblPasswordDifficulty.setStyle("-fx-text-fill: green");
+            }
+        });
     }
 }

@@ -40,23 +40,23 @@ public class AddFoodPaymentController implements Initializable {
         String paidAmount = inputPaidAmount.getText();
         String date = inputDate.getValue().toString();
 
-        boolean isValidQuantity = quantity.matches(patternQuantity);
-        boolean isValidPaidAmount = paidAmount.matches(patternPaidAmount);
-
-        inputQuantity.setStyle("-fx-text-inner-color: black");
-        inputPaidAmount.setStyle("-fx-text-inner-color: black");
-
-        if(!isValidQuantity){
-            inputQuantity.setStyle("-fx-text-inner-color: red");
-        }
-        if(!isValidPaidAmount){
-            inputPaidAmount.setStyle("-fx-text-inner-color: red");
-        }
-
-        if(!isValidQuantity || !isValidPaidAmount){
-            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
-            return;
-        }
+//        boolean isValidQuantity = quantity.matches(patternQuantity);
+//        boolean isValidPaidAmount = paidAmount.matches(patternPaidAmount);
+//
+//        inputQuantity.setStyle("-fx-text-inner-color: black");
+//        inputPaidAmount.setStyle("-fx-text-inner-color: black");
+//
+//        if(!isValidQuantity){
+//            inputQuantity.setStyle("-fx-text-inner-color: red");
+//        }
+//        if(!isValidPaidAmount){
+//            inputPaidAmount.setStyle("-fx-text-inner-color: red");
+//        }
+//
+//        if(!isValidQuantity || !isValidPaidAmount){
+//            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
+//            return;
+//        }
 
         FoodPaymentDto foodPaymentDto = new FoodPaymentDto(paymentId,foodId,Double.parseDouble(quantity),Double.parseDouble(paidAmount),date);
 
@@ -83,6 +83,28 @@ public class AddFoodPaymentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            inputQuantity.textProperty().addListener((observable, oldVal, newVal) -> {
+                if (newVal.matches(patternQuantity) || newVal.isEmpty()) {
+                    inputQuantity.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(false);
+
+                } else {
+                    inputQuantity.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(true);
+                }
+            });
+
+            inputPaidAmount.textProperty().addListener((observable, oldVal, newVal) -> {
+                if (newVal.matches(patternPaidAmount) || newVal.isEmpty()) {
+                    inputPaidAmount.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(false);
+
+                } else {
+                    inputPaidAmount.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(true);
+                }
+            });
+
             inputDate.setValue(java.time.LocalDate.now());
             loadNextId();
             lblFoodId.setText(FoodInventoryPageController.globalFoodId);

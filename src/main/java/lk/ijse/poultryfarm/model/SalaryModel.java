@@ -22,7 +22,7 @@ public class SalaryModel {
     }
 
     public ArrayList<SalaryDto> searchSalary(String employeeId) throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM salary WHERE employee_id = ?", employeeId);
+        ResultSet resultSet = CrudUtil.execute("SELECT s.salary_id,e.name,s.amount,s.date from salary s join employee e on s.employee_id = e.employee_id WHERE s.employee_id = ? order by s.salary_id desc", employeeId);
         ArrayList<SalaryDto> salaryDtos = new ArrayList<>();
 
         while (resultSet.next()) {
@@ -38,7 +38,7 @@ public class SalaryModel {
     }
 
     public ArrayList<SalaryDto> getAllSalary() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM salary ORDER BY salary_id DESC");
+        ResultSet resultSet = CrudUtil.execute("SELECT s.salary_id,e.name,s.amount,s.date from salary s join employee e on s.employee_id = e.employee_id order by s.salary_id desc");
 
         ArrayList<SalaryDto> salaryDtos = new ArrayList<>();
 

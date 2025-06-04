@@ -46,15 +46,15 @@ public class AddFoodConsumptionController implements Initializable {
         double foodConsumed = Double.parseDouble(consumption);
         boolean canConsume = foodRemain >= foodConsumed;
 
-        boolean isValidConsumption = consumption.matches(patternConsumption);
-        if(!isValidConsumption){
-            inputConsumption.setStyle("-fx-text-inner-color: red");
-        }
-
-        if(!isValidConsumption){
-            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
-            return;
-        }
+//        boolean isValidConsumption = consumption.matches(patternConsumption);
+//        if(!isValidConsumption){
+//            inputConsumption.setStyle("-fx-text-inner-color: red");
+//        }
+//
+//        if(!isValidConsumption){
+//            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
+//            return;
+//        }
 
         if(canConsume){
             FoodConsumptionDto foodConsumptionDto = new FoodConsumptionDto(
@@ -91,6 +91,17 @@ public class AddFoodConsumptionController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            inputConsumption.textProperty().addListener((observable, oldVal, newVal) -> {
+                if (newVal.matches(patternConsumption) || newVal.isEmpty()) {
+                    inputConsumption.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(false);
+
+                } else {
+                    inputConsumption.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(true);
+                }
+            });
+
             inputDate.setValue(java.time.LocalDate.now());
             loadNextId();
             loadBatchId();

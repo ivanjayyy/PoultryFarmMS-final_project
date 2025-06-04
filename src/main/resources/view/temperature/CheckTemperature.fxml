@@ -3,10 +3,13 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -14,7 +17,6 @@
     <children>
         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-radius: 20; -fx-background-color: white;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
             <children>
-            <Region prefHeight="83.0" prefWidth="1700.0" />
                 <HBox alignment="CENTER" prefHeight="198.0" prefWidth="1700.0">
                     <children>
                         <Label text="CHECK TEMPERATURE" textFill="GREY">
@@ -24,11 +26,20 @@
                         </Label>
                     </children>
                 </HBox>
-                <HBox alignment="CENTER" prefHeight="116.0" prefWidth="1700.0">
+                <HBox alignment="CENTER" prefHeight="116.0" prefWidth="1700.0" spacing="150.0">
                     <children>
                   <HBox alignment="TOP_CENTER" prefHeight="116.0" prefWidth="375.0">
                      <children>
                               <JFXComboBox fx:id="searchRoom" focusColor="WHITE" onAction="#searchRoomOnAction" prefHeight="54.0" prefWidth="193.0" promptText="Search Room" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0; -fx-font-size: 20px;" unFocusColor="WHITE" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="111.0" prefWidth="375.0">
+                     <children>
+                              <JFXButton fx:id="btnCheck" buttonType="RAISED" onAction="#checkTemperatureOnAction" prefHeight="78.0" prefWidth="222.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="CHECK" textFill="WHITE">
+                                  <font>
+                                      <Font name="Arial Rounded MT Bold" size="36.0" />
+                                  </font>
+                              </JFXButton>
                      </children>
                   </HBox>
                     </children>
@@ -77,17 +88,17 @@
                         </VBox>
                     </children>
                 </HBox>
-            <HBox alignment="CENTER" prefHeight="133.0" prefWidth="1620.0">
+            <HBox alignment="CENTER" prefHeight="419.0" prefWidth="1700.0" spacing="200.0">
                <children>
-                  <HBox alignment="CENTER" prefHeight="111.0" prefWidth="375.0">
-                     <children>
-                              <JFXButton fx:id="btnCheck" buttonType="RAISED" onAction="#checkTemperatureOnAction" prefHeight="78.0" prefWidth="222.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="CHECK" textFill="WHITE">
-                                  <font>
-                                      <Font name="Arial Rounded MT Bold" size="36.0" />
-                                  </font>
-                              </JFXButton>
-                     </children>
-                  </HBox>
+                  <PieChart fx:id="chickPieChart" />
+                  <BarChart fx:id="chicksDeadBarChart">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </BarChart>
                </children>
             </HBox>
             </children>

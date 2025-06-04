@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.OwnerDto;
 import lk.ijse.poultryfarm.model.OwnerModel;
+import lk.ijse.poultryfarm.util.EnterKeyAction;
 
 import java.net.URL;
 import java.util.Optional;
@@ -90,5 +91,9 @@ public class OwnerAccountController implements Initializable {
         inputEmail.setEditable(false);
         btnUpdateOwner.setText("EDIT DETAILS");
         ButtonScale.buttonScaling(btnUpdateOwner);
+
+        EnterKeyAction.setEnterKeyMove(inputFullName, inputUsername);
+        EnterKeyAction.setEnterKeyMove(inputUsername, inputPassword);
+        EnterKeyAction.setEnterKeyMove(inputPassword, inputEmail);
     }
 }

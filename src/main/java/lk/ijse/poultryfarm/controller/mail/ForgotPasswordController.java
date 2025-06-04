@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.controller.TextFieldLimiter;
 import lk.ijse.poultryfarm.model.OwnerModel;
 
@@ -134,6 +135,9 @@ public class ForgotPasswordController implements Initializable {
         Random random = new Random();
         code = 100000 + random.nextInt(900000);
 
+        ButtonScale.buttonScaling(btnResend);
+        ButtonScale.buttonScaling(btnVerify);
+
         String username;
         try {
             username = ownerModel.ownerUsername();
@@ -154,6 +158,31 @@ public class ForgotPasswordController implements Initializable {
         TextFieldLimiter.limitToOneDigit(four);
         TextFieldLimiter.limitToOneDigit(five);
         TextFieldLimiter.limitToOneDigit(six);
+
+        setAutoMove(one, two, null);
+        setAutoMove(two, three, one);
+        setAutoMove(three, four, two);
+        setAutoMove(four, five, three);
+        setAutoMove(five, six, four);
+        setAutoMove(six, null, five);
+    }
+
+    private void setAutoMove(TextField current, TextField next, TextField prev) {
+        current.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null && newVal.length() == 1 && next != null) {
+                next.requestFocus();
+            }
+        });
+
+        current.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case BACK_SPACE:
+                    if (current.getText().isEmpty() && prev != null) {
+                        prev.requestFocus();
+                    }
+                    break;
+            }
+        });
     }
 
     private void addImage() {

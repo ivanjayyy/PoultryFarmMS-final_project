@@ -35,24 +35,24 @@ public class AddChickBatchController implements Initializable {
         String paymentMade = inputPaymentMade.getText();
         String arrivedDate = inputArrivedDate.getValue().toString();
 
-        boolean isValidTotalChicks = totalChicks.matches(patternTotalChicks);
-        boolean isValidPaymentMade = paymentMade.matches(patternPaymentMade);
-
-        inputTotalChicks.setStyle("-fx-text-inner-color: black");
-        inputPaymentMade.setStyle("-fx-text-inner-color: black");
-
-        if(!isValidTotalChicks){
-            inputTotalChicks.setStyle("-fx-text-inner-color: red");
-        }
-
-        if(!isValidPaymentMade){
-            inputPaymentMade.setStyle("-fx-text-inner-color: red");
-        }
-
-        if(!isValidTotalChicks || !isValidPaymentMade){
-            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
-            return;
-        }
+//        boolean isValidTotalChicks = totalChicks.matches(patternTotalChicks);
+//        boolean isValidPaymentMade = paymentMade.matches(patternPaymentMade);
+//
+//        inputTotalChicks.setStyle("-fx-text-inner-color: black");
+//        inputPaymentMade.setStyle("-fx-text-inner-color: black");
+//
+//        if(!isValidTotalChicks){
+//            inputTotalChicks.setStyle("-fx-text-inner-color: red");
+//        }
+//
+//        if(!isValidPaymentMade){
+//            inputPaymentMade.setStyle("-fx-text-inner-color: red");
+//        }
+//
+//        if(!isValidTotalChicks || !isValidPaymentMade){
+//            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
+//            return;
+//        }
 
         ChickBatchDto chickBatchDto = new ChickBatchDto(batchId, Integer.parseInt(totalChicks),Double.parseDouble(paymentMade),arrivedDate);
 
@@ -90,6 +90,28 @@ public class AddChickBatchController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            inputTotalChicks.textProperty().addListener((observable, oldVal, newVal) -> {
+                if (newVal.matches(patternTotalChicks) || newVal.isEmpty()) {
+                    inputTotalChicks.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(false);
+
+                } else {
+                    inputTotalChicks.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(true);
+                }
+            });
+
+            inputPaymentMade.textProperty().addListener((observable, oldVal, newVal) -> {
+                if (newVal.matches(patternPaymentMade) || newVal.isEmpty()) {
+                    inputPaymentMade.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(false);
+
+                } else {
+                    inputPaymentMade.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(true);
+                }
+            });
+
             ButtonScale.buttonScaling(btnSave);
             btnSave.setText("SAVE");
 

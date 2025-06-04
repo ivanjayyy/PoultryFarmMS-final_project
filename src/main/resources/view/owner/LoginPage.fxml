@@ -29,7 +29,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="77.0" prefWidth="1920.0">
                      <children>
-                        <TextField fx:id="inputUsername" alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="username" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;">
+                        <TextField fx:id="inputUsername" alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="username" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;" text="ivan123">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="24.0" />
                            </font>
@@ -38,7 +38,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="118.0" prefWidth="1920.0">
                      <children>
-                        <PasswordField fx:id="inputPassword" alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="password" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;">
+                        <PasswordField fx:id="inputPassword" alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="password" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;" text="813311">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="24.0" />
                            </font>

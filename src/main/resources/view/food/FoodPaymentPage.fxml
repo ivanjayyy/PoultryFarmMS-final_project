@@ -43,10 +43,10 @@
                         <TableView fx:id="tblFoodPayment" prefHeight="497.0" prefWidth="1440.0" style="-fx-font-size: 24px; -fx-background-color: white; -fx-border-color: gray;">
                             <columns>
                                 <TableColumn fx:id="colPaymentId" prefWidth="241.0" text="Food Payment ID" />
-                                <TableColumn fx:id="colFoodId" prefWidth="248.0" text="Food ID" />
-                                <TableColumn fx:id="colQuantity" prefWidth="303.0" text="Quantity" />
-                        <TableColumn fx:id="colAmount" prefWidth="317.0" text="Paid Amount(Rs.)" />
-                        <TableColumn fx:id="colDate" prefWidth="329.0" text="Paid Date" />
+                                <TableColumn fx:id="colFoodId" prefWidth="330.0" text="Food Name" />
+                                <TableColumn fx:id="colQuantity" prefWidth="258.0" text="Quantity" />
+                        <TableColumn fx:id="colAmount" prefWidth="321.0" text="Paid Amount(Rs.)" />
+                        <TableColumn fx:id="colDate" prefWidth="288.0" text="Paid Date" />
                             </columns>
                         </TableView>
                     </children>

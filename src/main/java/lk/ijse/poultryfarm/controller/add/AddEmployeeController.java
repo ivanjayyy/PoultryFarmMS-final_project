@@ -43,24 +43,24 @@ public class AddEmployeeController implements Initializable {
         boolean isValidContact = contact.matches(patternContact);
         boolean isValidDailyWage = dailyWage.matches(patternDailyWage);
 
-        inputName.setStyle("-fx-text-inner-color: black");
-        inputContact.setStyle("-fx-text-inner-color: black");
-        inputDailyWage.setStyle("-fx-text-inner-color: black");
-
-        if(!isValidName){
-            inputName.setStyle("-fx-text-inner-color: red");
-        }
-        if(!isValidContact){
-            inputContact.setStyle("-fx-text-inner-color: red");
-        }
-        if(!isValidDailyWage){
-            inputDailyWage.setStyle("-fx-text-inner-color: red");
-        }
-
-        if(!isValidContact || !isValidName || !isValidDailyWage){
-            new Alert(Alert.AlertType.ERROR,"Invalid input").show();
-            return;
-        }
+//        inputName.setStyle("-fx-text-inner-color: black");
+//        inputContact.setStyle("-fx-text-inner-color: black");
+//        inputDailyWage.setStyle("-fx-text-inner-color: black");
+//
+//        if(!isValidName){
+//            inputName.setStyle("-fx-text-inner-color: red");
+//        }
+//        if(!isValidContact){
+//            inputContact.setStyle("-fx-text-inner-color: red");
+//        }
+//        if(!isValidDailyWage){
+//            inputDailyWage.setStyle("-fx-text-inner-color: red");
+//        }
+//
+//        if(!isValidContact || !isValidName || !isValidDailyWage){
+//            new Alert(Alert.AlertType.ERROR,"Invalid input").show();
+//            return;
+//        }
 
         EmployeeDto employeeDto = new EmployeeDto(employeeId,name,fullTime,contact,Double.parseDouble(dailyWage));
 
@@ -100,6 +100,39 @@ public class AddEmployeeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            inputName.textProperty().addListener((observable, oldVal, newVal) -> {
+                if (newVal.matches(patternName) || newVal.isEmpty()) {
+                    inputName.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(false);
+
+                } else {
+                    inputName.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(true);
+                }
+            });
+
+            inputContact.textProperty().addListener((observable, oldVal, newVal) -> {
+                if (newVal.matches(patternContact) || newVal.isEmpty()) {
+                    inputContact.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(false);
+
+                } else {
+                    inputContact.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(true);
+                }
+            });
+
+            inputDailyWage.textProperty().addListener((observable, oldVal, newVal) -> {
+                if (newVal.matches(patternDailyWage) || newVal.isEmpty()) {
+                    inputDailyWage.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(false);
+
+                } else {
+                    inputDailyWage.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(true);
+                }
+            });
+
             reset();
             inputEmployeeType.getItems().addAll("Full Time","Temporary");
             inputEmployeeType.setValue("Temporary");

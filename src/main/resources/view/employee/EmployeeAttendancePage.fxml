@@ -43,9 +43,9 @@
                         <TableView fx:id="tblEmployeeAttendance" prefHeight="497.0" prefWidth="1440.0" style="-fx-font-size: 24px; -fx-background-color: white; -fx-border-color: gray;">
                             <columns>
                                 <TableColumn fx:id="colBatchId" prefWidth="213.0" text="Batch ID" />
-                                <TableColumn fx:id="colAttendanceId" prefWidth="232.0" text="Attendance ID" />
-                                <TableColumn fx:id="colDate" prefWidth="329.0" text="Date" />
-                        <TableColumn fx:id="colEmployeeId" prefWidth="251.0" text="Employee ID" />
+                                <TableColumn fx:id="colAttendanceId" prefWidth="206.0" text="Attendance ID" />
+                                <TableColumn fx:id="colDate" prefWidth="240.0" text="Date" />
+                        <TableColumn fx:id="colEmployeeId" prefWidth="366.0" text="Employee Name" />
                         <TableColumn fx:id="colAttendance" prefWidth="413.0" text="Attendance Check(True/False)" />
                             </columns>
                         </TableView>

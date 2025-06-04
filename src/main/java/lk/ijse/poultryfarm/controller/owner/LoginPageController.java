@@ -7,16 +7,19 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.model.OwnerModel;
+import lk.ijse.poultryfarm.util.EnterKeyAction;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class LoginPageController implements Initializable {
@@ -64,19 +67,27 @@ public class LoginPageController implements Initializable {
         ButtonScale.buttonScaling(btnLogin);
         ButtonScale.textFieldScaling(inputUsername);
         ButtonScale.textFieldScaling(inputPassword);
+        ButtonScale.buttonScaling(btnForgotPassword);
+
+        EnterKeyAction.setEnterKeyMove(inputUsername, inputPassword);
     }
 
     public void goForgotPasswordWindowOnAction(ActionEvent actionEvent) {
-        try{
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/view/ForgotPassword.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-        } catch (Exception e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR,"Error in opening Forgot Password window").show();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to Change the Password ?", ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.YES) {
+            try{
+                Stage stage = new Stage();
+                Parent root = FXMLLoader.load(getClass().getResource("/view/ForgotPassword.fxml"));
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.showAndWait();
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR,"Error in opening Forgot Password window").show();
+            }
         }
 
     }

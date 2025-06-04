@@ -41,18 +41,18 @@ public class AddBillController implements Initializable {
         String paidAmount = inputPaidAmount.getText();
         String paidDate = inputPaidDate.getValue().toString();
 
-        boolean isValidPaidAmount = paidAmount.matches(patternPaidAmount);
-
-        inputPaidAmount.setStyle("-fx-text-inner-color: black;");
-
-        if(!isValidPaidAmount){
-            inputPaidAmount.setStyle("-fx-text-inner-color: red;");
-        }
-
-        if(!isValidPaidAmount){
-            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
-            return;
-        }
+//        boolean isValidPaidAmount = paidAmount.matches(patternPaidAmount);
+//
+//        inputPaidAmount.setStyle("-fx-text-inner-color: black;");
+//
+//        if(!isValidPaidAmount){
+//            inputPaidAmount.setStyle("-fx-text-inner-color: red;");
+//        }
+//
+//        if(!isValidPaidAmount){
+//            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
+//            return;
+//        }
 
         BillDto billDto = new BillDto(batchId,billId,billVariant,Double.parseDouble(paidAmount),paidDate);
 
@@ -94,6 +94,17 @@ public class AddBillController implements Initializable {
             ButtonScale.buttonScaling(btnSave);
 
             btnSave.setText("SAVE");
+
+            inputPaidAmount.textProperty().addListener((observable, oldVal, newVal) -> {
+                if (newVal.matches(patternPaidAmount) || newVal.isEmpty()) {
+                    inputPaidAmount.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(false);
+
+                } else {
+                    inputPaidAmount.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(true);
+                }
+            });
 
             if(BillManagementPageController.updateBill){
                 lblBatchId.setValue(BillManagementPageController.selectedBatchId);

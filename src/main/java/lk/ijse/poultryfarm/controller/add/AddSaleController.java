@@ -43,23 +43,23 @@ public class AddSaleController implements Initializable {
         String date = inputSoldDate.getValue().toString();
         String chicksSold = inputChicksSold.getText();
 
-        boolean isValidTotalSale = totalSale.matches(patternTotalSale);
-        boolean isValidChicksSold = chicksSold.matches(patternChicksSold);
-
-        inputChicksSold.setStyle("-fx-text-inner-color: black");
-        inputTotalSale.setStyle("-fx-text-inner-color: black");
-
-        if(!isValidChicksSold){
-            inputChicksSold.setStyle("-fx-text-inner-color: red");
-        }
-        if(!isValidTotalSale){
-            inputTotalSale.setStyle("-fx-text-inner-color: red");
-        }
-
-        if(!isValidChicksSold || !isValidTotalSale){
-            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
-            return;
-        }
+//        boolean isValidTotalSale = totalSale.matches(patternTotalSale);
+//        boolean isValidChicksSold = chicksSold.matches(patternChicksSold);
+//
+//        inputChicksSold.setStyle("-fx-text-inner-color: black");
+//        inputTotalSale.setStyle("-fx-text-inner-color: black");
+//
+//        if(!isValidChicksSold){
+//            inputChicksSold.setStyle("-fx-text-inner-color: red");
+//        }
+//        if(!isValidTotalSale){
+//            inputTotalSale.setStyle("-fx-text-inner-color: red");
+//        }
+//
+//        if(!isValidChicksSold || !isValidTotalSale){
+//            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
+//            return;
+//        }
 
         SaleDto saleDto = new SaleDto(batchId,saleId,Double.parseDouble(totalSale),date,Integer.parseInt(chicksSold));
 
@@ -97,6 +97,28 @@ public class AddSaleController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            inputChicksSold.textProperty().addListener((observable, oldVal, newVal) -> {
+                if (newVal.matches(patternChicksSold) || newVal.isEmpty()) {
+                    inputChicksSold.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(false);
+
+                } else {
+                    inputChicksSold.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(true);
+                }
+            });
+
+            inputTotalSale.textProperty().addListener((observable, oldVal, newVal) -> {
+                if (newVal.matches(patternTotalSale) || newVal.isEmpty()) {
+                    inputTotalSale.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(false);
+
+                } else {
+                    inputTotalSale.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(true);
+                }
+            });
+
             btnSave.setText("SAVE");
             inputSoldDate.setValue(java.time.LocalDate.now());
             inputChicksSold.setText(String.valueOf(BatchDetailsPageController.selectedBatchChicksLeft));
