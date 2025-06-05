@@ -50,6 +50,15 @@
                         </TextField>
                      </children>
                   </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="31.0" prefWidth="1900.0">
+                     <children>
+                        <Label fx:id="lblPasswordDifficulty" alignment="TOP_CENTER" prefHeight="27.0" prefWidth="118.0">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
                   <HBox alignment="CENTER" layoutX="10.0" layoutY="310.0" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <TextField fx:id="inputEmail" alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="email" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;">
@@ -61,7 +70,7 @@
                   </HBox>
                   <HBox alignment="BOTTOM_CENTER" layoutX="10.0" layoutY="410.0" prefHeight="98.0" prefWidth="1880.0">
                      <children>
-                        <JFXButton fx:id="btnCreate" buttonType="RAISED" onAction="#createAccountOnAction" prefHeight="70.0" prefWidth="247.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="CREATE" textFill="WHITE">
+                        <JFXButton fx:id="btnCreate" buttonType="RAISED" onAction="#createAccountOnAction" prefHeight="70.0" prefWidth="179.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="CREATE" textFill="WHITE">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="27.0" />
                            </font>

@@ -13,14 +13,6 @@ public class FoodConsumptionModel {
         return CrudUtil.execute("INSERT INTO food_consumption VALUES (?,?,?,?,?)", foodConsumptionDto.getBatchId(),foodConsumptionDto.getConsumptionId(),foodConsumptionDto.getDate(),foodConsumptionDto.getFoodId(),foodConsumptionDto.getConsumption());
     }
 
-    public boolean updateFoodConsumption(FoodConsumptionDto foodConsumptionDto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("UPDATE food_consumption SET batch_id = ?, date = ?, food_id = ?, consumption = ? WHERE consumption_id = ?", foodConsumptionDto.getBatchId(),foodConsumptionDto.getDate(),foodConsumptionDto.getFoodId(),foodConsumptionDto.getConsumption(),foodConsumptionDto.getConsumptionId());
-    }
-
-    public boolean deleteFoodConsumption(String consumptionId) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("DELETE FROM food_consumption WHERE consumption_id = ?", consumptionId);
-    }
-
     public ArrayList<FoodConsumptionDto> searchFoodConsumption(String batchId) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("select fc.batch_id,fc.consumption_id,fc.date,f.food_name,fc.consumption from food_consumption fc join food f on fc.food_id = f.food_id WHERE fc.batch_id = ? order by fc.consumption_id desc", batchId);
         ArrayList<FoodConsumptionDto> foodConsumptionDtos = new ArrayList<>();

@@ -12,6 +12,7 @@ import lk.ijse.poultryfarm.controller.ButtonScale;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -34,6 +35,7 @@ public class AppDashboardController implements Initializable {
     public JFXButton btnEmployee;
     public JFXButton btnTemperature;
     public Label lblTime;
+    public Label lblDate;
 
     public void currentTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -73,6 +75,7 @@ public class AppDashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currentTime();
+        lblDate.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 
         navigateTo("/view/dashboard/BatchDashboard.fxml");
         ButtonScale.buttonScaling(btnBatch);

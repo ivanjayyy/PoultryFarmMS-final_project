@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
@@ -7,6 +8,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -28,7 +31,7 @@
             <HBox alignment="CENTER" prefHeight="116.0" prefWidth="1700.0" spacing="50.0">
                <children>
                   <JFXComboBox fx:id="searchEmployeeType" focusColor="WHITE" onAction="#searchEmployeeTypeOnAction" prefHeight="54.0" prefWidth="193.0" promptText="Search Type" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0; -fx-font-size: 20px;" unFocusColor="WHITE" />
-                  <TextField fx:id="inputSearch" alignment="CENTER" editable="false" prefHeight="53.0" prefWidth="743.0" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;">
+                  <TextField fx:id="inputSearch" alignment="CENTER" editable="false" prefHeight="53.0" prefWidth="759.0" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="24.0" />
                      </font></TextField>
@@ -36,11 +39,33 @@
                      <font>
                         <Font name="Arial Rounded MT Bold" size="22.0" />
                      </font>
+                     <graphic>
+                        <JFXBadge>
+                           <children>
+                              <ImageView fitHeight="38.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../../../../../Users/ivanj/Downloads/icons8-search-64.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </JFXBadge>
+                     </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="btnAdd" buttonType="RAISED" layoutX="1122.0" layoutY="69.0" onAction="#addEmployeeOnAction" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="ADD" textFill="WHITE">
+                  <JFXButton fx:id="btnAdd" buttonType="RAISED" layoutX="1122.0" layoutY="69.0" onAction="#addEmployeeOnAction" prefHeight="53.0" prefWidth="156.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="ADD" textFill="WHITE">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="22.0" />
                      </font>
+                     <graphic>
+                        <JFXBadge>
+                           <children>
+                              <ImageView fitHeight="34.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../../../../../Users/ivanj/Downloads/icons8-add-64.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </JFXBadge>
+                     </graphic>
                   </JFXButton>
                </children>
             </HBox>
@@ -89,11 +114,33 @@
                            <font>
                               <Font name="Arial Rounded MT Bold" size="22.0" />
                            </font>
+                           <graphic>
+                              <JFXBadge>
+                                 <children>
+                                    <ImageView fitHeight="38.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../Users/ivanj/Downloads/icons8-reset-64.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </JFXBadge>
+                           </graphic>
                         </JFXButton>
                         <JFXButton fx:id="btnUpdate" buttonType="RAISED" onAction="#updateEmployeeOnAction" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #16a085; -fx-background-radius: 20;" text="UPDATE" textFill="WHITE">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="22.0" />
                            </font>
+                           <graphic>
+                              <JFXBadge>
+                                 <children>
+                                    <ImageView fitHeight="38.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../Users/ivanj/Downloads/icons8-edit-64.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </JFXBadge>
+                           </graphic>
                         </JFXButton>
                      </children>
                   </HBox>

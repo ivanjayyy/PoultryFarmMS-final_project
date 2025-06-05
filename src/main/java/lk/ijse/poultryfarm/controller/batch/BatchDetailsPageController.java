@@ -70,6 +70,7 @@ public class BatchDetailsPageController implements Initializable {
     public JFXComboBox<String> searchBatchId;
     public Label lblBatchSold;
     public JFXButton btnReport;
+    public JFXButton btnQR;
 
     /**
      * @param url
@@ -85,6 +86,7 @@ public class BatchDetailsPageController implements Initializable {
         ButtonScale.buttonScaling(btnUpdate);
         ButtonScale.buttonScaling(btnReset);
         ButtonScale.buttonScaling(btnReport);
+        ButtonScale.buttonScaling(btnQR);
 
         colBatchId.setCellValueFactory(new PropertyValueFactory<>("batchId"));
         colTotalChicks.setCellValueFactory(new PropertyValueFactory<>("chickTotal"));
@@ -107,6 +109,7 @@ public class BatchDetailsPageController implements Initializable {
             btnStatus.setDisable(true);
             btnAdd.setDisable(false);
             btnReport.setDisable(true);
+            btnQR.setDisable(true);
 
             searchBatchId.getItems().clear();
             searchBatchId.setItems(chickBatchModel.getAllBatchIds());
@@ -216,6 +219,7 @@ public class BatchDetailsPageController implements Initializable {
             btnSale.setDisable(true);
             btnStatus.setDisable(true);
             btnReport.setDisable(true);
+            btnQR.setDisable(false);
 
             if(25 <= daysBetween && daysBetween <= 30 && lblBatchSold.getText().equals("NO")) {
                 btnSale.setDisable(false);
@@ -313,6 +317,21 @@ public class BatchDetailsPageController implements Initializable {
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR,"Error in creating batch report").show();
             e.printStackTrace();
+        }
+    }
+
+    public void createQRCodeOnAction(ActionEvent actionEvent) {
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/batch/QRCode.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            resetPage();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in opening QR Code").show();
         }
     }
 }

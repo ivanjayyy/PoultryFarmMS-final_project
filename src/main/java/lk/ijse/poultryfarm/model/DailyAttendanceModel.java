@@ -13,14 +13,6 @@ public class DailyAttendanceModel {
         return CrudUtil.execute("INSERT INTO daily_attendance VALUES (?,?,?,?,?)", dailyAttendanceDto.getBatchId(),dailyAttendanceDto.getAttendanceId(),dailyAttendanceDto.getDate(),dailyAttendanceDto.getEmployeeId(),dailyAttendanceDto.isAttendance());
     }
 
-    public boolean updateDailyAttendance(DailyAttendanceDto dailyAttendanceDto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("UPDATE daily_attendance SET batch_id = ?, date = ?, employee_id = ?, attendance = ? WHERE attendance_id = ?", dailyAttendanceDto.getBatchId(),dailyAttendanceDto.getDate(),dailyAttendanceDto.getEmployeeId(),dailyAttendanceDto.isAttendance(),dailyAttendanceDto.getAttendanceId());
-    }
-
-    public boolean deleteDailyAttendance(String attendanceId) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("DELETE FROM daily_attendance WHERE attendance_id = ?", attendanceId);
-    }
-
     public int countAttendance(String employeeId, String batchId) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT COUNT(date) from daily_attendance WHERE batch_id = ? AND employee_id = ? AND attendance = true GROUP BY attendance", batchId,employeeId);
         if(resultSet.next()){

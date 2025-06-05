@@ -5,14 +5,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import javafx.animation.ScaleTransition;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.model.OwnerModel;
@@ -22,6 +27,8 @@ public class LoginDashboardController implements Initializable {
     public AnchorPane ancLoginWindow;
     public JFXButton btnLogin;
     public JFXButton btnCreate;
+    public JFXButton btnEdit;
+    public ImageView profileImageView;
 
     public void goCreateAccountPageOnAction(ActionEvent actionEvent) {
         navigateTo("/view/owner/CreateAccountPage.fxml");
@@ -37,6 +44,7 @@ public class LoginDashboardController implements Initializable {
 
         ButtonScale.buttonScaling(btnLogin);
         ButtonScale.buttonScaling(btnCreate);
+        ButtonScale.buttonScaling(btnEdit);
 
         OwnerModel ownerModel = new OwnerModel();
         try {
@@ -66,4 +74,21 @@ public class LoginDashboardController implements Initializable {
         }
     }
 
+    public void editLogoOnAction(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose Profile Picture");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
+        );
+
+        File selectedFile = fileChooser.showOpenDialog(getStage());
+        if (selectedFile != null) {
+            Image image = new Image(selectedFile.toURI().toString());
+            profileImageView.setImage(image);
+        }
+    }
+
+    private Stage getStage() {
+        return (Stage) profileImageView.getScene().getWindow();
+    }
 }

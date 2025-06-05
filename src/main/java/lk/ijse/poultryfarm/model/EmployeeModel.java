@@ -19,10 +19,6 @@ public class EmployeeModel {
         return CrudUtil.execute("UPDATE employee SET name = ?, full_time = ?, contact = ?, daily_wage = ? WHERE employee_id = ?", employeeDto.getName(),employeeDto.getFullTime(),employeeDto.getContact(),employeeDto.getDailyWage(),employeeDto.getEmployeeId());
     }
 
-    public boolean deleteEmployee(String employeeId) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("DELETE FROM employee WHERE employee_id = ?", employeeId);
-    }
-
     public double getDailyWage(String employeeId) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT daily_wage from employee WHERE employee_id = ?", employeeId);
         if(resultSet.next()){

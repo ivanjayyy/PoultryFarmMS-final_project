@@ -19,10 +19,6 @@ public class ChickBatchModel {
         return CrudUtil.execute("UPDATE chick_batch SET chick_total = ?, payment = ?, date = ? WHERE batch_id = ?", chickBatchDto.getChickTotal(),chickBatchDto.getPayment(),chickBatchDto.getDate(),chickBatchDto.getBatchId());
     }
 
-    public boolean deleteChickBatch(String batchId) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("DELETE FROM chick_batch WHERE batch_id = ?", batchId);
-    }
-
     public ArrayList<ChickBatchDto> searchChickBatch(String batchId) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM chick_batch WHERE batch_id = ?", batchId);
 

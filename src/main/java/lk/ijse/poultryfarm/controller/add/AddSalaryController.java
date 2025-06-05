@@ -114,7 +114,8 @@ public class AddSalaryController implements Initializable {
 
             if(SalaryManagementPageController.updateSalary){
                 lblSalaryId.setText(SalaryManagementPageController.selectedSalaryId);
-                lblEmployeeId.setText(SalaryManagementPageController.selectedEmployeeId);
+                String id = employeeModel.getEmployeeId(SalaryManagementPageController.selectedEmployeeId);
+                lblEmployeeId.setText(id);
                 inputAmount.setText(String.valueOf(SalaryManagementPageController.selectedSalary));
                 inputDate.setValue(LocalDate.parse(SalaryManagementPageController.selectedDate));
 

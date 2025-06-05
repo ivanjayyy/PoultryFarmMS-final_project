@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.controller.mail.ForgotPasswordController;
@@ -31,6 +32,7 @@ public class CreateAccountPageController implements Initializable {
     private final String pattern2WeakPassword = "^[0-9]+$";
     private final String pattern3WeakPassword = "^[A-Za-z0-9]+$";
     private final String patternNormalPassword = "^[A-Za-z0-9]{6,}$";
+    public Label lblPasswordDifficulty;
 
     public void createAccountOnAction(ActionEvent actionEvent) {
         String ownerId = "O001";
@@ -41,8 +43,11 @@ public class CreateAccountPageController implements Initializable {
 
         OwnerDto ownerDto = new OwnerDto(ownerId,fullName,username,password,email);
 
-        if(fullName.equals("") || username.equals("") || password.equals("") || email.equals("")) {
-            new Alert(Alert.AlertType.ERROR,"There are Empty Fields. Please Fill Them.").show();
+        if(fullName.isEmpty() || username.isEmpty() || password.isEmpty() || email.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "There are Empty Fields. Please Fill Them.").show();
+
+        } else if(!fullName.matches(patternFullName) || !username.matches(patternUsername) || !email.matches(patternEmail)) {
+            new Alert(Alert.AlertType.ERROR,"Invalid Inputs. Please Try Again.").show();
 
         } else {
             try {
@@ -79,6 +84,7 @@ public class CreateAccountPageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         ButtonScale.buttonScaling(btnCreate);
         ButtonScale.textFieldScaling(inputFullName);
         ButtonScale.textFieldScaling(inputUsername);
@@ -118,16 +124,28 @@ public class CreateAccountPageController implements Initializable {
 
         inputPassword.textProperty().addListener((observable, oldVal, newVal) -> {
             if (newVal.matches(patternNormalPassword)) {
-                inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 30; -fx-border-color: orange; -fx-border-width: 3");
+                inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 20; -fx-border-color: orange; -fx-border-width: 3");
+
+                lblPasswordDifficulty.setText("Normal");
+                lblPasswordDifficulty.setStyle("-fx-text-fill: orange");
 
             } else if (newVal.matches(pattern1WeakPassword) || newVal.matches(pattern2WeakPassword) || newVal.matches(pattern3WeakPassword)) {
-                inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 30; -fx-border-color: red; -fx-border-width: 3");
+                inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 20; -fx-border-color: red; -fx-border-width: 3");
+
+                lblPasswordDifficulty.setText("Weak");
+                lblPasswordDifficulty.setStyle("-fx-text-fill: red");
 
             } else if (newVal.isEmpty()){
-                inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 30; -fx-border-color: gray;");
+                inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 20; -fx-border-color: gray;");
+
+                lblPasswordDifficulty.setText("");
+                lblPasswordDifficulty.setStyle("-fx-text-fill: gray");
 
             } else {
-                inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 30; -fx-border-color: green; -fx-border-width: 3");
+                inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 20; -fx-border-color: green; -fx-border-width: 3");
+
+                lblPasswordDifficulty.setText("Strong");
+                lblPasswordDifficulty.setStyle("-fx-text-fill: green");
             }
         });
     }

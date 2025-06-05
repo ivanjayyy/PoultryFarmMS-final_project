@@ -29,7 +29,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="77.0" prefWidth="1920.0">
                      <children>
-                        <TextField fx:id="inputUsername" alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="username" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;" text="ivan123">
+                        <TextField fx:id="inputUsername" alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="username" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="24.0" />
                            </font>
@@ -38,7 +38,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="118.0" prefWidth="1920.0">
                      <children>
-                        <PasswordField fx:id="inputPassword" alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="password" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;" text="813311">
+                        <PasswordField fx:id="inputPassword" alignment="CENTER" prefHeight="60.0" prefWidth="375.0" promptText="password" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-radius: 30;">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="24.0" />
                            </font>
@@ -56,7 +56,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="181.0" prefWidth="1900.0">
                      <children>
-                        <JFXButton fx:id="btnLogin" buttonType="RAISED" onAction="#goAppWindowOnAction" prefHeight="70.0" prefWidth="227.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="LOG IN" textFill="WHITE">
+                        <JFXButton fx:id="btnLogin" buttonType="RAISED" onAction="#goAppWindowOnAction" prefHeight="70.0" prefWidth="169.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="LOG IN" textFill="WHITE">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="27.0" />
                            </font>

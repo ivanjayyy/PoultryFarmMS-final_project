@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
@@ -7,6 +8,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -26,22 +29,44 @@
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="116.0" prefWidth="1700.0" spacing="50.0">
+            <HBox alignment="CENTER" prefHeight="116.0" prefWidth="1700.0" spacing="52.0">
                <children>
                   <JFXComboBox fx:id="searchBatchId" focusColor="WHITE" onAction="#searchBatchIdOnAction" prefHeight="54.0" prefWidth="193.0" promptText="Search Batch ID" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0; -fx-font-size: 20px;" unFocusColor="WHITE" />
                   <TextField fx:id="inputSearch" alignment="CENTER" editable="false" prefHeight="53.0" prefWidth="747.0" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0;">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="24.0" />
                      </font></TextField>
-                  <JFXButton fx:id="btnSearch" buttonType="RAISED" onAction="#searchBatchOnAction" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="SEARCH" textFill="WHITE">
+                  <JFXButton fx:id="btnSearch" buttonType="RAISED" onAction="#searchBatchOnAction" prefHeight="53.0" prefWidth="176.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="SEARCH" textFill="WHITE">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="22.0" />
                      </font>
+                     <graphic>
+                        <JFXBadge>
+                           <children>
+                              <ImageView fitHeight="36.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../../../../../Users/ivanj/Downloads/icons8-search-64.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </JFXBadge>
+                     </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="btnAdd" buttonType="RAISED" layoutX="1122.0" layoutY="69.0" onAction="#addBatchOnAction" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="ADD" textFill="WHITE">
+                  <JFXButton fx:id="btnAdd" buttonType="RAISED" layoutX="1122.0" layoutY="69.0" onAction="#addBatchOnAction" prefHeight="53.0" prefWidth="165.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="ADD" textFill="WHITE">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="22.0" />
                      </font>
+                     <graphic>
+                        <JFXBadge>
+                           <children>
+                              <ImageView fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../../../../../Users/ivanj/Downloads/icons8-add-64.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </JFXBadge>
+                     </graphic>
                   </JFXButton>
                </children>
             </HBox>
@@ -149,17 +174,55 @@
                            <font>
                               <Font name="Arial Rounded MT Bold" size="22.0" />
                            </font>
+                           <graphic>
+                              <JFXBadge>
+                                 <children>
+                                    <ImageView fitHeight="38.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../Users/ivanj/Downloads/icons8-reset-64.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </JFXBadge>
+                           </graphic>
                         </JFXButton>
-                        <JFXButton fx:id="btnUpdate" buttonType="RAISED" onAction="#updateBatchDetailsOnAction" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #16a085; -fx-background-radius: 20;" text="UPDATE" textFill="WHITE">
+                        <JFXButton fx:id="btnUpdate" buttonType="RAISED" onAction="#updateBatchDetailsOnAction" prefHeight="53.0" prefWidth="180.0" style="-fx-background-color: #16a085; -fx-background-radius: 20;" text="UPDATE" textFill="WHITE">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="22.0" />
                            </font>
+                           <graphic>
+                              <JFXBadge>
+                                 <children>
+                                    <ImageView fitHeight="35.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../Users/ivanj/Downloads/icons8-edit-64.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </JFXBadge>
+                           </graphic>
                         </JFXButton>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="106.0" prefWidth="1136.0" spacing="50.0">
+                  <HBox alignment="CENTER" prefHeight="106.0" prefWidth="1136.0" spacing="40.0">
                      <children>
-                        <Region prefHeight="45.0" prefWidth="120.0" />
+                        <Region prefHeight="106.0" prefWidth="12.0" />
+                        <JFXButton fx:id="btnQR" buttonType="RAISED" layoutX="310.0" layoutY="37.0" onAction="#createQRCodeOnAction" prefHeight="53.0" prefWidth="106.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="QR" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="22.0" />
+                           </font>
+                           <graphic>
+                              <JFXBadge>
+                                 <children>
+                                    <ImageView fitHeight="40.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../Users/ivanj/Downloads/icons8-qr-24.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </JFXBadge>
+                           </graphic>
+                        </JFXButton>
                         <JFXButton fx:id="btnReport" buttonType="RAISED" layoutX="137.0" layoutY="37.0" onAction="#createBatchReportOnAction" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="REPORT" textFill="WHITE">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="22.0" />

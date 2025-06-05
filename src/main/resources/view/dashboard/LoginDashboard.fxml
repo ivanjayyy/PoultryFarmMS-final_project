@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -14,12 +15,12 @@
          <children>
             <HBox alignment="CENTER" prefHeight="60.0" prefWidth="356.0" spacing="50.0">
                <children>
-                  <JFXButton fx:id="btnLogin" onAction="#goLoginPageOnAction" ripplerFill="#d35400" text="LOG IN" textAlignment="CENTER" textFill="WHITE">
+                  <JFXButton fx:id="btnLogin" buttonType="RAISED" onAction="#goLoginPageOnAction" ripplerFill="#d35400" text="LOG IN" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="Arial Black" size="18.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton fx:id="btnCreate" layoutX="351.0" layoutY="25.0" onAction="#goCreateAccountPageOnAction" ripplerFill="#d15000" text="NEW ACCOUNT" textAlignment="CENTER" textFill="WHITE">
+                  <JFXButton fx:id="btnCreate" buttonType="RAISED" layoutX="351.0" layoutY="25.0" onAction="#goCreateAccountPageOnAction" ripplerFill="#d15000" text="NEW ACCOUNT" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="Arial Black" size="18.0" />
                      </font>
@@ -29,15 +30,31 @@
          </children>
       </HBox>
       <AnchorPane fx:id="ancLoginWindow" prefHeight="940.0" prefWidth="1920.0" style="-fx-background-color: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
-      <ImageView fitHeight="217.0" fitWidth="219.0" layoutX="98.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="profileImageView" fitHeight="217.0" fitWidth="219.0" layoutX="98.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../../Users/ivanj/Downloads/WhatsApp%20Image%202025-06-02%20at%2020.30.05_30b787f4.jpg" />
+            <Image url="@../../images/logo_change/Logo.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="71.0" layoutY="400.0" text="J.M.R. FARM HOUSE" textFill="WHITE">
+      <Label layoutX="71.0" layoutY="443.0" text="J.M.R. FARM HOUSE" textFill="WHITE">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="30.0" />
          </font>
       </Label>
+      <JFXButton fx:id="btnEdit" buttonType="RAISED" layoutX="166.0" layoutY="384.0" onAction="#editLogoOnAction" prefHeight="32.0" prefWidth="81.0" ripplerFill="#d35400" text="EDIT" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Arial Black" size="14.0" />
+         </font>
+         <graphic>
+            <JFXBadge position="CENTER">
+               <children>
+                  <ImageView fitHeight="24.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/EditIcon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </JFXBadge>
+         </graphic>
+      </JFXButton>
    </children>
 </AnchorPane>
