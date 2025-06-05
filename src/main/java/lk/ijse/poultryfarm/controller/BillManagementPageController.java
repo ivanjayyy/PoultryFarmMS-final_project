@@ -39,7 +39,6 @@ public class BillManagementPageController implements Initializable {
     public TableColumn<BillManagementTm,String> colPaidDate;
 
     public JFXButton btnDelete;
-    public JFXButton btnUpdate;
 
     private final BillModel billModel = new BillModel();
     public Label lblWaterBillStatus;
@@ -75,18 +74,6 @@ public class BillManagementPageController implements Initializable {
     public static String selectedBillDate;
 
     public void onClickTable(MouseEvent mouseEvent) throws SQLException, ClassNotFoundException {
-        ChickBatchModel chickBatchModel = new ChickBatchModel();
-        String currentBatchId = chickBatchModel.getCurrentBatchId();
-
-        if(selectedBatchId.equals(currentBatchId)){
-            btnDelete.setDisable(false);
-            btnUpdate.setDisable(false);
-        } else{
-            btnDelete.setDisable(true);
-            btnUpdate.setDisable(true);
-        }
-        btnAddBill.setDisable(true);
-
         try {
             BillManagementTm selectedItem = tblBill.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
@@ -95,6 +82,17 @@ public class BillManagementPageController implements Initializable {
                 selectedBillVariant = selectedItem.getBillVariant();
                 selectedBillAmount = selectedItem.getAmount();
                 selectedBillDate = selectedItem.getDate();
+
+                ChickBatchModel chickBatchModel = new ChickBatchModel();
+                String currentBatchId = chickBatchModel.getCurrentBatchId();
+
+                if(selectedBatchId.equals(currentBatchId)){
+                    btnDelete.setDisable(false);
+                } else {
+                    btnDelete.setDisable(true);
+                }
+
+                btnAddBill.setDisable(true);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -123,27 +121,6 @@ public class BillManagementPageController implements Initializable {
         }
     }
 
-    public static boolean updateBill;
-
-    public void updateBillOnAction(ActionEvent actionEvent) {
-        updateBill = true;
-
-        try {
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/view/add/AddBill.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-            resetPage();
-        } catch (IOException e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR,"Error in opening add bill window").show();
-        }
-
-        updateBill = false;
-    }
-
     public void addBillOnAction(ActionEvent actionEvent) throws IOException {
         try{
             Stage stage = new Stage();
@@ -168,7 +145,6 @@ public class BillManagementPageController implements Initializable {
         ButtonScale.buttonScaling(btnAddBill);
         ButtonScale.buttonScaling(btnSearch);
         ButtonScale.buttonScaling(btnDelete);
-        ButtonScale.buttonScaling(btnUpdate);
         ButtonScale.buttonScaling(btnReset);
 
         colBatchId.setCellValueFactory(new PropertyValueFactory<>("batchId"));
@@ -188,7 +164,6 @@ public class BillManagementPageController implements Initializable {
     private void resetPage() {
         try {
             btnDelete.setDisable(true);
-            btnUpdate.setDisable(true);
             btnAddBill.setDisable(false);
             btnSearch.setDisable(true);
 

@@ -5,15 +5,10 @@ import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.ChickStatusDto;
 import lk.ijse.poultryfarm.dto.tm.BatchStatusTm;
@@ -39,7 +34,6 @@ public class BatchStatusPageController implements Initializable {
     public TextField inputSearch;
     public JFXButton btnSearch;
     public JFXButton btnDelete;
-    public JFXButton btnUpdate;
 
     private final ChickBatchModel chickBatchModel = new ChickBatchModel();
     public JFXButton btnReset;
@@ -52,7 +46,6 @@ public class BatchStatusPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ButtonScale.buttonScaling(btnDelete);
-        ButtonScale.buttonScaling(btnUpdate);
         ButtonScale.buttonScaling(btnSearch);
         ButtonScale.buttonScaling(btnReset);
 
@@ -72,7 +65,6 @@ public class BatchStatusPageController implements Initializable {
     private void resetPage() {
         try{
             btnDelete.setDisable(true);
-            btnUpdate.setDisable(true);
             btnSearch.setDisable(true);
 
             searchBatchId.getItems().clear();
@@ -127,7 +119,6 @@ public class BatchStatusPageController implements Initializable {
     public static String selectedBatchStatusId;
     public static String selectedBatchDate;
     public static int selectedBatchChickDeaths;
-    public static boolean updateStatus;
 
     public void onClickTable(MouseEvent mouseEvent) throws SQLException, ClassNotFoundException {
         BatchStatusTm selectedItem = tblBatchStatus.getSelectionModel().getSelectedItem();
@@ -137,9 +128,10 @@ public class BatchStatusPageController implements Initializable {
             selectedBatchDate = selectedItem.getDate();
             selectedBatchChickDeaths = selectedItem.getChicksDead();
 
-            if(selectedBatchId.equals(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))){
+            if(selectedBatchDate.equals(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))){
                 btnDelete.setDisable(false);
-                btnUpdate.setDisable(false);
+            } else {
+                btnDelete.setDisable(true);
             }
         }
     }
@@ -163,23 +155,6 @@ public class BatchStatusPageController implements Initializable {
                     new Alert(Alert.AlertType.ERROR, "Error in deleting batch status").show();
                 }
             }
-    }
-
-    public void updateBatchStatusOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        updateStatus = true;
-            try {
-                Stage stage = new Stage();
-                Parent root = FXMLLoader.load(getClass().getResource("/view/add/AddChickStatus.fxml"));
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.showAndWait();
-                resetPage();
-            } catch (Exception e) {
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Error in opening add chick status window").show();
-            }
-        updateStatus = false;
     }
 
     public void btnResetOnAction(ActionEvent actionEvent) {

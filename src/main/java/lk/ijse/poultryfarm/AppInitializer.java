@@ -48,5 +48,4 @@ public class AppInitializer extends Application {
 
         new Thread(loadingTask).start();
     }
-
 }

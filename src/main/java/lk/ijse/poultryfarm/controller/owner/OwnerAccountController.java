@@ -15,6 +15,7 @@ import lk.ijse.poultryfarm.util.EnterKeyAction;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class OwnerAccountController implements Initializable {
     public TextField inputFullName;
@@ -71,6 +72,13 @@ public class OwnerAccountController implements Initializable {
                 inputPassword.setEditable(true);
                 inputEmail.setEditable(true);
                 btnUpdateOwner.setText("UPDATE");
+
+                btnUpdateOwner.setDisable(true);
+
+                inputFullName.setText("");
+                inputUsername.setText("");
+                inputPassword.setText("");
+                inputEmail.setText("");
             }
 
         }
@@ -107,30 +115,71 @@ public class OwnerAccountController implements Initializable {
         EnterKeyAction.setEnterKeyMove(inputUsername, inputPassword);
         EnterKeyAction.setEnterKeyMove(inputPassword, inputEmail);
 
+        AtomicBoolean isValidName = new AtomicBoolean(false);
+        AtomicBoolean isValidUsername = new AtomicBoolean(false);
+        AtomicBoolean isValidPassword = new AtomicBoolean(false);
+        AtomicBoolean isValidEmail = new AtomicBoolean(false);
+
         inputUsername.textProperty().addListener((observable, oldVal, newVal) -> {
-            if (newVal.matches(patternUsername) || newVal.isEmpty()) {
+            if (newVal.matches(patternUsername)) {
                 inputUsername.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                isValidUsername.set(true);
+
+                if (isValidPassword.get() && isValidEmail.get() && isValidName.get()){
+                    btnUpdateOwner.setDisable(false);
+                }
+
+            } else if (newVal.isEmpty()) {
+                inputUsername.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                isValidUsername.set(false);
+                btnUpdateOwner.setDisable(true);
 
             } else {
                 inputUsername.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                isValidUsername.set(false);
+                btnUpdateOwner.setDisable(true);
             }
         });
 
         inputEmail.textProperty().addListener((observable, oldVal, newVal) -> {
-            if (newVal.matches(patternEmail) || newVal.isEmpty()) {
+            if (newVal.matches(patternEmail)) {
                 inputEmail.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                isValidEmail.set(true);
+
+                if(isValidPassword.get() && isValidName.get() && isValidUsername.get()){
+                    btnUpdateOwner.setDisable(false);
+                }
+
+            } else if (newVal.isEmpty()) {
+                inputEmail.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                isValidEmail.set(false);
+                btnUpdateOwner.setDisable(true);
 
             } else {
                 inputEmail.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                isValidEmail.set(false);
+                btnUpdateOwner.setDisable(true);
             }
         });
 
         inputFullName.textProperty().addListener((observable, oldVal, newVal) -> {
-            if (newVal.matches(patternFullName) || newVal.isEmpty()) {
+            if (newVal.matches(patternFullName)) {
                 inputFullName.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                isValidName.set(true);
+
+                if(isValidPassword.get() && isValidEmail.get() && isValidUsername.get()){
+                    btnUpdateOwner.setDisable(false);
+                }
+
+            } else if (newVal.isEmpty()) {
+                inputFullName.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                isValidName.set(false);
+                btnUpdateOwner.setDisable(true);
 
             } else {
                 inputFullName.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                isValidName.set(false);
+                btnUpdateOwner.setDisable(true);
             }
         });
 
@@ -141,11 +190,23 @@ public class OwnerAccountController implements Initializable {
                 lblPasswordDifficulty.setText("Normal");
                 lblPasswordDifficulty.setStyle("-fx-text-fill: orange");
 
+                isValidPassword.set(true);
+
+                if(isValidEmail.get() && isValidName.get() && isValidUsername.get()){
+                       btnUpdateOwner.setDisable(false);
+                }
+
             } else if (newVal.matches(pattern1WeakPassword) || newVal.matches(pattern2WeakPassword) || newVal.matches(pattern3WeakPassword)) {
                 inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-color: red; -fx-border-width: 0 0 3px 0;");
 
                 lblPasswordDifficulty.setText("Weak");
                 lblPasswordDifficulty.setStyle("-fx-text-fill: red");
+
+                isValidPassword.set(true);
+
+                if(isValidEmail.get() && isValidName.get() && isValidUsername.get()){
+                    btnUpdateOwner.setDisable(false);
+                }
 
             } else if (newVal.isEmpty()){
                 inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
@@ -153,11 +214,20 @@ public class OwnerAccountController implements Initializable {
                 lblPasswordDifficulty.setText("");
                 lblPasswordDifficulty.setStyle("-fx-text-fill: gray");
 
+                isValidPassword.set(false);
+                btnUpdateOwner.setDisable(true);
+
             } else {
                 inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-color: green; -fx-border-width: 0 0 3px 0;");
 
                 lblPasswordDifficulty.setText("Strong");
                 lblPasswordDifficulty.setStyle("-fx-text-fill: green");
+
+                isValidPassword.set(true);
+
+                if(isValidEmail.get() && isValidName.get() && isValidUsername.get()){
+                    btnUpdateOwner.setDisable(false);
+                }
             }
         });
     }

@@ -54,7 +54,7 @@
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="497.0" prefWidth="1700.0">
                     <children>
-                        <TableView fx:id="tblEmployeeAttendance" prefHeight="497.0" prefWidth="1440.0" style="-fx-font-size: 24px; -fx-background-color: white; -fx-border-color: gray;">
+                        <TableView fx:id="tblEmployeeAttendance" onMouseClicked="#onClickTable" prefHeight="497.0" prefWidth="1440.0" style="-fx-font-size: 24px; -fx-background-color: white; -fx-border-color: gray;">
                             <columns>
                                 <TableColumn fx:id="colBatchId" prefWidth="213.0" text="Batch ID" />
                                 <TableColumn fx:id="colAttendanceId" prefWidth="206.0" text="Attendance ID" />
@@ -87,6 +87,22 @@
                         </JFXButton>
                      </children>
                   </HBox>
+                  <JFXButton fx:id="btnDelete" buttonType="RAISED" onAction="#deleteAttendanceOnAction" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #c0392b; -fx-background-radius: 20;" text="DELETE" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="22.0" />
+                     </font>
+                     <graphic>
+                        <JFXBadge>
+                           <children>
+                              <ImageView fitHeight="30.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/icons8-delete-24.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </JFXBadge>
+                     </graphic>
+                  </JFXButton>
                </children>
             </HBox>
             </children>

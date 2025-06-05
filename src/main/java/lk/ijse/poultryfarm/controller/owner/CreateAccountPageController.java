@@ -7,14 +7,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import lk.ijse.poultryfarm.controller.ButtonScale;
-import lk.ijse.poultryfarm.controller.dashboard.LoginDashboardController;
 import lk.ijse.poultryfarm.controller.mail.ForgotPasswordController;
 import lk.ijse.poultryfarm.dto.OwnerDto;
 import lk.ijse.poultryfarm.model.OwnerModel;
 import lk.ijse.poultryfarm.util.EnterKeyAction;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CreateAccountPageController implements Initializable {
     public TextField inputFullName;
@@ -35,7 +36,12 @@ public class CreateAccountPageController implements Initializable {
     private final String patternNormalPassword = "^[A-Za-z0-9]{6,}$";
     public Label lblPasswordDifficulty;
 
-    public void createAccountOnAction(ActionEvent actionEvent) {
+    public void createAccountOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        if (ownerModel.hasOwner()) {
+            new Alert(Alert.AlertType.ERROR, "Already have a User Account. Please Login.").show();
+            return;
+        }
+
         String ownerId = "O001";
         String fullName = inputFullName.getText();
         String username = inputUsername.getText();
@@ -85,6 +91,7 @@ public class CreateAccountPageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        btnCreate.setDisable(true);
 
         ButtonScale.buttonScaling(btnCreate);
         ButtonScale.textFieldScaling(inputFullName);
@@ -96,30 +103,71 @@ public class CreateAccountPageController implements Initializable {
         EnterKeyAction.setEnterKeyMove(inputUsername, inputPassword);
         EnterKeyAction.setEnterKeyMove(inputPassword, inputEmail);
 
+        AtomicBoolean isValidName = new AtomicBoolean(false);
+        AtomicBoolean isValidUsername = new AtomicBoolean(false);
+        AtomicBoolean isValidPassword = new AtomicBoolean(false);
+        AtomicBoolean isValidEmail = new AtomicBoolean(false);
+
         inputUsername.textProperty().addListener((observable, oldVal, newVal) -> {
-            if (newVal.matches(patternUsername) || newVal.isEmpty()) {
+            if (newVal.matches(patternUsername)) {
                 inputUsername.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 30; -fx-border-color: gray;");
+                isValidUsername.set(true);
+
+                if (isValidPassword.get() && isValidEmail.get() && isValidName.get()){
+                    btnCreate.setDisable(false);
+                }
+
+            } else if (newVal.isEmpty()) {
+                inputUsername.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 30; -fx-border-color: gray;");
+                isValidUsername.set(false);
+                btnCreate.setDisable(true);
 
             } else {
                 inputUsername.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-radius: 30; -fx-border-color: gray;");
+                isValidUsername.set(false);
+                btnCreate.setDisable(true);
             }
         });
 
         inputEmail.textProperty().addListener((observable, oldVal, newVal) -> {
-            if (newVal.matches(patternEmail) || newVal.isEmpty()) {
+            if (newVal.matches(patternEmail)) {
                 inputEmail.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 30; -fx-border-color: gray;");
+                isValidEmail.set(true);
+
+                if(isValidPassword.get() && isValidName.get() && isValidUsername.get()){
+                    btnCreate.setDisable(false);
+                }
+
+            } else if (newVal.isEmpty()) {
+                inputEmail.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 30; -fx-border-color: gray;");
+                isValidEmail.set(false);
+                btnCreate.setDisable(true);
 
             } else {
                 inputEmail.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-radius: 30; -fx-border-color: gray;");
+                isValidEmail.set(false);
+                btnCreate.setDisable(true);
             }
         });
 
         inputFullName.textProperty().addListener((observable, oldVal, newVal) -> {
-            if (newVal.matches(patternFullName) || newVal.isEmpty()) {
+            if (newVal.matches(patternFullName)) {
                 inputFullName.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 30; -fx-border-color: gray;");
+                isValidName.set(true);
+
+                if(isValidPassword.get() && isValidEmail.get() && isValidUsername.get()){
+                    btnCreate.setDisable(false);
+                }
+
+            } else if (newVal.isEmpty()) {
+                inputFullName.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 30; -fx-border-color: gray;");
+                isValidName.set(false);
+                btnCreate.setDisable(true);
 
             } else {
                 inputFullName.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-radius: 30; -fx-border-color: gray;");
+                isValidName.set(false);
+                btnCreate.setDisable(true);
             }
         });
 
@@ -130,11 +178,23 @@ public class CreateAccountPageController implements Initializable {
                 lblPasswordDifficulty.setText("Normal");
                 lblPasswordDifficulty.setStyle("-fx-text-fill: orange");
 
+                isValidPassword.set(true);
+
+                if(isValidEmail.get() && isValidName.get() && isValidUsername.get()){
+                    btnCreate.setDisable(false);
+                }
+
             } else if (newVal.matches(pattern1WeakPassword) || newVal.matches(pattern2WeakPassword) || newVal.matches(pattern3WeakPassword)) {
                 inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 20; -fx-border-color: red; -fx-border-width: 3");
 
                 lblPasswordDifficulty.setText("Weak");
                 lblPasswordDifficulty.setStyle("-fx-text-fill: red");
+
+                isValidPassword.set(true);
+
+                if(isValidEmail.get() && isValidName.get() && isValidUsername.get()){
+                    btnCreate.setDisable(false);
+                }
 
             } else if (newVal.isEmpty()){
                 inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 20; -fx-border-color: gray;");
@@ -142,11 +202,20 @@ public class CreateAccountPageController implements Initializable {
                 lblPasswordDifficulty.setText("");
                 lblPasswordDifficulty.setStyle("-fx-text-fill: gray");
 
+                isValidPassword.set(false);
+                btnCreate.setDisable(true);
+
             } else {
                 inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 20; -fx-border-color: green; -fx-border-width: 3");
 
                 lblPasswordDifficulty.setText("Strong");
                 lblPasswordDifficulty.setStyle("-fx-text-fill: green");
+
+                isValidPassword.set(true);
+
+                if(isValidEmail.get() && isValidName.get() && isValidUsername.get()){
+                    btnCreate.setDisable(false);
+                }
             }
         });
     }

@@ -9,11 +9,11 @@ public class DBConnection {
     private static DBConnection dbConnection;
     private Connection connection;
 
-    private DBConnection() throws ClassNotFoundException, SQLException {
+    private DBConnection() throws SQLException {
         connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/poultry_farm", "root", "mysql");
     }
 
-    public static DBConnection getInstance() throws ClassNotFoundException, SQLException {
+    public static DBConnection getInstance() throws SQLException {
         if (dbConnection == null) {
             dbConnection = new DBConnection();
         }

@@ -25,7 +25,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -146,6 +145,9 @@ public class BatchSalePageController implements Initializable {
                 if(selectedBatchDate.equals(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))){
                     btnDelete.setDisable(false);
                     btnUpdate.setDisable(false);
+                } else {
+                    btnDelete.setDisable(true);
+                    btnUpdate.setDisable(true);
                 }
             }
 

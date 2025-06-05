@@ -1,6 +1,5 @@
 package lk.ijse.poultryfarm.controller.add;
 
-import com.beust.ah.A;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;

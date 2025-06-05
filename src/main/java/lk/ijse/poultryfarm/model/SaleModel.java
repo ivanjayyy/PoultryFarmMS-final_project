@@ -1,6 +1,5 @@
 package lk.ijse.poultryfarm.model;
 
-import lk.ijse.poultryfarm.dto.SalaryDto;
 import lk.ijse.poultryfarm.dto.SaleDto;
 import lk.ijse.poultryfarm.util.CrudUtil;
 

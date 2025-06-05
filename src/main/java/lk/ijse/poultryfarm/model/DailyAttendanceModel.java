@@ -78,4 +78,8 @@ public class DailyAttendanceModel {
         }
         return 0;
     }
+
+    public boolean deleteAttendance(String id) throws SQLException, ClassNotFoundException {
+        return CrudUtil.execute("DELETE FROM daily_attendance WHERE attendance_id = ?", id);
+    }
 }

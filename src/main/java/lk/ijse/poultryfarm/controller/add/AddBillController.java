@@ -10,7 +10,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import lk.ijse.poultryfarm.controller.BillManagementPageController;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.BillDto;
 import lk.ijse.poultryfarm.model.BillModel;
@@ -18,7 +17,6 @@ import lk.ijse.poultryfarm.model.ChickBatchModel;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class AddBillController implements Initializable {
@@ -50,17 +48,6 @@ public class AddBillController implements Initializable {
 
         BillDto billDto = new BillDto(batchId,billId,billVariant,Double.parseDouble(paidAmount),paidDate);
 
-        if(BillManagementPageController.updateBill){
-            boolean isUpdated = billModel.updateBill(billDto);
-            if(!isUpdated){
-                new Alert(Alert.AlertType.ERROR,"Bill Update Failed").show();
-            }else {
-                new Alert(Alert.AlertType.INFORMATION,"Bill Updated Successfully").show();
-                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                stage.close();
-            }
-
-        } else {
             boolean isSaved = billModel.saveBill(billDto);
 
             if (isSaved) {
@@ -70,7 +57,6 @@ public class AddBillController implements Initializable {
             } else {
                 new Alert(Alert.AlertType.ERROR, "Bill Save Failed").show();
             }
-        }
     }
 
     /**
@@ -104,16 +90,6 @@ public class AddBillController implements Initializable {
                     btnSave.setDisable(true);
                 }
             });
-
-            if(BillManagementPageController.updateBill){
-                lblBatchId.setValue(BillManagementPageController.selectedBatchId);
-                lblBillId.setText(BillManagementPageController.selectedBillId);
-                inputPaidDate.setValue(LocalDate.parse(BillManagementPageController.selectedBillDate));
-                inputBillVariant.setValue(BillManagementPageController.selectedBillVariant);
-                inputPaidAmount.setText(String.valueOf(BillManagementPageController.selectedBillAmount));
-
-                btnSave.setText("UPDATE");
-            }
 
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR,"Error in retrieving customer id").show();

@@ -13,10 +13,6 @@ public class ChickStatusModel {
         return CrudUtil.execute("INSERT INTO chick_status VALUES (?,?,?,?)", chickStatusDto.getBatchId(),chickStatusDto.getChickStatusId(),chickStatusDto.getDate(),chickStatusDto.getChicksDead());
     }
 
-    public boolean updateChickStatus(ChickStatusDto chickStatusDto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("UPDATE chick_status SET batch_id = ?, date = ?, chicks_dead = ? WHERE chick_status_id = ?", chickStatusDto.getBatchId(),chickStatusDto.getDate(),chickStatusDto.getChicksDead(),chickStatusDto.getChickStatusId());
-    }
-
     public boolean deleteChickStatus(String chickStatusId) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("DELETE FROM chick_status WHERE chick_status_id = ?", chickStatusId);
     }

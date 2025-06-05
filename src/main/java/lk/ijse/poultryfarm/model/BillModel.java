@@ -13,10 +13,6 @@ public class BillModel {
         return CrudUtil.execute("INSERT INTO bill VALUES (?,?,?,?,?)", billDto.getBatchId(),billDto.getBillId(),billDto.getBillVariant(),billDto.getAmount(),billDto.getDate());
     }
 
-    public boolean updateBill(BillDto billDto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("UPDATE bill SET batch_id = ?, bill_variant = ?, amount = ?, date = ? WHERE bill_id = ?", billDto.getBatchId(),billDto.getBillVariant(),billDto.getAmount(),billDto.getDate(),billDto.getBillId());
-    }
-
     public boolean deleteBill(String billId) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("DELETE FROM bill WHERE bill_id = ?", billId);
     }

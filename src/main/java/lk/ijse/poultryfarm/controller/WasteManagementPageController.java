@@ -98,19 +98,6 @@ public class WasteManagementPageController implements Initializable {
     public static boolean updateWaste;
 
     public void onClickTable(MouseEvent mouseEvent) throws SQLException, ClassNotFoundException {
-        btnAdd.setDisable(true);
-
-        ChickBatchModel chickBatchModel = new ChickBatchModel();
-        String currentBatchId = chickBatchModel.getCurrentBatchId();
-
-        if(selectedBatchId.equals(currentBatchId)){
-            btnDelete.setDisable(false);
-            btnUpdate.setDisable(false);
-        } else {
-            btnDelete.setDisable(true);
-            btnUpdate.setDisable(true);
-        }
-
         WasteManagementTm selectedItem = tblWaste.getSelectionModel().getSelectedItem();
         try {
             if (selectedItem != null) {
@@ -118,6 +105,19 @@ public class WasteManagementPageController implements Initializable {
                 selectedWasteId = selectedItem.getWasteId();
                 selectedWasteAmount = selectedItem.getTotalSale();
                 selectedWasteDate = selectedItem.getDate();
+
+                btnAdd.setDisable(true);
+
+                ChickBatchModel chickBatchModel = new ChickBatchModel();
+                String currentBatchId = chickBatchModel.getCurrentBatchId();
+
+                if(selectedBatchId.equals(currentBatchId)){
+                    btnDelete.setDisable(false);
+                    btnUpdate.setDisable(false);
+                } else {
+                    btnDelete.setDisable(true);
+                    btnUpdate.setDisable(true);
+                }
             }
         }catch (Exception e){
             e.printStackTrace();

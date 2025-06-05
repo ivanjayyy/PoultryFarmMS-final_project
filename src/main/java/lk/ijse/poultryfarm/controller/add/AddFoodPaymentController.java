@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.controller.food.FoodInventoryPageController;
 import lk.ijse.poultryfarm.dto.FoodPaymentDto;
-import lk.ijse.poultryfarm.model.FoodModel;
 import lk.ijse.poultryfarm.model.FoodPaymentModel;
 
 import java.net.URL;

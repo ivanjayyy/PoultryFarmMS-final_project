@@ -11,7 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.controller.batch.BatchDetailsPageController;
-import lk.ijse.poultryfarm.controller.batch.BatchStatusPageController;
 import lk.ijse.poultryfarm.dto.ChickStatusDto;
 import lk.ijse.poultryfarm.model.ChickBatchModel;
 import lk.ijse.poultryfarm.model.ChickStatusModel;
@@ -19,7 +18,6 @@ import lk.ijse.poultryfarm.model.SaleModel;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class AddChickStatusController implements Initializable {
@@ -33,7 +31,6 @@ public class AddChickStatusController implements Initializable {
     private final ChickBatchModel chickBatchModel = new ChickBatchModel();
 
     private final String patternChicksDead = "^[0-9]+$";
-    public int originalChicksDead;
 
     public void saveChickStatusOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String batchId = lblBatchId.getText();
@@ -48,7 +45,6 @@ public class AddChickStatusController implements Initializable {
         SaleModel saleModel = new SaleModel();
         int totalSold = saleModel.selectedBatchTotalSold(batchId);
 
-        boolean isValidForUpdate = (chickDeadToday + (sumOfChickDead - originalChicksDead)) <= (batchChickTotal-totalSold);
         boolean isValid = (chickDeadToday + sumOfChickDead) <= (batchChickTotal-totalSold);
 
         int todayChickStatusCheckedCount = chickStatusModel.checkStatus(checkedDate);
@@ -60,23 +56,6 @@ public class AddChickStatusController implements Initializable {
 
                 ChickStatusDto chickStatusDto = new ChickStatusDto(batchId,chickStatusId,checkedDate,Integer.parseInt(chicksDead));
 
-                if(BatchStatusPageController.updateStatus){
-                    if(!isValidForUpdate) {
-                        new Alert(Alert.AlertType.ERROR, "Error: Total Chicks Dead cannot exceed the total chicks in the batch.").show();
-                        return;
-                    }
-
-                    boolean isUpdated = chickStatusModel.updateChickStatus(chickStatusDto);
-
-                    if (isUpdated) {
-                        new Alert(Alert.AlertType.INFORMATION, "Chick Status Updated Successfully").show();
-                        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                        stage.close();
-                    } else {
-                        new Alert(Alert.AlertType.ERROR, "Chick Status Update Failed").show();
-                    }
-
-                } else {
                     if(!isValid) {
                         new Alert(Alert.AlertType.ERROR, "Error: Total Chicks Dead cannot exceed the total chicks in the batch.").show();
                         return;
@@ -91,7 +70,6 @@ public class AddChickStatusController implements Initializable {
                     } else {
                         new Alert(Alert.AlertType.ERROR, "Chick Status Save Failed").show();
                     }
-                }
     }
 
     /**
@@ -123,17 +101,6 @@ public class AddChickStatusController implements Initializable {
             loadNextId();
             loadBatchId();
             ButtonScale.buttonScaling(btnSave);
-
-            if(BatchStatusPageController.updateStatus){
-                lblBatchId.setText(BatchStatusPageController.selectedBatchId);
-                lblChickStatusId.setText(BatchStatusPageController.selectedBatchStatusId);
-                inputCheckedDate.setValue(LocalDate.parse(BatchStatusPageController.selectedBatchDate));
-                inputChicksDead.setText(String.valueOf(BatchStatusPageController.selectedBatchChickDeaths));
-
-                originalChicksDead = BatchStatusPageController.selectedBatchChickDeaths;
-
-                btnSave.setText("UPDATE");
-            }
 
         } catch (Exception e) {
             e.printStackTrace();

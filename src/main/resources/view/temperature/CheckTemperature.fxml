@@ -28,7 +28,14 @@
                      <children>
                         <HBox alignment="CENTER" prefHeight="179.0" prefWidth="840.0">
                            <children>
-                                    <JFXComboBox fx:id="stageSelector" focusColor="WHITE" onAction="#selectStageOnAction" prefHeight="54.0" prefWidth="193.0" promptText="Select Stage" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0; -fx-font-size: 20px;" unFocusColor="WHITE" />
+                              <HBox alignment="CENTER" prefHeight="139.0" prefWidth="808.0" style="-fx-border-color: #e67e22; -fx-border-radius: 10; -fx-border-width: 5;">
+                                 <children>
+                                          <JFXComboBox fx:id="stageSelector" focusColor="WHITE" onAction="#selectStageOnAction" prefHeight="54.0" prefWidth="193.0" promptText="Select Stage" style="-fx-background-color: white; -fx-border-color: gray; -fx-border-width: 0 0 1px 0; -fx-font-size: 20px;" unFocusColor="WHITE" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets bottom="20.0" top="20.0" />
+                                 </HBox.margin>
+                              </HBox>
                            </children>
                         </HBox>
                             <HBox alignment="CENTER" prefHeight="249.0" prefWidth="875.0" spacing="150.0">
@@ -75,17 +82,23 @@
                                     </VBox>
                                 </children>
                             </HBox>
-                        <HBox alignment="CENTER" prefHeight="32.0" prefWidth="1236.0" spacing="200.0" />
-                        <HBox alignment="CENTER" prefHeight="165.0" prefWidth="1236.0">
+                        <HBox alignment="CENTER" prefHeight="198.0" prefWidth="1236.0">
                            <children>
-                                    <JFXButton fx:id="btnCheck" buttonType="RAISED" onAction="#checkTemperatureOnAction" prefHeight="83.0" prefWidth="226.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="CHECK" textFill="WHITE">
-                                        <font>
-                                            <Font name="Arial Rounded MT Bold" size="41.0" />
-                                        </font>
+                              <HBox alignment="CENTER" prefHeight="149.0" prefWidth="808.0" style="-fx-border-color: #e67e22; -fx-border-radius: 10; -fx-border-width: 5;">
+                                 <children>
+                                          <JFXButton fx:id="btnCheck" buttonType="RAISED" onAction="#checkTemperatureOnAction" prefHeight="83.0" prefWidth="226.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="CHECK" textFill="WHITE">
+                                              <font>
+                                                  <Font name="Arial Rounded MT Bold" size="41.0" />
+                                              </font>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                          </JFXButton>
+                                 </children>
                                  <HBox.margin>
-                                    <Insets bottom="20.0" />
+                                    <Insets bottom="20.0" top="20.0" />
                                  </HBox.margin>
-                                    </JFXButton>
+                              </HBox>
                            </children>
                         </HBox>
                      </children>

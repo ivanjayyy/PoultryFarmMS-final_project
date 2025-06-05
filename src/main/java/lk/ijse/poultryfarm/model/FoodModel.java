@@ -1,13 +1,11 @@
 package lk.ijse.poultryfarm.model;
 
 import lk.ijse.poultryfarm.dto.FoodConsumptionDto;
-import lk.ijse.poultryfarm.dto.FoodDto;
 import lk.ijse.poultryfarm.dto.FoodPaymentDto;
 import lk.ijse.poultryfarm.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class FoodModel {
 

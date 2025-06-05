@@ -7,14 +7,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.DailyAttendanceDto;
 import lk.ijse.poultryfarm.dto.tm.EmployeeAttendanceTm;
+import lk.ijse.poultryfarm.model.ChickBatchModel;
 import lk.ijse.poultryfarm.model.DailyAttendanceModel;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EmployeeAttendancePageController implements Initializable {
@@ -30,6 +33,7 @@ public class EmployeeAttendancePageController implements Initializable {
     public JFXButton btnSearch;
     public JFXButton btnReset;
     public DatePicker searchDate;
+    public JFXButton btnDelete;
 
     /**
      * @param url
@@ -60,6 +64,7 @@ public class EmployeeAttendancePageController implements Initializable {
             inputSearch.clear();
             searchDate.setValue(null);
             btnSearch.setDisable(true);
+            btnDelete.setDisable(true);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,5 +119,52 @@ public class EmployeeAttendancePageController implements Initializable {
         btnSearch.setDisable(false);
         String date = searchDate.getValue().toString();
         inputSearch.setText(date);
+    }
+
+    public void deleteAttendanceOnAction(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete?", ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.YES) {
+            try {
+                boolean isDeleted = dailyAttendanceModel.deleteAttendance(selectedAttendanceId);
+
+                if(isDeleted){
+                    new Alert(Alert.AlertType.INFORMATION,"Attendance deleted successfully").show();
+                }else {
+                    new Alert(Alert.AlertType.ERROR,"Error in deleting Attendance").show();
+                }
+                resetPage();
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR,"Error in deleting Attendance").show();
+            }
+        }
+    }
+
+    public static String selectedBatchId;
+    public static String selectedAttendanceId;
+
+    public void onClickTable(MouseEvent mouseEvent) {
+        try {
+            EmployeeAttendanceTm selectedItem = tblEmployeeAttendance.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+                selectedBatchId = selectedItem.getBatchId();
+                selectedAttendanceId = selectedItem.getAttendanceId();
+
+                ChickBatchModel chickBatchModel = new ChickBatchModel();
+                String currentBatchId = chickBatchModel.getCurrentBatchId();
+
+                if(selectedBatchId.equals(currentBatchId)){
+                    btnDelete.setDisable(false);
+                } else {
+                    btnDelete.setDisable(true);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Error in retrieving bills").show();
+        }
     }
 }

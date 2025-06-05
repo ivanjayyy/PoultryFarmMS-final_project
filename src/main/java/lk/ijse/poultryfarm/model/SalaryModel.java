@@ -13,10 +13,6 @@ public class SalaryModel {
         return CrudUtil.execute("INSERT INTO salary VALUES (?,?,?,?)", salaryDto.getSalaryId(),salaryDto.getEmployeeId(),salaryDto.getAmount(),salaryDto.getDate());
     }
 
-    public boolean updateSalary(SalaryDto salaryDto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("UPDATE salary SET employee_id = ?, amount = ?, date = ? WHERE salary_id = ?", salaryDto.getEmployeeId(),salaryDto.getAmount(),salaryDto.getDate(),salaryDto.getSalaryId());
-    }
-
     public boolean deleteSalary(String salaryId) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("DELETE FROM salary WHERE salary_id = ?", salaryId);
     }

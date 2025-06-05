@@ -1,12 +1,10 @@
 package lk.ijse.poultryfarm.model;
 
-import lk.ijse.poultryfarm.dto.BillDto;
 import lk.ijse.poultryfarm.dto.OwnerDto;
 import lk.ijse.poultryfarm.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class OwnerModel {
 
