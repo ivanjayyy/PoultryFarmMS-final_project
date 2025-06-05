@@ -14,6 +14,7 @@ import lk.ijse.poultryfarm.model.OwnerModel;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ChangePasswordController implements Initializable {
     public TextField inputPassword;
@@ -26,13 +27,8 @@ public class ChangePasswordController implements Initializable {
     private final String pattern3WeakPassword = "^[A-Za-z0-9]+$";
     private final String patternNormalPassword = "^[A-Za-z0-9]{6,}$";
 
-    boolean isEmpty = true;
-
     public void savePasswordOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        if(isEmpty) {
-            new Alert(Alert.AlertType.ERROR, "Empty Fields. Enter Password.");
-
-        } else if(inputPassword.getText().equals(confirmPassword.getText())){
+        if(inputPassword.getText().equals(confirmPassword.getText())){
             OwnerModel ownerModel = new OwnerModel();
             boolean isSuccess = ownerModel.changePassword(inputPassword.getText());
 
@@ -55,6 +51,10 @@ public class ChangePasswordController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ButtonScale.buttonScaling(btnSave);
+        btnSave.setDisable(true);
+
+        AtomicBoolean isValidPassword = new AtomicBoolean(false);
+        AtomicBoolean isConfirmed = new AtomicBoolean(false);
 
         inputPassword.textProperty().addListener((observable, oldVal, newVal) -> {
             if (newVal.matches(patternNormalPassword)) {
@@ -62,28 +62,53 @@ public class ChangePasswordController implements Initializable {
 
                 lblPasswordDifficulty.setText("Normal");
                 lblPasswordDifficulty.setStyle("-fx-text-fill: orange");
-                isEmpty = false;
+                isValidPassword.set(true);
+
+                if(isConfirmed.get()) {
+                    btnSave.setDisable(false);
+                }
 
             } else if (newVal.matches(pattern1WeakPassword) || newVal.matches(pattern2WeakPassword) || newVal.matches(pattern3WeakPassword)) {
                 inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 20; -fx-border-color: red; -fx-border-width: 3");
 
                 lblPasswordDifficulty.setText("Weak");
                 lblPasswordDifficulty.setStyle("-fx-text-fill: red");
-                isEmpty = false;
+                isValidPassword.set(true);
+
+                if(isConfirmed.get()) {
+                    btnSave.setDisable(false);
+                }
 
             } else if (newVal.isEmpty()){
                 inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 20; -fx-border-color: gray;");
 
                 lblPasswordDifficulty.setText("");
                 lblPasswordDifficulty.setStyle("-fx-text-fill: gray");
-                isEmpty = true;
+                isValidPassword.set(false);
+                btnSave.setDisable(true);
 
             } else {
                 inputPassword.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-radius: 20; -fx-border-color: green; -fx-border-width: 3");
 
                 lblPasswordDifficulty.setText("Strong");
                 lblPasswordDifficulty.setStyle("-fx-text-fill: green");
-                isEmpty = false;
+                isValidPassword.set(true);
+
+                if(isConfirmed.get()) {
+                    btnSave.setDisable(false);
+                }
+            }
+        });
+
+        confirmPassword.textProperty().addListener((observable, oldVal, newVal) -> {
+            if (newVal.matches(inputPassword.getText())) {
+                isConfirmed.set(true);
+                if(isValidPassword.get()){
+                    btnSave.setDisable(false);
+                }
+            } else {
+                isConfirmed.set(false);
+                btnSave.setDisable(true);
             }
         });
     }

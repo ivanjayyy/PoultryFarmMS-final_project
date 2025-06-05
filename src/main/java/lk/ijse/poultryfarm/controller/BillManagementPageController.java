@@ -81,6 +81,9 @@ public class BillManagementPageController implements Initializable {
         if(selectedBatchId.equals(currentBatchId)){
             btnDelete.setDisable(false);
             btnUpdate.setDisable(false);
+        } else{
+            btnDelete.setDisable(true);
+            btnUpdate.setDisable(true);
         }
         btnAddBill.setDisable(true);
 

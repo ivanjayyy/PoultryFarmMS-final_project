@@ -23,6 +23,8 @@ import lk.ijse.poultryfarm.model.EmployeeModel;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -129,7 +131,6 @@ public class EmployeeDetailsPageController implements Initializable {
             EmployeeDetailsTm selectedItem = tblEmployee.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
                 btnSalary.setDisable(false);
-                btnAttendance.setDisable(false);
                 btnAdd.setDisable(true);
                 btnUpdate.setDisable(false);
 
@@ -140,6 +141,12 @@ public class EmployeeDetailsPageController implements Initializable {
                 selectedEmployeeDailyWage = String.valueOf(selectedItem.getDailyWage());
 
                 DailyAttendanceModel dailyAttendanceModel = new DailyAttendanceModel();
+                if(dailyAttendanceModel.checkAttendance(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), selectedEmployeeId) == 0) {
+                    btnAttendance.setDisable(false);
+                } else {
+                    btnAttendance.setDisable(true);
+                }
+
                 ChickBatchModel chickBatchModel = new ChickBatchModel();
                 String currentBatchId = chickBatchModel.getCurrentBatchId();
                 int currentBatchAttendDays = dailyAttendanceModel.countAttendance(selectedEmployeeId,currentBatchId);

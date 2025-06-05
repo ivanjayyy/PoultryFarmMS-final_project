@@ -75,7 +75,7 @@ public class AppDashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currentTime();
-        lblDate.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+        lblDate.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
         navigateTo("/view/dashboard/BatchDashboard.fxml");
         ButtonScale.buttonScaling(btnBatch);

@@ -106,6 +106,9 @@ public class WasteManagementPageController implements Initializable {
         if(selectedBatchId.equals(currentBatchId)){
             btnDelete.setDisable(false);
             btnUpdate.setDisable(false);
+        } else {
+            btnDelete.setDisable(true);
+            btnUpdate.setDisable(true);
         }
 
         WasteManagementTm selectedItem = tblWaste.getSelectionModel().getSelectedItem();

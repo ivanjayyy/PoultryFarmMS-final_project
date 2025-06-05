@@ -89,8 +89,8 @@ public class ForgotPasswordController implements Initializable {
     }
 
     public static void sendMail(String subject, String messageText) {
-        final String fromEmail = "ivanjayasooriya03@gmail.com";
-        final String appPassword = "cekz mqnn qsgw osdt";
+        final String fromEmail = "poultryfarmms@gmail.com";
+        final String appPassword = "httc oscc ghpb exji";
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");

@@ -38,7 +38,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class BatchDetailsPageController implements Initializable {
-    public static boolean updateChickBatch;
     public static String selectedBatchId;
     public static String selectedBatchDate;
     public static int selectedBatchTotalChicks;
@@ -62,7 +61,6 @@ public class BatchDetailsPageController implements Initializable {
     private final ChickBatchModel chickBatchModel = new ChickBatchModel();
     public JFXButton btnSale;
     public JFXButton btnStatus;
-    public JFXButton btnUpdate;
 
     private final SaleModel saleModel = new SaleModel();
     private final ChickStatusModel chickStatusModel = new ChickStatusModel();
@@ -83,7 +81,6 @@ public class BatchDetailsPageController implements Initializable {
         ButtonScale.buttonScaling(btnSearch);
         ButtonScale.buttonScaling(btnSale);
         ButtonScale.buttonScaling(btnStatus);
-        ButtonScale.buttonScaling(btnUpdate);
         ButtonScale.buttonScaling(btnReset);
         ButtonScale.buttonScaling(btnReport);
         ButtonScale.buttonScaling(btnQR);
@@ -104,7 +101,6 @@ public class BatchDetailsPageController implements Initializable {
     private void resetPage() {
         try {
             btnSearch.setDisable(true);
-            btnUpdate.setDisable(true);
             btnSale.setDisable(true);
             btnStatus.setDisable(true);
             btnAdd.setDisable(false);
@@ -115,12 +111,17 @@ public class BatchDetailsPageController implements Initializable {
             searchBatchId.setItems(chickBatchModel.getAllBatchIds());
 
             loadTableData();
-            lblTotalDays.setText("");
 
             String currentBatchId = chickBatchModel.getCurrentBatchId();
             selectedBatchId = currentBatchId;
             selectedBatchTotalChicks = chickBatchModel.searchChickBatch(currentBatchId).getFirst().getChickTotal();
             loadBatchDetails();
+
+            selectedBatchDate = chickBatchModel.searchChickBatch(currentBatchId).getFirst().getDate();
+            LocalDate givenDate = LocalDate.parse(selectedBatchDate);
+            LocalDate today = LocalDate.now();
+            long daysBetween = ChronoUnit.DAYS.between(givenDate, today);
+            lblTotalDays.setText(String.valueOf(daysBetween));
 
             inputSearch.setText("");
         } catch (Exception e) {
@@ -130,7 +131,6 @@ public class BatchDetailsPageController implements Initializable {
     }
 
     private void loadBatchDetails() throws SQLException, ClassNotFoundException {
-
         int sumOfChickDead = chickStatusModel.selectedBatchChickDeaths(selectedBatchId);
         int batchChicksLeft = (selectedBatchTotalChicks - sumOfChickDead);
         int totalChickSold = saleModel.selectedBatchTotalSold(selectedBatchId);
@@ -214,7 +214,6 @@ public class BatchDetailsPageController implements Initializable {
             lblTotalDays.setText(String.valueOf(daysBetween));
 
             loadBatchDetails();
-            btnUpdate.setDisable(true);
             btnAdd.setDisable(true);
             btnSale.setDisable(true);
             btnStatus.setDisable(true);
@@ -227,7 +226,6 @@ public class BatchDetailsPageController implements Initializable {
 
             if(lblBatchSold.getText().equals("NO") && daysBetween <= 30) {
                 btnStatus.setDisable(false);
-                btnUpdate.setDisable(false);
             }
 
             if(25 <= daysBetween && daysBetween <= 30 && lblBatchSold.getText().equals("YES")){
@@ -264,23 +262,6 @@ public class BatchDetailsPageController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in opening add chick status window").show();
         }
-    }
-
-    public void updateBatchDetailsOnAction(ActionEvent actionEvent) {
-        updateChickBatch = true;
-        try{
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/view/add/AddChickBatch.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-            resetPage();
-        } catch (Exception e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR,"Error in opening add batch window").show();
-        }
-        updateChickBatch = false;
     }
 
     public void btnResetOnAction(ActionEvent actionEvent) {

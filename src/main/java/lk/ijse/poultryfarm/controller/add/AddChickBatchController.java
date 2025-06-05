@@ -10,14 +10,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
-import lk.ijse.poultryfarm.controller.batch.BatchDetailsPageController;
 import lk.ijse.poultryfarm.dto.ChickBatchDto;
 import lk.ijse.poultryfarm.model.ChickBatchModel;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AddChickBatchController implements Initializable {
     public Label lblBatchId;
@@ -35,40 +34,8 @@ public class AddChickBatchController implements Initializable {
         String paymentMade = inputPaymentMade.getText();
         String arrivedDate = inputArrivedDate.getValue().toString();
 
-//        boolean isValidTotalChicks = totalChicks.matches(patternTotalChicks);
-//        boolean isValidPaymentMade = paymentMade.matches(patternPaymentMade);
-//
-//        inputTotalChicks.setStyle("-fx-text-inner-color: black");
-//        inputPaymentMade.setStyle("-fx-text-inner-color: black");
-//
-//        if(!isValidTotalChicks){
-//            inputTotalChicks.setStyle("-fx-text-inner-color: red");
-//        }
-//
-//        if(!isValidPaymentMade){
-//            inputPaymentMade.setStyle("-fx-text-inner-color: red");
-//        }
-//
-//        if(!isValidTotalChicks || !isValidPaymentMade){
-//            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
-//            return;
-//        }
-
         ChickBatchDto chickBatchDto = new ChickBatchDto(batchId, Integer.parseInt(totalChicks),Double.parseDouble(paymentMade),arrivedDate);
 
-        if(BatchDetailsPageController.updateChickBatch){
-            boolean isUpdated = chickBatchModel.updateChickBatch(chickBatchDto);
-
-            if(isUpdated){
-                new Alert(Alert.AlertType.INFORMATION,"Batch Updated Successfully").show();
-                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                stage.close();
-
-            }else{
-                new Alert(Alert.AlertType.ERROR,"Batch Update Failed").show();
-            }
-
-        } else {
             boolean isSaved = chickBatchModel.saveChickBatch(chickBatchDto);
 
             if (isSaved) {
@@ -78,7 +45,6 @@ public class AddChickBatchController implements Initializable {
             } else {
                 new Alert(Alert.AlertType.ERROR,"Batch Save Failed").show();
             }
-        }
     }
 
     private final ChickBatchModel chickBatchModel = new ChickBatchModel();
@@ -89,43 +55,58 @@ public class AddChickBatchController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        AtomicBoolean totalChicks = new AtomicBoolean(false);
+        AtomicBoolean paymentMade = new AtomicBoolean(false);
+        btnSave.setDisable(true);
+
         try {
             inputTotalChicks.textProperty().addListener((observable, oldVal, newVal) -> {
-                if (newVal.matches(patternTotalChicks) || newVal.isEmpty()) {
+                if (newVal.matches(patternTotalChicks)) {
                     inputTotalChicks.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
-                    btnSave.setDisable(false);
+                    totalChicks.set(true);
+
+                    if(paymentMade.get()) {
+                        btnSave.setDisable(false);
+                    }
+
+                } else if (newVal.isEmpty()) {
+                    inputTotalChicks.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    totalChicks.set(false);
+                    btnSave.setDisable(true);
 
                 } else {
                     inputTotalChicks.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    totalChicks.set(false);
                     btnSave.setDisable(true);
                 }
             });
 
             inputPaymentMade.textProperty().addListener((observable, oldVal, newVal) -> {
-                if (newVal.matches(patternPaymentMade) || newVal.isEmpty()) {
+                if (newVal.matches(patternPaymentMade)) {
                     inputPaymentMade.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
-                    btnSave.setDisable(false);
+                    paymentMade.set(true);
+
+                    if(totalChicks.get()) {
+                        btnSave.setDisable(false);
+                    }
+
+                } else if (newVal.isEmpty()) {
+                    inputPaymentMade.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    paymentMade.set(false);
+                    btnSave.setDisable(true);
 
                 } else {
                     inputPaymentMade.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    paymentMade.set(false);
                     btnSave.setDisable(true);
                 }
             });
 
             ButtonScale.buttonScaling(btnSave);
-            btnSave.setText("SAVE");
 
             inputArrivedDate.setValue(java.time.LocalDate.now());
             loadNextId();
 
-            if(BatchDetailsPageController.updateChickBatch){
-                lblBatchId.setText(BatchDetailsPageController.selectedBatchId);
-                inputTotalChicks.setText(String.valueOf(BatchDetailsPageController.selectedBatchTotalChicks));
-                inputArrivedDate.setValue(LocalDate.parse(BatchDetailsPageController.selectedBatchDate));
-                inputPaymentMade.setText(String.valueOf(BatchDetailsPageController.selectedBatchPayment));
-
-                btnSave.setText("UPDATE");
-            }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,"Error in retrieving customer id").show();

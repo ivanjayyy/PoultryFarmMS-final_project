@@ -15,6 +15,7 @@ import lk.ijse.poultryfarm.controller.batch.BatchStatusPageController;
 import lk.ijse.poultryfarm.dto.ChickStatusDto;
 import lk.ijse.poultryfarm.model.ChickBatchModel;
 import lk.ijse.poultryfarm.model.ChickStatusModel;
+import lk.ijse.poultryfarm.model.SaleModel;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -32,6 +33,7 @@ public class AddChickStatusController implements Initializable {
     private final ChickBatchModel chickBatchModel = new ChickBatchModel();
 
     private final String patternChicksDead = "^[0-9]+$";
+    public int originalChicksDead;
 
     public void saveChickStatusOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String batchId = lblBatchId.getText();
@@ -43,27 +45,27 @@ public class AddChickStatusController implements Initializable {
         int chickDeadToday = Integer.parseInt(chicksDead);
         int batchChickTotal = chickBatchModel.getChickTotal(batchId);
 
-//        boolean isValidChicksDead = chicksDead.matches(patternChicksDead);
-//        inputChicksDead.setStyle("-fx-text-inner-color: black");
-//
-//        if(!isValidChicksDead){
-//            inputChicksDead.setStyle("-fx-text-inner-color: red");
-//        }
-//
-//        if(!isValidChicksDead){
-//            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
-//            return;
-//        }
+        SaleModel saleModel = new SaleModel();
+        int totalSold = saleModel.selectedBatchTotalSold(batchId);
 
-        boolean isValid = (chickDeadToday + sumOfChickDead) <= batchChickTotal;
+        boolean isValidForUpdate = (chickDeadToday + (sumOfChickDead - originalChicksDead)) <= (batchChickTotal-totalSold);
+        boolean isValid = (chickDeadToday + sumOfChickDead) <= (batchChickTotal-totalSold);
 
         int todayChickStatusCheckedCount = chickStatusModel.checkStatus(checkedDate);
 
-        if(todayChickStatusCheckedCount == 0){
-            if(isValid) {
+        if(todayChickStatusCheckedCount != 0) {
+            new Alert(Alert.AlertType.ERROR, "Error: You have already checked today's chick status.").show();
+            return;
+        }
+
                 ChickStatusDto chickStatusDto = new ChickStatusDto(batchId,chickStatusId,checkedDate,Integer.parseInt(chicksDead));
 
                 if(BatchStatusPageController.updateStatus){
+                    if(!isValidForUpdate) {
+                        new Alert(Alert.AlertType.ERROR, "Error: Total Chicks Dead cannot exceed the total chicks in the batch.").show();
+                        return;
+                    }
+
                     boolean isUpdated = chickStatusModel.updateChickStatus(chickStatusDto);
 
                     if (isUpdated) {
@@ -73,7 +75,13 @@ public class AddChickStatusController implements Initializable {
                     } else {
                         new Alert(Alert.AlertType.ERROR, "Chick Status Update Failed").show();
                     }
+
                 } else {
+                    if(!isValid) {
+                        new Alert(Alert.AlertType.ERROR, "Error: Total Chicks Dead cannot exceed the total chicks in the batch.").show();
+                        return;
+                    }
+
                     boolean isSaved = chickStatusModel.saveChickStatus(chickStatusDto);
 
                     if (isSaved) {
@@ -84,12 +92,6 @@ public class AddChickStatusController implements Initializable {
                         new Alert(Alert.AlertType.ERROR, "Chick Status Save Failed").show();
                     }
                 }
-            } else {
-                new Alert(Alert.AlertType.ERROR,"Error: Total Chicks Dead cannot exceed the total chicks in the batch.").show();
-            }
-        } else {
-            new Alert(Alert.AlertType.ERROR,"Error: You have already checked today's chick status.").show();
-        }
     }
 
     /**
@@ -98,11 +100,17 @@ public class AddChickStatusController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        btnSave.setDisable(true);
+
         try {
             inputChicksDead.textProperty().addListener((observable, oldVal, newVal) -> {
-                if (newVal.matches(patternChicksDead) || newVal.isEmpty()) {
+                if (newVal.matches(patternChicksDead)) {
                     inputChicksDead.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
                     btnSave.setDisable(false);
+
+                } else if (newVal.isEmpty()) {
+                    inputChicksDead.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(true);
 
                 } else {
                     inputChicksDead.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
@@ -121,6 +129,8 @@ public class AddChickStatusController implements Initializable {
                 lblChickStatusId.setText(BatchStatusPageController.selectedBatchStatusId);
                 inputCheckedDate.setValue(LocalDate.parse(BatchStatusPageController.selectedBatchDate));
                 inputChicksDead.setText(String.valueOf(BatchStatusPageController.selectedBatchChickDeaths));
+
+                originalChicksDead = BatchStatusPageController.selectedBatchChickDeaths;
 
                 btnSave.setText("UPDATE");
             }

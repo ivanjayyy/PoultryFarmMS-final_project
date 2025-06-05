@@ -74,10 +74,8 @@ public class QRCodeController implements Initializable {
             System.out.println("Decoded QR: " + result.getText());
             String output = "Decoded QR:\n" + result.getText();
             new Alert(Alert.AlertType.INFORMATION, output).show();
-            webcam.close();
         } catch (NotFoundException e) {
             System.out.println("QR code not found. Try again.");
-            webcam.close();
         }
     }
 }

@@ -22,6 +22,8 @@ import lk.ijse.poultryfarm.model.ChickStatusModel;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -135,8 +137,7 @@ public class BatchStatusPageController implements Initializable {
             selectedBatchDate = selectedItem.getDate();
             selectedBatchChickDeaths = selectedItem.getChicksDead();
 
-            String currentBatchId = chickBatchModel.getCurrentBatchId();
-            if(selectedBatchId.equals(currentBatchId)){
+            if(selectedBatchId.equals(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))){
                 btnDelete.setDisable(false);
                 btnUpdate.setDisable(false);
             }

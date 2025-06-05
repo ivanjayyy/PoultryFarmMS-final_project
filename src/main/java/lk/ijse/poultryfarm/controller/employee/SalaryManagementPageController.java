@@ -22,6 +22,8 @@ import lk.ijse.poultryfarm.model.SalaryModel;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -132,8 +134,10 @@ public class SalaryManagementPageController implements Initializable {
                 selectedSalary = selectedItem.getAmount();
                 selectedDate = selectedItem.getDate();
 
-                btnDelete.setDisable(false);
-                btnUpdate.setDisable(false);
+                if(selectedDate.equals(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))){
+                    btnDelete.setDisable(false);
+                    btnUpdate.setDisable(false);
+                }
             }
         }catch (Exception e){
             e.printStackTrace();

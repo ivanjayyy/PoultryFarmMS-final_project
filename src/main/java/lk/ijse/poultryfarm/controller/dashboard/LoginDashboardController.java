@@ -40,8 +40,6 @@ public class LoginDashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        navigateTo("/view/owner/LoginPage.fxml");
-
         ButtonScale.buttonScaling(btnLogin);
         ButtonScale.buttonScaling(btnCreate);
         ButtonScale.buttonScaling(btnEdit);
@@ -50,6 +48,9 @@ public class LoginDashboardController implements Initializable {
         try {
             if(ownerModel.hasOwner()) {
                 btnCreate.setDisable(true);
+                navigateTo("/view/owner/LoginPage.fxml");
+            } else {
+                navigateTo("/view/owner/CreateAccountPage.fxml");
             }
 
         } catch (Exception e) {
