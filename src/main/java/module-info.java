@@ -11,6 +11,7 @@ module lk.ijse.poultryfarm {
     requires com.google.zxing.javase;
     requires javafx.swing;
     requires webcam.capture;
+    requires jcommander;
 
     exports lk.ijse.poultryfarm;
     opens lk.ijse.poultryfarm.controller to javafx.fxml;

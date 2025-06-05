@@ -58,7 +58,7 @@ public class CheckTemperatureController implements Initializable {
                 if (temp < min) {
                     lblTemperatureStatus.setText("Too Low");
                     lblTemperatureStatus.setStyle("-fx-text-fill: red");
-                } else if (temp < max) {
+                } else if (temp <= max) {
                     lblTemperatureStatus.setText("Normal");
                     lblTemperatureStatus.setStyle("-fx-text-fill: green");
                 } else {
@@ -88,14 +88,14 @@ public class CheckTemperatureController implements Initializable {
         String batchStage = stageSelector.getSelectionModel().getSelectedItem();
 
         if(batchStage.equals("Stage 01")) {
-            min = 20.0;
-            max = 30.0;
+            min = 29.0;
+            max = 35.0;
         } else if(batchStage.equals("Stage 02")) {
-            min = 30.0;
-            max = 40.0;
+            min = 21.0;
+            max = 39.0;
         } else if(batchStage.equals("Stage 03")) {
-            min = 40.0;
-            max = 50.0;
+            min = 18.0;
+            max = 21.0;
         }
     }
 }

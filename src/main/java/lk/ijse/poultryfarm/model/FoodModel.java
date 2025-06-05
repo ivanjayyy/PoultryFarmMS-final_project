@@ -37,4 +37,12 @@ public class FoodModel {
         }
         return null;
     }
+
+    public String getFoodName(String id) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT food_name FROM food WHERE food_id = ?", id);
+        if (resultSet.next()) {
+            return resultSet.getString(1);
+        }
+        return null;
+    }
 }

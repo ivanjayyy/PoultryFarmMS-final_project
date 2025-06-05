@@ -61,7 +61,7 @@ public class FoodConsumptionPageController implements Initializable {
 
     private void resetPage() {
         try {
-            loadTableDate();
+            loadTableData();
             inputSearch.clear();
             btnSearch.setDisable(true);
 
@@ -75,7 +75,7 @@ public class FoodConsumptionPageController implements Initializable {
         }
     }
 
-    private void loadTableDate() throws SQLException, ClassNotFoundException {
+    private void loadTableData() throws SQLException, ClassNotFoundException {
         ArrayList<FoodConsumptionDto> foodConsumptionDtos = foodConsumptionModel.getAllFoodConsumption();
         ObservableList<FoodConsumptionTm> foodConsumptionTms = FXCollections.observableArrayList();
 

@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.controller.food.FoodInventoryPageController;
+import lk.ijse.poultryfarm.controller.mail.ForgotPasswordController;
 import lk.ijse.poultryfarm.dto.FoodConsumptionDto;
 import lk.ijse.poultryfarm.model.ChickBatchModel;
 import lk.ijse.poultryfarm.model.FoodConsumptionModel;
@@ -46,16 +47,6 @@ public class AddFoodConsumptionController implements Initializable {
         double foodConsumed = Double.parseDouble(consumption);
         boolean canConsume = foodRemain >= foodConsumed;
 
-//        boolean isValidConsumption = consumption.matches(patternConsumption);
-//        if(!isValidConsumption){
-//            inputConsumption.setStyle("-fx-text-inner-color: red");
-//        }
-//
-//        if(!isValidConsumption){
-//            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
-//            return;
-//        }
-
         if(canConsume){
             FoodConsumptionDto foodConsumptionDto = new FoodConsumptionDto(
                     batchId,
@@ -66,22 +57,26 @@ public class AddFoodConsumptionController implements Initializable {
             );
 
             boolean isSaved = foodConsumptionModel.saveFoodConsumption(foodConsumptionDto);
+
             if (isSaved) {
-                boolean isChanged = foodModel.updateAfterFoodConsumption(foodConsumptionDto);
-                if(!isChanged){
-                    new Alert(Alert.AlertType.ERROR,"Food Consumption Failed").show();
+                double fRemain = Double.parseDouble(foodModel.foodInventory(foodId));
+
+                if (fRemain < 200) {
+                    String subject = "Food Shortage in the Inventory.";
+                    String message = "Food '" + foodModel.getFoodName(foodId) + "' is Low in the Inventory. Please Order them Immediately.";
+                    ForgotPasswordController.sendMail(subject, message);
                 }
 
                 new Alert(Alert.AlertType.INFORMATION,"Food Consumption Saved").show();
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                 stage.close();
+
             } else {
-                new Alert(Alert.AlertType.ERROR,"Food Consumption Failed").show();
+                new Alert(Alert.AlertType.ERROR,"Food Consumption Saving Failed").show();
             }
         } else {
             new Alert(Alert.AlertType.ERROR,"Not Enough Food In Inventory").show();
         }
-
     }
 
     /**
@@ -90,11 +85,17 @@ public class AddFoodConsumptionController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        btnSave.setDisable(true);
+
         try {
             inputConsumption.textProperty().addListener((observable, oldVal, newVal) -> {
-                if (newVal.matches(patternConsumption) || newVal.isEmpty()) {
+                if (newVal.matches(patternConsumption)) {
                     inputConsumption.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
                     btnSave.setDisable(false);
+
+                } else if (newVal.isEmpty()) {
+                    inputConsumption.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(true);
 
                 } else {
                     inputConsumption.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");

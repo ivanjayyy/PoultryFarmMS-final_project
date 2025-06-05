@@ -1,8 +1,10 @@
 package lk.ijse.poultryfarm.model;
 
+import lk.ijse.poultryfarm.database.DBConnection;
 import lk.ijse.poultryfarm.dto.FoodConsumptionDto;
 import lk.ijse.poultryfarm.util.CrudUtil;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,7 +12,30 @@ import java.util.ArrayList;
 public class FoodConsumptionModel {
 
     public boolean saveFoodConsumption(FoodConsumptionDto foodConsumptionDto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("INSERT INTO food_consumption VALUES (?,?,?,?,?)", foodConsumptionDto.getBatchId(),foodConsumptionDto.getConsumptionId(),foodConsumptionDto.getDate(),foodConsumptionDto.getFoodId(),foodConsumptionDto.getConsumption());
+        Connection connection = DBConnection.getInstance().getConnection();
+        try {
+            connection.setAutoCommit(false);
+            boolean isSaved = CrudUtil.execute("INSERT INTO food_consumption VALUES (?,?,?,?,?)", foodConsumptionDto.getBatchId(),foodConsumptionDto.getConsumptionId(),foodConsumptionDto.getDate(),foodConsumptionDto.getFoodId(),foodConsumptionDto.getConsumption());
+
+            if (isSaved) {
+                FoodModel foodModel = new FoodModel();
+                boolean isUpdated = foodModel.updateAfterFoodConsumption(foodConsumptionDto);
+
+                if (isUpdated) {
+                    connection.commit();
+                    return true;
+                }
+            }
+            connection.rollback();
+            return false;
+
+        } catch (Exception e) {
+            connection.rollback();
+            return false;
+
+        } finally {
+            connection.setAutoCommit(true);
+        }
     }
 
     public ArrayList<FoodConsumptionDto> searchFoodConsumption(String batchId) throws SQLException, ClassNotFoundException {

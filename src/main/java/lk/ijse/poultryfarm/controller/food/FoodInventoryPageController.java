@@ -82,20 +82,6 @@ public class FoodInventoryPageController implements Initializable {
             String starterRemain = foodModel.foodInventory("F002");
             String finisherRemain = foodModel.foodInventory("F003");
 
-            double bRemain = Double.parseDouble(boosterRemain);
-            double sRemain = Double.parseDouble(starterRemain);
-            double fRemain = Double.parseDouble(finisherRemain);
-
-            if (fRemain < 200) {
-                new Alert(Alert.AlertType.WARNING, "Warning: Chicken food 'Finisher' is low in stock.").show();
-            }
-            if (sRemain < 200) {
-                new Alert(Alert.AlertType.WARNING, "Warning: Chicken food 'Starter' is low in stock.").show();
-            }
-            if (bRemain < 200) {
-                new Alert(Alert.AlertType.WARNING, "Warning: Chicken food 'Booster' is low in stock.").show();
-            }
-
             lblBoosterFood.setText(boosterRemain);
             lblStarterFood.setText(starterRemain);
             lblFinisherFood.setText(finisherRemain);

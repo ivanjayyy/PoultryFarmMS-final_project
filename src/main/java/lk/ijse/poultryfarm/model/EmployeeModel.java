@@ -98,4 +98,12 @@ public class EmployeeModel {
         }
         return null;
     }
+
+    public int checkContactDuplicate(String contact) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT COUNT(employee_id) FROM employee WHERE contact = ?", contact);
+        if (resultSet.next()) {
+            return resultSet.getInt(1);
+        }
+        return 0;
+    }
 }

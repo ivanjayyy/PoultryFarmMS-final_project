@@ -39,17 +39,6 @@ public class AddWasteManagementController implements Initializable {
         String totalSale = inputTotalSale.getText();
         String date = inputSoldDate.getValue().toString();
 
-//        boolean isValidTotalSale = totalSale.matches(patternTotalSale);
-//        inputTotalSale.setStyle("-fx-text-inner-color: black");
-//
-//        if(!isValidTotalSale){
-//            inputTotalSale.setStyle("-fx-text-inner-color: red");
-//        }
-//        if(!isValidTotalSale){
-//            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
-//            return;
-//        }
-
         WasteManagementDto wasteManagementDto = new WasteManagementDto(batchId,wasteId,Double.parseDouble(totalSale),date);
 
         if(WasteManagementPageController.updateWaste){
@@ -70,7 +59,7 @@ public class AddWasteManagementController implements Initializable {
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                 stage.close();
             } else {
-                new Alert(Alert.AlertType.ERROR, "Waste Save Failed").show();
+                new Alert(Alert.AlertType.ERROR, "Waste Saving Failed").show();
             }
         }
     }
@@ -81,11 +70,17 @@ public class AddWasteManagementController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        btnSave.setDisable(true);
+
         try {
             inputTotalSale.textProperty().addListener((observable, oldVal, newVal) -> {
-                if (newVal.matches(patternTotalSale) || newVal.isEmpty()) {
+                if (newVal.matches(patternTotalSale)) {
                     inputTotalSale.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
                     btnSave.setDisable(false);
+
+                } else if (newVal.isEmpty()) {
+                    inputTotalSale.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    btnSave.setDisable(true);
 
                 } else {
                     inputTotalSale.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");

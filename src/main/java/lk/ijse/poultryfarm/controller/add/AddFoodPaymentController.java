@@ -18,6 +18,7 @@ import lk.ijse.poultryfarm.model.FoodPaymentModel;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AddFoodPaymentController implements Initializable {
     public Label lblPaymentId;
@@ -31,7 +32,6 @@ public class AddFoodPaymentController implements Initializable {
     private final String patternPaidAmount = "^[0-9]+(\\.[0-9]{1,2})?$";
 
     private final FoodPaymentModel foodPaymentModel = new FoodPaymentModel();
-    private final FoodModel foodModel = new FoodModel();
 
     public void saveFoodPaymentOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String paymentId = lblPaymentId.getText();
@@ -40,34 +40,11 @@ public class AddFoodPaymentController implements Initializable {
         String paidAmount = inputPaidAmount.getText();
         String date = inputDate.getValue().toString();
 
-//        boolean isValidQuantity = quantity.matches(patternQuantity);
-//        boolean isValidPaidAmount = paidAmount.matches(patternPaidAmount);
-//
-//        inputQuantity.setStyle("-fx-text-inner-color: black");
-//        inputPaidAmount.setStyle("-fx-text-inner-color: black");
-//
-//        if(!isValidQuantity){
-//            inputQuantity.setStyle("-fx-text-inner-color: red");
-//        }
-//        if(!isValidPaidAmount){
-//            inputPaidAmount.setStyle("-fx-text-inner-color: red");
-//        }
-//
-//        if(!isValidQuantity || !isValidPaidAmount){
-//            new Alert(Alert.AlertType.ERROR,"Invalid Input.").show();
-//            return;
-//        }
-
         FoodPaymentDto foodPaymentDto = new FoodPaymentDto(paymentId,foodId,Double.parseDouble(quantity),Double.parseDouble(paidAmount),date);
 
         boolean isSaved = foodPaymentModel.saveFoodPayment(foodPaymentDto);
 
         if (isSaved) {
-            boolean isChanged = foodModel.updateAfterFoodOrder(foodPaymentDto);
-            if(!isChanged){
-                new Alert(Alert.AlertType.ERROR,"Food Order Failed").show();
-            }
-
             new Alert(Alert.AlertType.INFORMATION,"Food Payment Saved").show();
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.close();
@@ -82,25 +59,49 @@ public class AddFoodPaymentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        btnSave.setDisable(true);
+        AtomicBoolean validQuantity = new AtomicBoolean(false);
+        AtomicBoolean validPaidAmount = new AtomicBoolean(false);
+
         try {
             inputQuantity.textProperty().addListener((observable, oldVal, newVal) -> {
-                if (newVal.matches(patternQuantity) || newVal.isEmpty()) {
+                if (newVal.matches(patternQuantity)) {
                     inputQuantity.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
-                    btnSave.setDisable(false);
+                    validQuantity.set(true);
+
+                    if(validPaidAmount.get()){
+                        btnSave.setDisable(false);
+                    }
+
+                } else if (newVal.isEmpty()) {
+                    inputQuantity.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    validQuantity.set(false);
+                    btnSave.setDisable(true);
 
                 } else {
                     inputQuantity.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    validQuantity.set(false);
                     btnSave.setDisable(true);
                 }
             });
 
             inputPaidAmount.textProperty().addListener((observable, oldVal, newVal) -> {
-                if (newVal.matches(patternPaidAmount) || newVal.isEmpty()) {
+                if (newVal.matches(patternPaidAmount)) {
                     inputPaidAmount.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
-                    btnSave.setDisable(false);
+                    validPaidAmount.set(true);
+
+                    if(validQuantity.get()){
+                        btnSave.setDisable(false);
+                    }
+
+                } else if (newVal.isEmpty()) {
+                    inputPaidAmount.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    validPaidAmount.set(false);
+                    btnSave.setDisable(true);
 
                 } else {
                     inputPaidAmount.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    validPaidAmount.set(false);
                     btnSave.setDisable(true);
                 }
             });

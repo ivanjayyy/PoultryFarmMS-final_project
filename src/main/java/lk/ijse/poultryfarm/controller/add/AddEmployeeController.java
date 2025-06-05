@@ -17,6 +17,7 @@ import lk.ijse.poultryfarm.model.EmployeeModel;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AddEmployeeController implements Initializable {
     public Label lblEmployeeId;
@@ -39,32 +40,14 @@ public class AddEmployeeController implements Initializable {
         String contact = inputContact.getText();
         String dailyWage = inputDailyWage.getText();
 
-        boolean isValidName = name.matches(patternName);
-        boolean isValidContact = contact.matches(patternContact);
-        boolean isValidDailyWage = dailyWage.matches(patternDailyWage);
-
-//        inputName.setStyle("-fx-text-inner-color: black");
-//        inputContact.setStyle("-fx-text-inner-color: black");
-//        inputDailyWage.setStyle("-fx-text-inner-color: black");
-//
-//        if(!isValidName){
-//            inputName.setStyle("-fx-text-inner-color: red");
-//        }
-//        if(!isValidContact){
-//            inputContact.setStyle("-fx-text-inner-color: red");
-//        }
-//        if(!isValidDailyWage){
-//            inputDailyWage.setStyle("-fx-text-inner-color: red");
-//        }
-//
-//        if(!isValidContact || !isValidName || !isValidDailyWage){
-//            new Alert(Alert.AlertType.ERROR,"Invalid input").show();
-//            return;
-//        }
-
         EmployeeDto employeeDto = new EmployeeDto(employeeId,name,fullTime,contact,Double.parseDouble(dailyWage));
 
         if(EmployeeDetailsPageController.updateEmployee){
+            if(employeeModel.checkContactDuplicate(contact) > 1) {
+                new Alert(Alert.AlertType.ERROR,"Contact number already exists").show();
+                return;
+            }
+
             boolean isUpdated = employeeModel.updateEmployee(employeeDto);
 
             if(isUpdated){
@@ -79,6 +62,11 @@ public class AddEmployeeController implements Initializable {
             }
 
         }else {
+            if(employeeModel.checkContactDuplicate(contact) > 0) {
+                new Alert(Alert.AlertType.ERROR,"Contact number already exists").show();
+                return;
+            }
+
             boolean isSaved = employeeModel.saveEmployee(employeeDto);
 
             if (isSaved) {
@@ -89,8 +77,6 @@ public class AddEmployeeController implements Initializable {
                 new Alert(Alert.AlertType.ERROR, "Employee Save Failed").show();
             }
         }
-
-        reset();
     }
 
     /**
@@ -99,41 +85,78 @@ public class AddEmployeeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        reset();
+
+        AtomicBoolean validName = new AtomicBoolean(false);
+        AtomicBoolean validContact = new AtomicBoolean(false);
+        AtomicBoolean validDailyWage = new AtomicBoolean(false);
+
+        btnSave.setDisable(true);
+
         try {
             inputName.textProperty().addListener((observable, oldVal, newVal) -> {
-                if (newVal.matches(patternName) || newVal.isEmpty()) {
+                if (newVal.matches(patternName)) {
                     inputName.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
-                    btnSave.setDisable(false);
+                    validName.set(true);
+
+                    if(validContact.get() && validDailyWage.get()){
+                        btnSave.setDisable(false);
+                    }
+
+                } else if (newVal.isEmpty()) {
+                    inputName.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    validName.set(false);
+                    btnSave.setDisable(true);
 
                 } else {
                     inputName.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    validName.set(false);
                     btnSave.setDisable(true);
                 }
             });
 
             inputContact.textProperty().addListener((observable, oldVal, newVal) -> {
-                if (newVal.matches(patternContact) || newVal.isEmpty()) {
+                if (newVal.matches(patternContact)) {
                     inputContact.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
-                    btnSave.setDisable(false);
+                    validContact.set(true);
+
+                    if(validName.get() && validDailyWage.get()){
+                        btnSave.setDisable(false);
+                    }
+
+                } else if (newVal.isEmpty()) {
+                    inputContact.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    validContact.set(false);
+                    btnSave.setDisable(true);
 
                 } else {
                     inputContact.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    validContact.set(false);
                     btnSave.setDisable(true);
                 }
             });
 
             inputDailyWage.textProperty().addListener((observable, oldVal, newVal) -> {
-                if (newVal.matches(patternDailyWage) || newVal.isEmpty()) {
+                if (newVal.matches(patternDailyWage)) {
                     inputDailyWage.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
-                    btnSave.setDisable(false);
+                    validDailyWage.set(true);
+
+                    if(validName.get() && validContact.get()) {
+                        btnSave.setDisable(false);
+                    }
+
+                } else if (newVal.isEmpty()) {
+                    inputDailyWage.setStyle("-fx-text-inner-color: black; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    validDailyWage.set(false);
+                    btnSave.setDisable(true);
 
                 } else {
                     inputDailyWage.setStyle("-fx-text-inner-color: red; -fx-background-color: white; -fx-border-width: 0 0 1px 0; -fx-border-color: gray;");
+                    validDailyWage.set(false);
                     btnSave.setDisable(true);
                 }
             });
 
-            reset();
             inputEmployeeType.getItems().addAll("Full Time","Temporary");
             inputEmployeeType.setValue("Temporary");
             loadNextId();

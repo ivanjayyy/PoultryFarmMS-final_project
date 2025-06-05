@@ -63,7 +63,7 @@ public class ForgotPasswordController implements Initializable {
         String username = ownerModel.ownerUsername();
 
         String subject = "Change Password Verification Code";
-        String messageText = "Hello "+username+",\nYour verification code is: " + code;
+        String messageText = "Dear "+username+",\nYour verification code is: " + code;
         sendMail(subject,messageText);
         setTimer();
     }
@@ -146,7 +146,7 @@ public class ForgotPasswordController implements Initializable {
         }
 
         String subject = "Change Password Verification Code";
-        String messageText = "Hello "+username+",\nYour verification code is: " + code;
+        String messageText = "Dear "+username+",\nYour verification code is: " + code;
         sendMail(subject,messageText);
         setTimer();
 
