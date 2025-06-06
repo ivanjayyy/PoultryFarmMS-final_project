@@ -27,8 +27,8 @@ public class AddEmployeeController implements Initializable {
     public TextField inputDailyWage;
     public JFXButton btnSave;
 
-    private final String patternName = "^[A-Za-z ]+$";
-    private final String patternContact = "^(\\d+)||((\\d+\\.)(\\d){2})$";
+    private final String patternName = "^[A-Z][a-z]+(?: [A-Z][a-z]+)*$";
+    private final String patternContact = "^7|0|(?:\\+94)[0-9]{9,10}$";
     private final String patternDailyWage = "^[0-9]+(\\.[0-9]{1,2})?$";
 
     private final EmployeeModel employeeModel = new EmployeeModel();

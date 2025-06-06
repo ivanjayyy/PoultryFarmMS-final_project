@@ -31,6 +31,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -113,15 +114,17 @@ public class BatchDetailsPageController implements Initializable {
             loadTableData();
 
             String currentBatchId = chickBatchModel.getCurrentBatchId();
-            selectedBatchId = currentBatchId;
-            selectedBatchTotalChicks = chickBatchModel.searchChickBatch(currentBatchId).getFirst().getChickTotal();
-            loadBatchDetails();
+            if(currentBatchId != null) {
+                selectedBatchId = currentBatchId;
+                selectedBatchTotalChicks = chickBatchModel.searchChickBatch(currentBatchId).getFirst().getChickTotal();
+                loadBatchDetails();
 
-            selectedBatchDate = chickBatchModel.searchChickBatch(currentBatchId).getFirst().getDate();
-            LocalDate givenDate = LocalDate.parse(selectedBatchDate);
-            LocalDate today = LocalDate.now();
-            long daysBetween = ChronoUnit.DAYS.between(givenDate, today);
-            lblTotalDays.setText(String.valueOf(daysBetween));
+                selectedBatchDate = chickBatchModel.searchChickBatch(currentBatchId).getFirst().getDate();
+                LocalDate givenDate = LocalDate.parse(selectedBatchDate);
+                LocalDate today = LocalDate.now();
+                long daysBetween = ChronoUnit.DAYS.between(givenDate, today);
+                lblTotalDays.setText(String.valueOf(daysBetween));
+            }
 
             inputSearch.setText("");
         } catch (Exception e) {
@@ -224,7 +227,8 @@ public class BatchDetailsPageController implements Initializable {
                 btnSale.setDisable(false);
             }
 
-            if(lblBatchSold.getText().equals("NO") && daysBetween <= 30) {
+            int checkTodayStatusCount = chickStatusModel.checkStatus(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), selectedBatchId);
+            if(lblBatchSold.getText().equals("NO") && daysBetween <= 30 && checkTodayStatusCount == 0) {
                 btnStatus.setDisable(false);
             }
 

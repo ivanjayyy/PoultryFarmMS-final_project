@@ -16,6 +16,8 @@ import lk.ijse.poultryfarm.model.DailyAttendanceModel;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -43,6 +45,7 @@ public class EmployeeAttendancePageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ButtonScale.buttonScaling(btnSearch);
         ButtonScale.buttonScaling(btnReset);
+        ButtonScale.buttonScaling(btnDelete);
 
         colBatchId.setCellValueFactory(new PropertyValueFactory<>("batchId"));
         colAttendanceId.setCellValueFactory(new PropertyValueFactory<>("attendanceId"));
@@ -142,20 +145,17 @@ public class EmployeeAttendancePageController implements Initializable {
         }
     }
 
-    public static String selectedBatchId;
     public static String selectedAttendanceId;
+    public static String selectedDate;
 
     public void onClickTable(MouseEvent mouseEvent) {
         try {
             EmployeeAttendanceTm selectedItem = tblEmployeeAttendance.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
-                selectedBatchId = selectedItem.getBatchId();
                 selectedAttendanceId = selectedItem.getAttendanceId();
+                selectedDate = selectedItem.getDate();
 
-                ChickBatchModel chickBatchModel = new ChickBatchModel();
-                String currentBatchId = chickBatchModel.getCurrentBatchId();
-
-                if(selectedBatchId.equals(currentBatchId)){
+                if(selectedDate.equals(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))){
                     btnDelete.setDisable(false);
                 } else {
                     btnDelete.setDisable(true);

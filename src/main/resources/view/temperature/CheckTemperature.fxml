@@ -13,18 +13,24 @@
     <children>
         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-radius: 20; -fx-background-color: white;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
             <children>
-                <HBox alignment="CENTER" prefHeight="198.0" prefWidth="1700.0">
+                <HBox alignment="BOTTOM_CENTER" prefHeight="198.0" prefWidth="1700.0">
                     <children>
                         <Label text="CHECK ROOM TEMPERATURE" textFill="GREY">
                             <font>
-                                <Font name="Arial Black" size="54.0" />
+                                <Font name="Arial Black" size="61.0" />
                             </font>
+                     <HBox.margin>
+                        <Insets bottom="20.0" />
+                     </HBox.margin>
                         </Label>
                     </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
                 </HBox>
             <HBox alignment="CENTER" prefHeight="733.0" prefWidth="1700.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="668.0" prefWidth="1256.0" style="-fx-border-color: #e67e22; -fx-border-radius: 50; -fx-border-width: 10;">
+                  <VBox alignment="CENTER" prefHeight="668.0" prefWidth="1256.0">
                      <children>
                         <HBox alignment="CENTER" prefHeight="179.0" prefWidth="840.0">
                            <children>
@@ -86,9 +92,9 @@
                            <children>
                               <HBox alignment="CENTER" prefHeight="149.0" prefWidth="808.0" style="-fx-border-color: #e67e22; -fx-border-radius: 10; -fx-border-width: 5;">
                                  <children>
-                                          <JFXButton fx:id="btnCheck" buttonType="RAISED" onAction="#checkTemperatureOnAction" prefHeight="83.0" prefWidth="226.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="CHECK" textFill="WHITE">
+                                          <JFXButton fx:id="btnCheck" buttonType="RAISED" onAction="#checkTemperatureOnAction" prefHeight="67.0" prefWidth="198.0" style="-fx-background-color: #e67e22; -fx-background-radius: 20;" text="CHECK" textFill="WHITE">
                                               <font>
-                                                  <Font name="Arial Rounded MT Bold" size="41.0" />
+                                                  <Font name="Arial Rounded MT Bold" size="36.0" />
                                               </font>
                                        <HBox.margin>
                                           <Insets />

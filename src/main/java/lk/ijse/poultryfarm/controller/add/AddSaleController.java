@@ -57,31 +57,31 @@ public class AddSaleController implements Initializable {
         SaleModel saleModel = new SaleModel();
         int totalSold = saleModel.selectedBatchTotalSold(batchId);
 
-        boolean isValidForUpdate = (chicksSoldToday + (totalSold - originalSoldChicks)) <= (batchChickTotal-sumOfChickDead);
-        boolean isValid = (chicksSoldToday + totalSold) <= (batchChickTotal-sumOfChickDead);
+        int allSoldChicks = chicksSoldToday + totalSold;
+        int allSoldChicksForUpdate = chicksSoldToday + totalSold - originalSoldChicks;
+        int batchChicksLeft = batchChickTotal - sumOfChickDead;
+
+        boolean isValidForUpdate = (allSoldChicksForUpdate <= batchChicksLeft);
+        boolean isValid = (allSoldChicks <= batchChicksLeft);
 
         if(BatchSalePageController.updateSale){
-            if(!isValidForUpdate){
-                new Alert(Alert.AlertType.ERROR, "Not Enough Chicks For Sale.");
-                return;
-            }
+            if(isValidForUpdate){
+                boolean isUpdated = saleModel.updateSale(saleDto);
 
-            boolean isUpdated = saleModel.updateSale(saleDto);
+                if(isUpdated){
+                    new Alert(Alert.AlertType.INFORMATION,"Sale Updated Successfully").show();
+                    Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                    stage.close();
+                }else {
+                    new Alert(Alert.AlertType.ERROR,"Sale Update Failed").show();
+                }
 
-            if(isUpdated){
-                new Alert(Alert.AlertType.INFORMATION,"Sale Updated Successfully").show();
-                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                stage.close();
-            }else {
-                new Alert(Alert.AlertType.ERROR,"Sale Update Failed").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Not Enough Chicks For Sale.").show();
             }
 
         } else {
-            if(!isValid){
-                new Alert(Alert.AlertType.ERROR, "Not Enough Chicks For Sale.");
-                return;
-            }
-
+            if(isValid){
                 boolean isSaved = saleModel.saveSale(saleDto);
 
                 if (isSaved) {
@@ -91,6 +91,10 @@ public class AddSaleController implements Initializable {
                 } else {
                     new Alert(Alert.AlertType.ERROR,"Sale Save Failed").show();
                 }
+
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Not Enough Chicks For Sale.").show();
+            }
         }
     }
 
@@ -153,9 +157,9 @@ public class AddSaleController implements Initializable {
             loadNextId();
             loadBatchId();
             ButtonScale.buttonScaling(btnSave);
-            originalSoldChicks = Integer.parseInt(BatchSalePageController.selectedBatchChicksSold);
 
             if(BatchSalePageController.updateSale){
+                originalSoldChicks = Integer.parseInt(BatchSalePageController.selectedBatchChicksSold);
                 lblBatchId.setText(BatchSalePageController.selectedBatchId);
                 lblSaleId.setText(BatchSalePageController.selectedSaleId);
                 inputSoldDate.setValue(LocalDate.parse(BatchSalePageController.selectedBatchDate));
@@ -166,11 +170,11 @@ public class AddSaleController implements Initializable {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR,"Error in retrieving customer id").show();
+            new Alert(Alert.AlertType.ERROR,"Error").show();
         }
     }
 
-    private void loadBatchId() throws SQLException, ClassNotFoundException {
+    private void loadBatchId()  {
         String batchId = BatchDetailsPageController.selectedBatchId;
 
         if (batchId != null) {

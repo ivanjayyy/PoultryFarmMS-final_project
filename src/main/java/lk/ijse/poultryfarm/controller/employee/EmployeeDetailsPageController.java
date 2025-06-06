@@ -130,7 +130,6 @@ public class EmployeeDetailsPageController implements Initializable {
         try {
             EmployeeDetailsTm selectedItem = tblEmployee.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
-                btnSalary.setDisable(false);
                 btnAdd.setDisable(true);
                 btnUpdate.setDisable(false);
 
@@ -150,6 +149,12 @@ public class EmployeeDetailsPageController implements Initializable {
                 ChickBatchModel chickBatchModel = new ChickBatchModel();
                 String currentBatchId = chickBatchModel.getCurrentBatchId();
                 int currentBatchAttendDays = dailyAttendanceModel.countAttendance(selectedEmployeeId,currentBatchId);
+
+                if(currentBatchAttendDays > 0) {
+                    btnSalary.setDisable(false);
+                } else {
+                    btnSalary.setDisable(true);
+                }
 
                 lblAttendDays.setText(String.valueOf(currentBatchAttendDays));
             }

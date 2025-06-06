@@ -48,13 +48,13 @@
          </font>
          <graphic>
             <JFXBadge position="CENTER">
-               <children>
+               <control>
                   <ImageView fitHeight="24.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/EditIcon.png" />
                      </image>
                   </ImageView>
-               </children>
+               </control>
             </JFXBadge>
          </graphic>
       </JFXButton>

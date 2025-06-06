@@ -20,6 +20,8 @@ import lk.ijse.poultryfarm.model.FoodModel;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
 public class AddFoodConsumptionController implements Initializable {
@@ -46,6 +48,33 @@ public class AddFoodConsumptionController implements Initializable {
         double foodRemain = Double.parseDouble(foodModel.foodInventory(foodId));
         double foodConsumed = Double.parseDouble(consumption);
         boolean canConsume = foodRemain >= foodConsumed;
+
+        String selectedBatchArrivedDate = chickBatchModel.searchChickBatch(batchId).getFirst().getDate();
+        LocalDate givenDate = LocalDate.parse(selectedBatchArrivedDate);
+        LocalDate today = LocalDate.now();
+        long daysBetween = ChronoUnit.DAYS.between(givenDate, today);
+
+        if(daysBetween < 10){
+            if (foodId.equals("F002") || foodId.equals("F003")) {
+                new Alert(Alert.AlertType.ERROR, "This Chick Batch is too young for this food.").show();
+                return;
+            }
+
+        } else if (daysBetween < 20) {
+                if (foodId.equals("F001") || foodId.equals("F003")) {
+                    new Alert(Alert.AlertType.ERROR, "This Chick Batch is not eligible for this food.").show();
+                    return;
+                }
+
+        } else if (daysBetween <= 30) {
+                    if (foodId.equals("F001") || foodId.equals("F002")){
+                        new Alert(Alert.AlertType.ERROR,"This Chick Batch is too old for this food.").show();
+                        return;
+                }
+        } else {
+            new Alert(Alert.AlertType.ERROR,"This Chick Batch's Food Consumption Period is over.").show();
+            return;
+        }
 
         if(canConsume){
             FoodConsumptionDto foodConsumptionDto = new FoodConsumptionDto(

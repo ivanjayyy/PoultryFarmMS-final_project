@@ -98,10 +98,10 @@
                   <TableView fx:id="tblEmployee" onMouseClicked="#onClickTable" prefHeight="452.0" prefWidth="1440.0" style="-fx-font-size: 24px; -fx-background-color: white; -fx-border-color: gray;">
                      <columns>
                         <TableColumn fx:id="colEmployeeId" prefWidth="171.0" text="Employee ID" />
-                        <TableColumn fx:id="colName" prefWidth="396.0" text="Name" />
-                        <TableColumn fx:id="colFullTime" prefWidth="370.0" text="Full Time Employee(Yes/No)" />
-                        <TableColumn fx:id="colContact" prefWidth="279.0" text="Contact" />
-                        <TableColumn fx:id="colDailyWage" prefWidth="222.0" text="Daily Wage" />
+                        <TableColumn fx:id="colName" prefWidth="442.0" text="Name" />
+                        <TableColumn fx:id="colFullTime" prefWidth="311.0" text="Employee Type" />
+                        <TableColumn fx:id="colContact" prefWidth="267.0" text="Contact" />
+                        <TableColumn fx:id="colDailyWage" prefWidth="247.0" text="Daily Wage" />
                      </columns>
                   </TableView>
                </children>

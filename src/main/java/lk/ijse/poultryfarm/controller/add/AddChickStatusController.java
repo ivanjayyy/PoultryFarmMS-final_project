@@ -47,7 +47,7 @@ public class AddChickStatusController implements Initializable {
 
         boolean isValid = (chickDeadToday + sumOfChickDead) <= (batchChickTotal-totalSold);
 
-        int todayChickStatusCheckedCount = chickStatusModel.checkStatus(checkedDate);
+        int todayChickStatusCheckedCount = chickStatusModel.checkStatus(checkedDate,batchId);
 
         if(todayChickStatusCheckedCount != 0) {
             new Alert(Alert.AlertType.ERROR, "Error: You have already checked today's chick status.").show();

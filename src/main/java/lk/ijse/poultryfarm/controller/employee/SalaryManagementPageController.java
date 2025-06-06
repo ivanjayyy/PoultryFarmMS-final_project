@@ -43,6 +43,7 @@ public class SalaryManagementPageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ButtonScale.buttonScaling(btnSearch);
         ButtonScale.buttonScaling(btnReset);
+        ButtonScale.buttonScaling(btnDelete);
 
         colSalaryId.setCellValueFactory(new PropertyValueFactory<>("salaryId"));
         colEmployeeId.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
