@@ -9,7 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
-import lk.ijse.poultryfarm.model.OwnerModel;
+import lk.ijse.poultryfarm.dao.custom.impl.OwnerDAOImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -29,7 +29,7 @@ public class ChangePasswordController implements Initializable {
 
     public void savePasswordOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         if(inputPassword.getText().equals(confirmPassword.getText())){
-            OwnerModel ownerModel = new OwnerModel();
+            OwnerDAOImpl ownerModel = new OwnerDAOImpl();
             boolean isSuccess = ownerModel.changePassword(inputPassword.getText());
 
             if(isSuccess) {

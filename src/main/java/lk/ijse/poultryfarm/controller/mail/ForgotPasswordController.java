@@ -16,7 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.controller.TextFieldLimiter;
-import lk.ijse.poultryfarm.model.OwnerModel;
+import lk.ijse.poultryfarm.dao.custom.impl.OwnerDAOImpl;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -54,7 +54,7 @@ public class ForgotPasswordController implements Initializable {
 
     static int code;
 
-    OwnerModel ownerModel = new OwnerModel();
+    OwnerDAOImpl ownerModel = new OwnerDAOImpl();
 
     public void resendEmailOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         Random random = new Random();
@@ -105,7 +105,7 @@ public class ForgotPasswordController implements Initializable {
         });
 
         try {
-            OwnerModel ownerModel = new OwnerModel();
+            OwnerDAOImpl ownerModel = new OwnerDAOImpl();
             String toEmail = ownerModel.getEmail();
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(fromEmail));

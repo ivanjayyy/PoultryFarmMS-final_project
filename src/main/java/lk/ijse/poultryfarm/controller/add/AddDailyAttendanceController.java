@@ -12,8 +12,8 @@ import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.controller.employee.EmployeeDetailsPageController;
 import lk.ijse.poultryfarm.dto.DailyAttendanceDto;
-import lk.ijse.poultryfarm.model.ChickBatchModel;
-import lk.ijse.poultryfarm.model.DailyAttendanceModel;
+import lk.ijse.poultryfarm.dao.custom.impl.ChickBatchDAOImpl;
+import lk.ijse.poultryfarm.dao.custom.impl.DailyAttendanceDAOImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -27,8 +27,8 @@ public class AddDailyAttendanceController implements Initializable {
     public JFXComboBox<Boolean> inputAttendance;
     public JFXButton btnSave;
     
-    private final DailyAttendanceModel dailyAttendanceModel = new DailyAttendanceModel();
-    private final ChickBatchModel chickBatchModel = new ChickBatchModel();
+    private final DailyAttendanceDAOImpl dailyAttendanceModel = new DailyAttendanceDAOImpl();
+    private final ChickBatchDAOImpl chickBatchModel = new ChickBatchDAOImpl();
 
     public void saveDailyAttendanceOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String batchId = lblBatchId.getText();

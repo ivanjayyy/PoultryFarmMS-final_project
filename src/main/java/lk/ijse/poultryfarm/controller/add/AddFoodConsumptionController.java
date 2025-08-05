@@ -14,9 +14,7 @@ import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.controller.food.FoodInventoryPageController;
 import lk.ijse.poultryfarm.controller.mail.ForgotPasswordController;
 import lk.ijse.poultryfarm.dto.FoodConsumptionDto;
-import lk.ijse.poultryfarm.model.ChickBatchModel;
-import lk.ijse.poultryfarm.model.FoodConsumptionModel;
-import lk.ijse.poultryfarm.model.FoodModel;
+import lk.ijse.poultryfarm.dao.custom.impl.*;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -32,9 +30,9 @@ public class AddFoodConsumptionController implements Initializable {
     public TextField inputConsumption;
     public JFXButton btnSave;
 
-    private final ChickBatchModel chickBatchModel = new ChickBatchModel();
-    private final FoodConsumptionModel foodConsumptionModel = new FoodConsumptionModel();
-    private final FoodModel foodModel = new FoodModel();
+    private final ChickBatchDAOImpl chickBatchModel = new ChickBatchDAOImpl();
+    private final FoodConsumptionDAOImpl foodConsumptionModel = new FoodConsumptionDAOImpl();
+    private final FoodDAOImpl foodModel = new FoodDAOImpl();
 
     private final String patternConsumption = "^[0-9]+(\\.[0-9]{1,2})?$";
 
@@ -50,6 +48,8 @@ public class AddFoodConsumptionController implements Initializable {
         boolean canConsume = foodRemain >= foodConsumed;
 
         String selectedBatchArrivedDate = chickBatchModel.searchChickBatch(batchId).getFirst().getDate();
+        int selectedBatchTotalChicks = chickBatchModel.searchChickBatch(batchId).getFirst().getChickTotal();
+
         LocalDate givenDate = LocalDate.parse(selectedBatchArrivedDate);
         LocalDate today = LocalDate.now();
         long daysBetween = ChronoUnit.DAYS.between(givenDate, today);
@@ -66,13 +66,27 @@ public class AddFoodConsumptionController implements Initializable {
                     return;
                 }
 
-        } else if (daysBetween <= 30) {
+        } else if (daysBetween < 30) {
                     if (foodId.equals("F001") || foodId.equals("F002")){
                         new Alert(Alert.AlertType.ERROR,"This Chick Batch is too old for this food.").show();
                         return;
                 }
         } else {
             new Alert(Alert.AlertType.ERROR,"This Chick Batch's Food Consumption Period is over.").show();
+            return;
+        }
+
+        ChickStatusDAOImpl chickStatusModel = new ChickStatusDAOImpl();
+        SaleDAOImpl saleModel = new SaleDAOImpl();
+
+        int sumOfChickDead = chickStatusModel.selectedBatchChickDeaths(batchId);
+        int batchChicksLeft = (selectedBatchTotalChicks - sumOfChickDead);
+        int totalChickSold = saleModel.selectedBatchTotalSold(batchId);
+
+        boolean isSold = (batchChicksLeft == totalChickSold);
+
+        if (isSold) {
+            new Alert(Alert.AlertType.ERROR, "This Chick Batch is Already Sold Out.").show();
             return;
         }
 

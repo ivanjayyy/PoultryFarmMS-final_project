@@ -3,6 +3,7 @@ package lk.ijse.poultryfarm.controller;
 import com.jfoenix.controls.JFXButton;
 import javafx.animation.ScaleTransition;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class ButtonScale {
@@ -31,5 +32,19 @@ public class ButtonScale {
 
         txt.setOnMouseEntered(e -> grow.playFromStart());
         txt.setOnMouseExited(e -> shrink.playFromStart());
+    }
+
+    public static void imageScaling(ImageView imageView) {
+
+        ScaleTransition grow = new ScaleTransition(Duration.millis(100), imageView);
+        grow.setToX(1.2);
+        grow.setToY(1.2);
+
+        ScaleTransition shrink = new ScaleTransition(Duration.millis(100), imageView);
+        shrink.setToX(1);
+        shrink.setToY(1);
+
+        imageView.setOnMouseEntered(e -> grow.playFromStart());
+        imageView.setOnMouseExited(e -> shrink.playFromStart());
     }
 }

@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.ChickBatchDto;
-import lk.ijse.poultryfarm.model.ChickBatchModel;
+import lk.ijse.poultryfarm.dao.custom.impl.ChickBatchDAOImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -47,7 +47,7 @@ public class AddChickBatchController implements Initializable {
             }
     }
 
-    private final ChickBatchModel chickBatchModel = new ChickBatchModel();
+    private final ChickBatchDAOImpl chickBatchModel = new ChickBatchDAOImpl();
 
     /**
      * @param url

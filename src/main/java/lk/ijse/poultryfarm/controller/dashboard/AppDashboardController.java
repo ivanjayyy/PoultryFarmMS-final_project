@@ -6,7 +6,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 
@@ -14,6 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.animation.KeyFrame;
@@ -33,6 +37,7 @@ public class AppDashboardController implements Initializable {
     public JFXButton btnTemperature;
     public Label lblTime;
     public Label lblDate;
+    public ImageView imagePowerButton;
 
     public void currentTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -82,6 +87,7 @@ public class AppDashboardController implements Initializable {
         ButtonScale.buttonScaling(btnTemperature);
         ButtonScale.buttonScaling(btnUser);
         ButtonScale.buttonScaling(btnEmployee);
+        ButtonScale.imageScaling(imagePowerButton);
     }
 
     public void navigateTo(String path) {
@@ -101,5 +107,14 @@ public class AppDashboardController implements Initializable {
 
     public void checkTemperatureOnAction(ActionEvent actionEvent) {
         navigateTo("/view/temperature/CheckTemperature.fxml");
+    }
+
+    public void closeProjectOnClicked(MouseEvent mouseEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to Exit?", ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.YES) {
+            System.exit(0);
+        }
     }
 }

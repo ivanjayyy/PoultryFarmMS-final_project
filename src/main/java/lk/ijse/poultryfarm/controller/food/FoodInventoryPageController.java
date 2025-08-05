@@ -11,7 +11,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
-import lk.ijse.poultryfarm.model.FoodModel;
+import lk.ijse.poultryfarm.dao.custom.impl.FoodDAOImpl;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,7 +22,7 @@ public class FoodInventoryPageController implements Initializable {
     public Label lblFinisherFood;
     public static String globalFoodId;
 
-    private final FoodModel foodModel = new FoodModel();
+    private final FoodDAOImpl foodModel = new FoodDAOImpl();
     public JFXButton btnBoosterConsume;
     public JFXButton btnBoosterOrder;
     public JFXButton btnStarterConsume;

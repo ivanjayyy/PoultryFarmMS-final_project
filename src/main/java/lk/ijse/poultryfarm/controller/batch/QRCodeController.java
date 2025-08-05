@@ -20,6 +20,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import lk.ijse.poultryfarm.controller.ButtonScale;
+import lk.ijse.poultryfarm.controller.mail.ForgotPasswordController;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -71,11 +72,14 @@ public class QRCodeController implements Initializable {
             LuminanceSource source = new BufferedImageLuminanceSource(image);
             BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
             result = new MultiFormatReader().decode(bitmap);
-            System.out.println("Decoded QR: " + result.getText());
             String output = "Decoded QR:\n" + result.getText();
+            ForgotPasswordController.sendMail("QR Scan Result", output);
             new Alert(Alert.AlertType.INFORMATION, output).show();
+            webcam.close();
+
         } catch (NotFoundException e) {
-            System.out.println("QR code not found. Try again.");
+            new Alert(Alert.AlertType.ERROR, "QR Code not found. Try again.").show();
+            webcam.close();
         }
     }
 }

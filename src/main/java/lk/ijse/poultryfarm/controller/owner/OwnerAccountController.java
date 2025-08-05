@@ -9,7 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.OwnerDto;
-import lk.ijse.poultryfarm.model.OwnerModel;
+import lk.ijse.poultryfarm.dao.custom.impl.OwnerDAOImpl;
 import lk.ijse.poultryfarm.util.EnterKeyAction;
 
 import java.net.URL;
@@ -34,7 +34,7 @@ public class OwnerAccountController implements Initializable {
     private final String pattern3WeakPassword = "^[A-Za-z0-9]+$";
     private final String patternNormalPassword = "^[A-Za-z0-9]{6,}$";
 
-    OwnerModel ownerModel = new OwnerModel();
+    OwnerDAOImpl ownerModel = new OwnerDAOImpl();
 
     public void updateOwnerOnAction(ActionEvent actionEvent) {
         if (btnUpdateOwner.getText().equals("UPDATE")) {

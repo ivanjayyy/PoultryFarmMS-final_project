@@ -13,9 +13,9 @@ import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.controller.batch.BatchDetailsPageController;
 import lk.ijse.poultryfarm.controller.batch.BatchSalePageController;
 import lk.ijse.poultryfarm.dto.SaleDto;
-import lk.ijse.poultryfarm.model.ChickBatchModel;
-import lk.ijse.poultryfarm.model.ChickStatusModel;
-import lk.ijse.poultryfarm.model.SaleModel;
+import lk.ijse.poultryfarm.dao.custom.impl.ChickBatchDAOImpl;
+import lk.ijse.poultryfarm.dao.custom.impl.ChickStatusDAOImpl;
+import lk.ijse.poultryfarm.dao.custom.impl.SaleDAOImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -34,7 +34,7 @@ public class AddSaleController implements Initializable {
     private final String patternChicksSold = "^[0-9]+$";
     private final String patternTotalSale = "^(0|[1-9][0-9]*)?(\\.[0-9]{1,2})?$";
 
-    private final SaleModel saleModel = new SaleModel();
+    private final SaleDAOImpl saleModel = new SaleDAOImpl();
 
     public int originalSoldChicks;
 
@@ -47,14 +47,14 @@ public class AddSaleController implements Initializable {
 
         SaleDto saleDto = new SaleDto(batchId,saleId,Double.parseDouble(totalSale),date,Integer.parseInt(chicksSold));
 
-        ChickStatusModel chickStatusModel = new ChickStatusModel();
-        ChickBatchModel chickBatchModel = new ChickBatchModel();
+        ChickStatusDAOImpl chickStatusModel = new ChickStatusDAOImpl();
+        ChickBatchDAOImpl chickBatchModel = new ChickBatchDAOImpl();
 
         int sumOfChickDead = chickStatusModel.selectedBatchChickDeaths(batchId);
         int chicksSoldToday = Integer.parseInt(chicksSold);
         int batchChickTotal = chickBatchModel.getChickTotal(batchId);
 
-        SaleModel saleModel = new SaleModel();
+        SaleDAOImpl saleModel = new SaleDAOImpl();
         int totalSold = saleModel.selectedBatchTotalSold(batchId);
 
         int allSoldChicks = chicksSoldToday + totalSold;

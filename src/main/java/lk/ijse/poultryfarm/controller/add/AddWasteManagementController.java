@@ -13,8 +13,8 @@ import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.controller.WasteManagementPageController;
 import lk.ijse.poultryfarm.dto.WasteManagementDto;
-import lk.ijse.poultryfarm.model.ChickBatchModel;
-import lk.ijse.poultryfarm.model.WasteManagementModel;
+import lk.ijse.poultryfarm.dao.custom.impl.ChickBatchDAOImpl;
+import lk.ijse.poultryfarm.dao.custom.impl.WasteManagementDAOImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -30,8 +30,8 @@ public class AddWasteManagementController implements Initializable {
 
     private final String patternTotalSale = "^[0-9]+(\\.[0-9]{1,2})?$";
 
-    private final WasteManagementModel wasteManagementModel = new WasteManagementModel();
-    private final ChickBatchModel chickBatchModel = new ChickBatchModel();
+    private final WasteManagementDAOImpl wasteManagementModel = new WasteManagementDAOImpl();
+    private final ChickBatchDAOImpl chickBatchModel = new ChickBatchDAOImpl();
 
     public void saveBatchOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String batchId = lblBatchId.getValue();

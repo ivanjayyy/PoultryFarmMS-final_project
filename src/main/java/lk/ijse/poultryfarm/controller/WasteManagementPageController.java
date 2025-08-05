@@ -16,8 +16,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.dto.WasteManagementDto;
 import lk.ijse.poultryfarm.dto.tm.WasteManagementTm;
-import lk.ijse.poultryfarm.model.ChickBatchModel;
-import lk.ijse.poultryfarm.model.WasteManagementModel;
+import lk.ijse.poultryfarm.dao.custom.impl.ChickBatchDAOImpl;
+import lk.ijse.poultryfarm.dao.custom.impl.WasteManagementDAOImpl;
 
 import java.io.IOException;
 import java.net.URL;
@@ -34,7 +34,7 @@ public class WasteManagementPageController implements Initializable {
     public TableColumn<WasteManagementTm,Double> colTotalAmount;
     public TableColumn<WasteManagementTm,String> colSoldDate;
 
-    private final WasteManagementModel wasteManagementModel = new WasteManagementModel();
+    private final WasteManagementDAOImpl wasteManagementModel = new WasteManagementDAOImpl();
     public TextField inputSearch;
     public JFXButton btnSearch;
     public JFXButton btnDelete;
@@ -66,7 +66,7 @@ public class WasteManagementPageController implements Initializable {
            inputSearch.clear();
            btnSearch.setDisable(true);
 
-           ChickBatchModel chickBatchModel = new ChickBatchModel();
+           ChickBatchDAOImpl chickBatchModel = new ChickBatchDAOImpl();
            searchBatchId.getItems().clear();
            searchBatchId.setItems(chickBatchModel.getAllBatchIds());
 
@@ -108,7 +108,7 @@ public class WasteManagementPageController implements Initializable {
 
                 btnAdd.setDisable(true);
 
-                ChickBatchModel chickBatchModel = new ChickBatchModel();
+                ChickBatchDAOImpl chickBatchModel = new ChickBatchDAOImpl();
                 String currentBatchId = chickBatchModel.getCurrentBatchId();
 
                 if(selectedBatchId.equals(currentBatchId)){

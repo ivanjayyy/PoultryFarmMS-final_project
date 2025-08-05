@@ -1,4 +1,4 @@
-package lk.ijse.poultryfarm.util;
+package lk.ijse.poultryfarm.dao;
 
 import lk.ijse.poultryfarm.database.DBConnection;
 
@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CrudUtil {
+public class SQLUtil {
     public static <T>T execute(String sql, Object... obj) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getInstance().getConnection();
         PreparedStatement pst = connection.prepareStatement(sql);

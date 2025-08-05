@@ -1,24 +1,25 @@
-package lk.ijse.poultryfarm.model;
+package lk.ijse.poultryfarm.dao.custom.impl;
 
+import lk.ijse.poultryfarm.dao.custom.BillDAO;
 import lk.ijse.poultryfarm.dto.BillDto;
-import lk.ijse.poultryfarm.util.CrudUtil;
+import lk.ijse.poultryfarm.dao.SQLUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class BillModel {
+public class BillDAOImpl implements BillDAO {
 
     public boolean saveBill(BillDto billDto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("INSERT INTO bill VALUES (?,?,?,?,?)", billDto.getBatchId(),billDto.getBillId(),billDto.getBillVariant(),billDto.getAmount(),billDto.getDate());
+        return SQLUtil.execute("INSERT INTO bill VALUES (?,?,?,?,?)", billDto.getBatchId(),billDto.getBillId(),billDto.getBillVariant(),billDto.getAmount(),billDto.getDate());
     }
 
     public boolean deleteBill(String billId) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("DELETE FROM bill WHERE bill_id = ?", billId);
+        return SQLUtil.execute("DELETE FROM bill WHERE bill_id = ?", billId);
     }
 
     public ArrayList<BillDto> searchBill(String billVariant) throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM bill WHERE bill_variant = ? ORDER BY bill_id DESC", billVariant);
+        ResultSet resultSet = SQLUtil.execute("SELECT * FROM bill WHERE bill_variant = ? ORDER BY bill_id DESC", billVariant);
 
         ArrayList<BillDto> billDtos = new ArrayList<>();
 
@@ -36,7 +37,7 @@ public class BillModel {
     }
 
     public ArrayList<BillDto> getAllBill() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM bill ORDER BY bill_id DESC");
+        ResultSet resultSet = SQLUtil.execute("SELECT * FROM bill ORDER BY bill_id DESC");
 
         ArrayList<BillDto> billDtos = new ArrayList<>();
 
@@ -54,7 +55,7 @@ public class BillModel {
     }
 
     public String getNextBillId() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT bill_id FROM bill ORDER BY bill_id DESC LIMIT 1");
+        ResultSet resultSet = SQLUtil.execute("SELECT bill_id FROM bill ORDER BY bill_id DESC LIMIT 1");
 
         if (resultSet.next()) {
             String lastId = resultSet.getString(1);
@@ -69,7 +70,7 @@ public class BillModel {
     }
 
     public int billPaidStatus(String batchId, String billType) throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT COUNT(bill_id) FROM bill WHERE batch_id = ? AND bill_variant = ?", batchId,billType);
+        ResultSet resultSet = SQLUtil.execute("SELECT COUNT(bill_id) FROM bill WHERE batch_id = ? AND bill_variant = ?", batchId,billType);
 
         if(resultSet.next()){
             return resultSet.getInt(1);

@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
-import lk.ijse.poultryfarm.model.OwnerModel;
+import lk.ijse.poultryfarm.dao.custom.impl.OwnerDAOImpl;
 import lk.ijse.poultryfarm.util.EnterKeyAction;
 
 import java.io.IOException;
@@ -29,7 +29,7 @@ public class LoginPageController implements Initializable {
     public TextField inputUsername;
     public JFXButton btnForgotPassword;
 
-    OwnerModel ownerModel = new OwnerModel();
+    OwnerDAOImpl ownerModel = new OwnerDAOImpl();
 
     public void goAppWindowOnAction(ActionEvent actionEvent) throws IOException, SQLException, ClassNotFoundException {
         String txtUsername = inputUsername.getText();

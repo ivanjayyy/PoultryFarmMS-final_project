@@ -3,10 +3,14 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="1000.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.poultryfarm.controller.dashboard.AppDashboardController">
@@ -14,7 +18,31 @@
       <AnchorPane fx:id="ancAppWindow" prefHeight="1000.0" prefWidth="1720.0" style="-fx-background-color: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <VBox prefHeight="1000.0" prefWidth="200.0" style="-fx-background-color: #e67e22;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Region prefHeight="88.0" prefWidth="200.0" />
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="724.0" prefHeight="53.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="lblTime" alignment="CENTER" contentDisplay="CENTER" prefHeight="22.0" prefWidth="132.0" style="-fx-border-color: white; -fx-border-radius: 20; -fx-border-width: 2px;" text="Label" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="916.0" prefHeight="53.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="lblDate" alignment="CENTER" contentDisplay="CENTER" prefHeight="22.0" prefWidth="132.0" style="-fx-border-color: white; -fx-border-width: 0 0 2px 0;" text="Label" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <Region prefHeight="54.0" prefWidth="200.0" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <JFXButton fx:id="btnBatch" buttonType="RAISED" onAction="#openBatchWindowOnAction" ripplerFill="#d35400" text="BATCH" textFill="WHITE">
@@ -69,8 +97,8 @@
                   </JFXButton>
                </children>
             </HBox>
-            <Region layoutX="10.0" layoutY="10.0" prefHeight="112.0" prefWidth="200.0" />
-            <HBox alignment="CENTER" layoutX="10.0" layoutY="598.0" prefHeight="106.0" prefWidth="200.0">
+            <Region layoutX="10.0" layoutY="10.0" prefHeight="77.0" prefWidth="200.0" />
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="598.0" prefHeight="87.0" prefWidth="200.0">
                <children>
                   <JFXButton fx:id="btnUser" buttonType="RAISED" onAction="#goOwnerAccountOnAction" ripplerFill="#d35400" text="USER" textFill="WHITE">
                      <font>
@@ -79,25 +107,20 @@
                   </JFXButton>
                </children>
             </HBox>
-            <HBox alignment="CENTER" layoutX="10.0" layoutY="724.0" prefHeight="53.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="179.0">
                <children>
-                  <Label fx:id="lblTime" alignment="CENTER" contentDisplay="CENTER" prefHeight="22.0" prefWidth="132.0" style="-fx-border-color: white; -fx-border-radius: 20; -fx-border-width: 2px;" text="Label" textFill="WHITE">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="24.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" layoutX="10.0" layoutY="916.0" prefHeight="53.0" prefWidth="200.0">
-               <children>
-                  <Label fx:id="lblDate" alignment="CENTER" contentDisplay="CENTER" prefHeight="22.0" prefWidth="132.0" style="-fx-border-color: white; -fx-border-width: 0 0 2px 0;" text="Label" textFill="WHITE">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="24.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets bottom="10.0" />
-                     </HBox.margin>
-                  </Label>
+                  <ImageView fx:id="imagePowerButton" fitHeight="54.0" fitWidth="60.0" onMouseClicked="#closeProjectOnClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/icons8-power-button-64.png" />
+                     </image>
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color opacity="0.3358778655529022" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </ImageView>
                </children>
             </HBox>
          </children>

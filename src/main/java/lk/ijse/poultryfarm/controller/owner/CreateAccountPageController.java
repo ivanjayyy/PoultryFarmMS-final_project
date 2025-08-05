@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.controller.mail.ForgotPasswordController;
 import lk.ijse.poultryfarm.dto.OwnerDto;
-import lk.ijse.poultryfarm.model.OwnerModel;
+import lk.ijse.poultryfarm.dao.custom.impl.OwnerDAOImpl;
 import lk.ijse.poultryfarm.util.EnterKeyAction;
 
 import java.net.URL;
@@ -23,7 +23,7 @@ public class CreateAccountPageController implements Initializable {
     public TextField inputPassword;
     public TextField inputEmail;
 
-    private final OwnerModel ownerModel = new OwnerModel();
+    private final OwnerDAOImpl ownerModel = new OwnerDAOImpl();
     public JFXButton btnCreate;
 
     private final String patternUsername = "^[a-zA-Z0-9_-]+$";

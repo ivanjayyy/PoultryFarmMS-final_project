@@ -16,8 +16,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.dto.BillDto;
 import lk.ijse.poultryfarm.dto.tm.BillManagementTm;
-import lk.ijse.poultryfarm.model.BillModel;
-import lk.ijse.poultryfarm.model.ChickBatchModel;
+import lk.ijse.poultryfarm.dao.custom.impl.BillDAOImpl;
+import lk.ijse.poultryfarm.dao.custom.impl.ChickBatchDAOImpl;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,7 +40,7 @@ public class BillManagementPageController implements Initializable {
 
     public JFXButton btnDelete;
 
-    private final BillModel billModel = new BillModel();
+    private final BillDAOImpl billModel = new BillDAOImpl();
     public Label lblWaterBillStatus;
     public Label lblElecBillStatus;
     public JFXButton btnReset;
@@ -83,7 +83,7 @@ public class BillManagementPageController implements Initializable {
                 selectedBillAmount = selectedItem.getAmount();
                 selectedBillDate = selectedItem.getDate();
 
-                ChickBatchModel chickBatchModel = new ChickBatchModel();
+                ChickBatchDAOImpl chickBatchModel = new ChickBatchDAOImpl();
                 String currentBatchId = chickBatchModel.getCurrentBatchId();
 
                 if(selectedBatchId.equals(currentBatchId)){
@@ -181,7 +181,7 @@ public class BillManagementPageController implements Initializable {
     }
 
     private void loadData() throws SQLException, ClassNotFoundException {
-        ChickBatchModel chickBatchModel = new ChickBatchModel();
+        ChickBatchDAOImpl chickBatchModel = new ChickBatchDAOImpl();
 
         String currentBatchId = chickBatchModel.getCurrentBatchId();
         int waterBillStatus = billModel.billPaidStatus(currentBatchId,"Water");

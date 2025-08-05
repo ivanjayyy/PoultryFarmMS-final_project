@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
-import lk.ijse.poultryfarm.model.OwnerModel;
+import lk.ijse.poultryfarm.dao.custom.impl.OwnerDAOImpl;
 
 public class LoginDashboardController implements Initializable {
 
@@ -41,7 +41,7 @@ public class LoginDashboardController implements Initializable {
         ButtonScale.buttonScaling(btnCreate);
         ButtonScale.buttonScaling(btnEdit);
 
-        OwnerModel ownerModel = new OwnerModel();
+        OwnerDAOImpl ownerModel = new OwnerDAOImpl();
         try {
             if(ownerModel.hasOwner()) {
                 btnCreate.setDisable(true);

@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.controller.food.FoodInventoryPageController;
 import lk.ijse.poultryfarm.dto.FoodPaymentDto;
-import lk.ijse.poultryfarm.model.FoodPaymentModel;
+import lk.ijse.poultryfarm.dao.custom.impl.FoodPaymentDAOImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -30,7 +30,7 @@ public class AddFoodPaymentController implements Initializable {
     private final String patternQuantity = "^[0-9]+(\\.[0-9]{1,2})?$";
     private final String patternPaidAmount = "^[0-9]+(\\.[0-9]{1,2})?$";
 
-    private final FoodPaymentModel foodPaymentModel = new FoodPaymentModel();
+    private final FoodPaymentDAOImpl foodPaymentModel = new FoodPaymentDAOImpl();
 
     public void saveFoodPaymentOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String paymentId = lblPaymentId.getText();

@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.controller.employee.EmployeeDetailsPageController;
 import lk.ijse.poultryfarm.dto.EmployeeDto;
-import lk.ijse.poultryfarm.model.EmployeeModel;
+import lk.ijse.poultryfarm.dao.custom.impl.EmployeeDAOImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -28,10 +28,10 @@ public class AddEmployeeController implements Initializable {
     public JFXButton btnSave;
 
     private final String patternName = "^[A-Z][a-z]+(?: [A-Z][a-z]+)*$";
-    private final String patternContact = "^7|0|(?:\\+94)[0-9]{9,10}$";
+    private final String patternContact = "^0\\d{9}$";
     private final String patternDailyWage = "^[0-9]+(\\.[0-9]{1,2})?$";
 
-    private final EmployeeModel employeeModel = new EmployeeModel();
+    private final EmployeeDAOImpl employeeModel = new EmployeeDAOImpl();
 
     public void saveBatchOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String employeeId = lblEmployeeId.getText();

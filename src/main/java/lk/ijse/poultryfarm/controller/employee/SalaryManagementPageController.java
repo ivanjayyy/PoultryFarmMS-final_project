@@ -12,8 +12,8 @@ import javafx.scene.input.MouseEvent;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.SalaryDto;
 import lk.ijse.poultryfarm.dto.tm.SalaryManagementTm;
-import lk.ijse.poultryfarm.model.EmployeeModel;
-import lk.ijse.poultryfarm.model.SalaryModel;
+import lk.ijse.poultryfarm.dao.custom.impl.EmployeeDAOImpl;
+import lk.ijse.poultryfarm.dao.custom.impl.SalaryDAOImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -28,7 +28,7 @@ public class SalaryManagementPageController implements Initializable {
     public TableColumn<SalaryManagementTm,Double> colSalary;
     public TableColumn<SalaryManagementTm,String> colDate;
 
-    private final SalaryModel salaryModel = new SalaryModel();
+    private final SalaryDAOImpl salaryModel = new SalaryDAOImpl();
     public TextField inputSearch;
     public JFXButton btnSearch;
     public JFXButton btnReset;
@@ -64,7 +64,7 @@ public class SalaryManagementPageController implements Initializable {
             btnSearch.setDisable(true);
             btnDelete.setDisable(true);
 
-            EmployeeModel employeeModel = new EmployeeModel();
+            EmployeeDAOImpl employeeModel = new EmployeeDAOImpl();
             searchEmployeeName.getItems().clear();
             searchEmployeeName.setItems(employeeModel.getAllEmployeeNames());
 
@@ -118,7 +118,7 @@ public class SalaryManagementPageController implements Initializable {
         btnSearch.setDisable(false);
         String name = searchEmployeeName.getSelectionModel().getSelectedItem();
 
-        EmployeeModel employeeModel = new EmployeeModel();
+        EmployeeDAOImpl employeeModel = new EmployeeDAOImpl();
         String employeeId = employeeModel.getEmployeeId(name);
 
         inputSearch.setText(employeeId);

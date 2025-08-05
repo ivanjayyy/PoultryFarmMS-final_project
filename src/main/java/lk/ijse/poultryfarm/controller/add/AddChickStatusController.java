@@ -12,9 +12,9 @@ import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.controller.batch.BatchDetailsPageController;
 import lk.ijse.poultryfarm.dto.ChickStatusDto;
-import lk.ijse.poultryfarm.model.ChickBatchModel;
-import lk.ijse.poultryfarm.model.ChickStatusModel;
-import lk.ijse.poultryfarm.model.SaleModel;
+import lk.ijse.poultryfarm.dao.custom.impl.ChickBatchDAOImpl;
+import lk.ijse.poultryfarm.dao.custom.impl.ChickStatusDAOImpl;
+import lk.ijse.poultryfarm.dao.custom.impl.SaleDAOImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -27,8 +27,8 @@ public class AddChickStatusController implements Initializable {
     public TextField inputChicksDead;
     public JFXButton btnSave;
 
-    private final ChickStatusModel chickStatusModel = new ChickStatusModel();
-    private final ChickBatchModel chickBatchModel = new ChickBatchModel();
+    private final ChickStatusDAOImpl chickStatusModel = new ChickStatusDAOImpl();
+    private final ChickBatchDAOImpl chickBatchModel = new ChickBatchDAOImpl();
 
     private final String patternChicksDead = "^[0-9]+$";
 
@@ -42,7 +42,7 @@ public class AddChickStatusController implements Initializable {
         int chickDeadToday = Integer.parseInt(chicksDead);
         int batchChickTotal = chickBatchModel.getChickTotal(batchId);
 
-        SaleModel saleModel = new SaleModel();
+        SaleDAOImpl saleModel = new SaleDAOImpl();
         int totalSold = saleModel.selectedBatchTotalSold(batchId);
 
         boolean isValid = (chickDeadToday + sumOfChickDead) <= (batchChickTotal-totalSold);

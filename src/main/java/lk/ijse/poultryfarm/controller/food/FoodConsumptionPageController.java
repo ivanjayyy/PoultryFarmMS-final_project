@@ -14,8 +14,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.dto.FoodConsumptionDto;
 import lk.ijse.poultryfarm.dto.tm.FoodConsumptionTm;
-import lk.ijse.poultryfarm.model.ChickBatchModel;
-import lk.ijse.poultryfarm.model.FoodConsumptionModel;
+import lk.ijse.poultryfarm.dao.custom.impl.ChickBatchDAOImpl;
+import lk.ijse.poultryfarm.dao.custom.impl.FoodConsumptionDAOImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -30,7 +30,7 @@ public class FoodConsumptionPageController implements Initializable {
     public TableColumn<FoodConsumptionTm,String> colFoodId;
     public TableColumn<FoodConsumptionTm,Double> colConsumption;
 
-    private final FoodConsumptionModel foodConsumptionModel = new FoodConsumptionModel();
+    private final FoodConsumptionDAOImpl foodConsumptionModel = new FoodConsumptionDAOImpl();
     public TextField inputSearch;
     public JFXButton btnSearch;
     public JFXButton btnReset;
@@ -65,7 +65,7 @@ public class FoodConsumptionPageController implements Initializable {
             inputSearch.clear();
             btnSearch.setDisable(true);
 
-            ChickBatchModel chickBatchModel = new ChickBatchModel();
+            ChickBatchDAOImpl chickBatchModel = new ChickBatchDAOImpl();
             searchBatchId.getItems().clear();
             searchBatchId.setItems(chickBatchModel.getAllBatchIds());
 

@@ -12,10 +12,10 @@ import javafx.stage.Stage;
 import lk.ijse.poultryfarm.controller.ButtonScale;
 import lk.ijse.poultryfarm.controller.employee.EmployeeDetailsPageController;
 import lk.ijse.poultryfarm.dto.SalaryDto;
-import lk.ijse.poultryfarm.model.ChickBatchModel;
-import lk.ijse.poultryfarm.model.DailyAttendanceModel;
-import lk.ijse.poultryfarm.model.EmployeeModel;
-import lk.ijse.poultryfarm.model.SalaryModel;
+import lk.ijse.poultryfarm.dao.custom.impl.ChickBatchDAOImpl;
+import lk.ijse.poultryfarm.dao.custom.impl.DailyAttendanceDAOImpl;
+import lk.ijse.poultryfarm.dao.custom.impl.EmployeeDAOImpl;
+import lk.ijse.poultryfarm.dao.custom.impl.SalaryDAOImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -30,10 +30,10 @@ public class AddSalaryController implements Initializable {
 
     private final String patternAmount = "^[0-9]+(\\.[0-9]{1,2})?$";
 
-    private final SalaryModel salaryModel = new SalaryModel();
-    private final DailyAttendanceModel dailyAttendanceModel = new DailyAttendanceModel();
-    private final ChickBatchModel chickBatchModel = new ChickBatchModel();
-    private final EmployeeModel employeeModel = new EmployeeModel();
+    private final SalaryDAOImpl salaryModel = new SalaryDAOImpl();
+    private final DailyAttendanceDAOImpl dailyAttendanceModel = new DailyAttendanceDAOImpl();
+    private final ChickBatchDAOImpl chickBatchModel = new ChickBatchDAOImpl();
+    private final EmployeeDAOImpl employeeModel = new EmployeeDAOImpl();
 
     public void saveSalaryOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String salaryId = lblSalaryId.getText();
